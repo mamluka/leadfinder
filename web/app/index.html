@@ -1,0 +1,150 @@
+<html lang="en" ng-app="leadFinder">
+<head>
+    <meta charset="utf-8">
+    <title>My AngularJS App</title>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css"/>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div style="height: 150px;"></div>
+    <div class="row-fluid">
+        <span class="span8">
+            <tabs>
+                <pane title="Geographics">
+                    <div ng-controller="GeographicsController">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <lable class="control-label">Choose state</lable>
+                                <div class="controls">
+                                    <select list-facet data-facet-id="state" data-facet-label="State"></select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </pane>
+
+                <pane title="Demographics">
+                    <div ng-controller="DemographicsController">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <lable class="control-label">Income:</lable>
+                                <div class="controls">
+                                    <select list-facet data-facet-id="income_estimated_household" data-facet-label="Income"></select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <lable class="control-label">Net Worth:</lable>
+                                <div class="controls">
+                                    <select list-facet data-facet-id="net_worth" data-facet-label="Net worth"></select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <lable class="control-label">Language:</lable>
+                                <div class="controls">
+                                    <select list-facet data-facet-id="language" data-facet-label="Language"></select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <lable class="control-label">Home owner:</lable>
+                                <div class="controls">
+                                    <select list-facet data-facet-id="home_owner" data-facet-label="Home Owner"></select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <lable class="control-label">Age:</lable>
+                                <div class="controls">
+                                    <select list-facet data-facet-id="exact_age" data-facet-label="Age"></select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <lable class="control-label">Credit rating:</lable>
+                                <div class="controls">
+                                    <select list-facet data-facet-id="credit_rating" data-facet-label="Credit rating"></select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <lable class="control-label">Gender:</lable>
+                                <div class="controls">
+                                    <select list-facet data-facet-id="gender" data-facet-label="Gender"></select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <lable class="control-label">Has phone number:</lable>
+                                <div class="controls">
+                                    <select list-facet data-facet-id="has_telephone_number" data-facet-label="Phone listed"></select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </pane>
+
+                <pane title="Psychographics">
+                    <div ng-controller="PsychographicsController">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <lable class="control-label">Tennis</lable>
+                                <div class="controls">
+                                    <select list-facet data-facet-id="tennis"></select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <lable class="control-label">Golf</lable>
+                                <div class="controls">
+                                    <select list-facet data-facet-id="golf"></select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <lable class="control-label">Skiing</lable>
+                                <div class="controls">
+                                    <select list-facet data-facet-id="snow_skiing"></select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn" ng-click="next()">Buy the leads</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </pane>
+            </tabs>
+
+        </span>
+        <span class="span4">
+            <div ng-controller="SummeryController">
+                You have selected {{total}} leads so far
+
+                <div ng-repeat="facetIndicator in selectedFacetsIndicators">
+                    <div>{{facetIndicator.label}} -> {{facetIndicator.value}}</div>
+                </div>
+
+            </div>
+        </span>
+    </div>
+
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.7.2/angular-strap.min.js"></script>
+
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/directives.js"></script>
+</body>
+</html>
