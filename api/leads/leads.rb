@@ -29,5 +29,20 @@ class Leads < Grape::API
     {total: s.results.total}
   end
 
+  get :download do
+    params.delete(:route_info)
+    current_facets = params
+
+    s = Tire.search 'leads' do
+      query do
+        boolean do
+          current_facets.each { |k, v| must { string "#{k}:#{v}" } }
+        end
+      end
+
+      size Integer::MAX
+    end
+  end
+
 
 end

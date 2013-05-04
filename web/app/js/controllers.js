@@ -27,6 +27,20 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
 
         $scope.$on('facets-selected', function (e, data) {
 
+            var selectedFacets = wizard.getSelectedFacets()
+            leads.getTotalLeadsByFacets(selectedFacets).done(function (data) {
+                $scope.$apply(function () {
+                    $scope.total = data.total;
+                })
+            })
+
+            if (data.value == "none") {
+                $scope.selectedFacetsIndicators = _.reject($scope.selectedFacetsIndicators, function (x) {
+                    return x.label == data.label;
+                })
+                return;
+            }
+
             var alreadyUsed = _.some($scope.selectedFacetsIndicators, function (x) {
                 return x.label == data.label
             });
@@ -43,13 +57,10 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
             else {
                 $scope.selectedFacetsIndicators.push({label: data.label, value: data.value});
             }
-
-            var selectedFacets = wizard.getSelectedFacets()
-            leads.getTotalLeadsByFacets(selectedFacets).done(function (data) {
-                $scope.$apply(function() {
-                    $scope.total = data.total;
-                })
-            })
         })
+
+        $scope.download = function() {
+            wizard.download()
+        }
     }])
 ;

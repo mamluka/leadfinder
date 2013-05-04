@@ -55,7 +55,11 @@ angular.module('leadFinder.services', [])
                 var state = JSON.parse(window.sessionStorage.getItem('leadFinder.wizard.state')) || {};
                 return state[facetId]
             },
-            getSelectedFacets: _getSelectedFacets
+            getSelectedFacets: _getSelectedFacets,
+            download: function () {
+                window.location.href = apiUrl + '/download/all.csv?' + jQuery.param(_getSelectedFacets());
+            }
+
         }
     }])
     .factory('Leads', ['$http', 'apiUrl', function ($http, apiUrl) {

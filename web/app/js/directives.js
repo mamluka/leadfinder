@@ -4,7 +4,18 @@
 
 
 angular.module('leadFinder.directives', ['leadFinder.services'])
-    .directive('listFacet', ['Facets', 'Wizard', '$rootScope', function (facets, wizard, $rootScope) {
+    .factory('facetEvents', ['$rootScope', function ($rootScope) {
+        return {
+            facetsSelected: function (label, value, id) {
+                $rootScope.$broadcast('facets-selected', {
+                    label: label,
+                    value: value,
+                    id: id
+                });
+            }
+        }
+    }])
+    .directive('listFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
         return function (scope, element) {
 
             var elm = $(element);
@@ -16,7 +27,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 _.each(facets[facetId], function (facet) {
 
                     var text = facet.id;
-                    var option = createSmartOption(text, facet.id, facetId)
+                    var option = createOption(text, facet.id, facetId)
 
                     elm.append(option)
                 });
@@ -26,12 +37,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 var savedFacet = wizard.getSavedFacetFor(facetId)
                 if (savedFacet) {
                     elm.val(savedFacet)
-
-                    $rootScope.$broadcast('facets-selected', {
-                        label: facetLabel,
-                        value: savedFacet,
-                        id: facetId
-                    });
+                    facetEvents.facetsSelected(facetLabel, savedFacet, facetId)
                 }
             });
 
@@ -40,13 +46,8 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 var value = $('option:selected', self).val()
 
                 wizard.update(facetId, value);
-
                 $rootScope.$apply(function () {
-                    $rootScope.$broadcast('facets-selected', {
-                        label: facetLabel,
-                        value: value,
-                        id: facetId
-                    });
+                    facetEvents.facetsSelected(facetLabel, value, facetId)
                 })
             });
 
@@ -56,28 +57,32 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 option.text(text)
                 return option
             }
-
-            function createSmartOption(text, val, facetId) {
-                var option = createOption(text, val)
-
-//                $(window).on('facets-selected', function () {
-//                    var facetsIds = _.map(wizard.getAvailableFacetsFor(facetId), function (x) {
-//                        return x.id
-//                    });
-//
-//                    var isContains = _.contains(facetsIds, option.attr('value'))
-//                    if (!isContains) {
-//                        option.css('color', 'gray')
-//                    } else {
-//                        option.css('color', 'black')
-//                    }
-//                })
-
-                return option;
-            }
         }
-    }
-    ])
+    }])
+    .directive('checkboxFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
+        return function (scope, element) {
+            var elm = $(element);
+            var facetId = elm.data('facet-id')
+            var facetLabel = elm.data('facet-label')
+
+            var savedFacet = wizard.getSavedFacetFor(facetId)
+            if (savedFacet && savedFacet != "none") {
+                elm.prop('checked', true);
+                facetEvents.facetsSelected(facetLabel, savedFacet, facetId)
+            }
+
+            elm.change(function () {
+                var self = $(this)
+                var value = self.is(':checked') ? self.data('checked-value') : 'none';
+
+                wizard.update(facetId, value);
+                $rootScope.$apply(function () {
+                    facetEvents.facetsSelected(facetLabel, value, facetId)
+                })
+            });
+
+        }
+    }])
     .directive('tabs',function () {
         return {
             restrict: 'E',

@@ -78,11 +78,13 @@
                             </div>
 
                             <div class="control-group">
-                                <lable class="control-label">Has phone number:</lable>
                                 <div class="controls">
-                                    <select list-facet data-facet-id="has_telephone_number" data-facet-label="Phone listed"></select>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number" data-facet-label="Phone listed" data-checked-value="T"/>Has phone number
+                                    </label>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </pane>
@@ -91,29 +93,26 @@
                     <div ng-controller="PsychographicsController">
                         <form class="form-horizontal">
                             <div class="control-group">
-                                <lable class="control-label">Tennis</lable>
                                 <div class="controls">
-                                    <select list-facet data-facet-id="tennis"></select>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <lable class="control-label">Golf</lable>
-                                <div class="controls">
-                                    <select list-facet data-facet-id="golf"></select>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <lable class="control-label">Skiing</lable>
-                                <div class="controls">
-                                    <select list-facet data-facet-id="snow_skiing"></select>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checkbox-facet data-facet-id="tennis" data-facet-label="Tennis" data-checked-value="y"/>Tennis
+                                    </label>
                                 </div>
                             </div>
 
                             <div class="control-group">
                                 <div class="controls">
-                                    <button class="btn" ng-click="next()">Buy the leads</button>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checkbox-facet data-facet-id="golf" data-facet-label="Golf" data-checked-value="y"/>Golf
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    <label class="checkbox">
+                                        <input type="checkbox" checkbox-facet data-facet-id="snow_skiing" data-facet-label="Skiing" data-checked-value="y"/>Skiing
+                                    </label>
                                 </div>
                             </div>
                         </form>
@@ -129,6 +128,8 @@
                 <div ng-repeat="facetIndicator in selectedFacetsIndicators">
                     <div>{{facetIndicator.label}} -> {{facetIndicator.value}}</div>
                 </div>
+
+                <span class="btn" ng-click="download()">Download</span>
 
             </div>
         </span>
