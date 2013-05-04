@@ -55,8 +55,10 @@
       <file leaf-file-name="services.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/services.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="106" selection-start="2191" selection-end="2191" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="55" column="106" selection-start="1982" selection-end="1982" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1367694120556" expanded="true" signature="1875:1996" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -76,8 +78,12 @@
       <file leaf-file-name="directives.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/directives.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="49" selection-start="2297" selection-end="2297" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="56" column="49" selection-start="1791" selection-end="1791" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1367694120556" expanded="true" signature="228:1601" placeholder="{...}" />
+                <marker date="1367694120556" expanded="true" signature="90:297" placeholder="{...}" />
+                <marker date="1367694120556" expanded="true" signature="1020:1108" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -146,8 +152,16 @@
       <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="48" selection-start="945" selection-end="945" vertical-scroll-proportion="-13.892858">
-              <folding />
+            <state line="15" column="48" selection-start="496" selection-end="496" vertical-scroll-proportion="-8.035714">
+              <folding>
+                <marker date="1367694120556" expanded="true" signature="455:1669" placeholder="{...}" />
+                <marker date="1367694120556" expanded="true" signature="873:995" placeholder="{...}" />
+                <marker date="1367694120556" expanded="true" signature="1257:1519" placeholder="{...}" />
+                <marker date="1367694120556" expanded="true" signature="1376:1429" placeholder="{...}" />
+                <marker date="1367694120556" expanded="true" signature="1355:1400" placeholder="{...}" />
+                <marker date="1367694120556" expanded="true" signature="1537:1594" placeholder="{...}" />
+                <marker date="1367694120556" expanded="true" signature="1787:1793" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -436,14 +450,24 @@
     <entry file="file://$PROJECT_DIR$/app/js/services.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <marker date="1367694120556" expanded="true" signature="1875:1996" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="39" selection-start="438" selection-end="438" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <marker date="1367694120556" expanded="true" signature="455:1669" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="873:995" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="1257:1519" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="1376:1429" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="1355:1400" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="1537:1594" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="1787:1793" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -539,22 +563,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="48" selection-start="945" selection-end="945" vertical-scroll-proportion="-13.892858">
-          <folding />
+        <state line="15" column="48" selection-start="496" selection-end="496" vertical-scroll-proportion="-8.035714">
+          <folding>
+            <marker date="1367694120556" expanded="true" signature="455:1669" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="873:995" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="1257:1519" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="1376:1429" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="1355:1400" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="1537:1594" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="1787:1793" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/js/services.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="106" selection-start="2191" selection-end="2191" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="55" column="106" selection-start="1982" selection-end="1982" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1367694120556" expanded="true" signature="1875:1996" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/js/directives.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="49" selection-start="2297" selection-end="2297" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="56" column="49" selection-start="1791" selection-end="1791" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1367694120556" expanded="true" signature="228:1601" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="90:297" placeholder="{...}" />
+            <marker date="1367694120556" expanded="true" signature="1020:1108" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
