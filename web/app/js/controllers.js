@@ -3,22 +3,13 @@
 /* Controllers */
 
 angular.module('leadFinder.controllers', ['leadFinder.services']).
+    controller('WizardController', ['$scope', function ($scope) {
 
-    controller('GeographicsController', ['$scope', 'Facets', 'Wizard', function ($scope, Facets, Wizard) {
-        $scope.next = function () {
-            window.location.href = '#demographics'
-        }
 
     }])
-    .controller('DemographicsController', ['$scope', 'Facets', function ($scope) {
-        $scope.next = function () {
-            window.location.href = '#psychographics'
-        }
-    }])
-    .controller('PsychographicsController', ['$scope', 'Facets', function ($scope) {
-        $scope.next = function () {
-            window.location.href = '#buy'
-        }
+    .controller('GeographicsController', ['$scope', function ($scope) {
+
+
     }])
     .controller('SummeryController', ['$scope', 'Wizard', 'Leads', function ($scope, wizard, leads) {
 
@@ -59,7 +50,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
             }
         })
 
-        $scope.download = function() {
+        $scope.download = function () {
             wizard.download()
         }
     }])

@@ -31,7 +31,12 @@ angular.module('leadFinder.services', [])
         return {
             update: function (key, value) {
                 var state = JSON.parse(window.sessionStorage.getItem('leadFinder.wizard.state')) || {};
-                state[key] = value;
+                if (_.isArray(value)) {
+                    state[key] = value[0] + '-' + value[1]
+                }
+                else {
+                    state[key] = value;
+                }
 
                 window.sessionStorage.setItem('leadFinder.wizard.state', JSON.stringify(state))
 
@@ -53,7 +58,12 @@ angular.module('leadFinder.services', [])
             },
             getSavedFacetFor: function (facetId) {
                 var state = JSON.parse(window.sessionStorage.getItem('leadFinder.wizard.state')) || {};
-                return state[facetId]
+                var value = state[facetId];
+
+                if (value &&  value.indexOf('-') !== -1)
+                    return value.split('-')
+
+                return value
             },
             getSelectedFacets: _getSelectedFacets,
             download: function () {

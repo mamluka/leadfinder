@@ -26,8 +26,8 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
                 _.each(facets[facetId], function (facet) {
 
-                    var text = facet.id;
-                    var option = createOption(text, facet.id, facetId)
+                    var text = facet.text;
+                    var option = createOption(text, facet.value, facetId)
 
                     elm.append(option)
                 });
@@ -51,12 +51,58 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 })
             });
 
+            $scope.$on('')
+
             function createOption(text, val) {
                 var option = $('<option></option>');
                 option.val(val)
                 option.text(text)
                 return option
             }
+        }
+    }])
+    .directive('sliderFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
+        return function (scope, element) {
+
+            var elm = $(element);
+            var facetId = elm.data('facet-id')
+            var facetLabel = elm.data('facet-label')
+
+            facets.get(facetId).success(function (facets) {
+
+                var sortedFacetValues = _.sortBy(facets[facetId], function (x) {
+                    return parseInt(x.value)
+                });
+
+                var numberOfPoints = _.size(sortedFacetValues) - 1;
+
+                elm.slider({
+                    range: true,
+                    min: 0,
+                    max: numberOfPoints,
+                    values: [ 0, numberOfPoints],
+                    stop: function (event, ui) {
+                        var min = ui.values[0];
+                        var max = ui.values[1];
+                        var minmax = [sortedFacetValues[min].value, sortedFacetValues[max].value]
+
+                        wizard.update(facetId, minmax)
+
+                        $rootScope.$apply(function () {
+                            facetEvents.facetsSelected(facetLabel, minmax, facetId)
+                        })
+                    }
+
+                })
+
+                var savedFacet = wizard.getSavedFacetFor(facetId)
+                if (savedFacet) {
+
+                    elm.slider("values", savedFacet);
+
+                    facetEvents.facetsSelected(facetLabel, savedFacet, facetId)
+                }
+            });
         }
     }])
     .directive('checkboxFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
@@ -83,11 +129,36 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
         }
     }])
+    .directive('multilineFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
+        return function (scope, element) {
+            var elm = $(element);
+            var facetId = elm.data('facet-id')
+            var facetLabel = elm.data('facet-label')
+
+            var savedFacet = wizard.getSavedFacetFor(facetId)
+            if (savedFacet) {
+                elm.val(savedFacet)
+                facetEvents.facetsSelected(facetLabel, savedFacet, facetId)
+            }
+
+            elm.blur(function () {
+                var self = $(this)
+
+                var value = self.val().split('\n').join(',')
+
+                wizard.update(facetId, value);
+                $rootScope.$apply(function () {
+                    facetEvents.facetsSelected(facetLabel, value, facetId)
+                })
+            });
+
+        }
+    }])
     .directive('tabs',function () {
         return {
             restrict: 'E',
+            scope: {displayTabs: '='},
             transclude: true,
-            scope: {},
             controller: function ($scope, $element) {
                 var panes = $scope.panes = [];
 
@@ -103,7 +174,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     panes.push(pane);
                 }
             },
-            template: '<div class="tabbable">' +
+            template: '<div class="tabbable" ng-show="displayTabs">' +
                 '<ul class="nav nav-tabs">' +
                 '<li ng-repeat="pane in panes" ng-class="{active:pane.selected}">' +
                 '<a href="" ng-click="select(pane)">{{pane.title}}</a>' +
@@ -127,4 +198,27 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 '</div>',
             replace: true
         };
+    })
+    .directive('rangeSlider', function () {
+        return {
+            restrict: 'A',
+            scope: {
+                min: '=minValue',
+                test: '@test'
+            },
+            link: function (scope, element) {
+                alert(scope.test)
+                $(element).slider({
+                    range: true,
+                    min: 0,
+                    max: 500,
+                    values: [ 75, 300 ],
+                    slide: function (event, ui) {
+                        scope.$apply(function () {
+                            scope.min = ui.values[0];
+                        })
+                    }
+                });
+            }
+        }
     });

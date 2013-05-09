@@ -3,6 +3,7 @@
     <meta charset="utf-8">
     <title>My AngularJS App</title>
     <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
     <link rel="stylesheet" href="css/app.css"/>
 </head>
 <body>
@@ -11,116 +12,121 @@
     <div style="height: 150px;"></div>
     <div class="row-fluid">
         <span class="span8">
-            <tabs>
-                <pane title="Geographics">
-                    <div ng-controller="GeographicsController">
-                        <form class="form-horizontal">
-                            <div class="control-group">
-                                <lable class="control-label">Choose state</lable>
-                                <div class="controls">
-                                    <select list-facet data-facet-id="state" data-facet-label="State"></select>
-                                </div>
-                            </div>
-                        </form>
+            <div ng-controller="GeographicsController">
+                <form class="form-horizontal">
+                    <div class="control-group">
+                        <lable class="control-label">Choose a state</lable>
+                        <div class="controls">
+                            <select list-facet data-facet-id="state" data-facet-label="State" or-group="geo"></select>
+                        </div>
                     </div>
-                </pane>
 
-                <pane title="Demographics">
-                    <div ng-controller="DemographicsController">
-                        <form class="form-horizontal">
-                            <div class="control-group">
-                                <lable class="control-label">Income:</lable>
-                                <div class="controls">
-                                    <select list-facet data-facet-id="income_estimated_household" data-facet-label="Income"></select>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <lable class="control-label">Net Worth:</lable>
-                                <div class="controls">
-                                    <select list-facet data-facet-id="net_worth" data-facet-label="Net worth"></select>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <lable class="control-label">Language:</lable>
-                                <div class="controls">
-                                    <select list-facet data-facet-id="language" data-facet-label="Language"></select>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <lable class="control-label">Home owner:</lable>
-                                <div class="controls">
-                                    <select list-facet data-facet-id="home_owner" data-facet-label="Home Owner"></select>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <lable class="control-label">Age:</lable>
-                                <div class="controls">
-                                    <select list-facet data-facet-id="exact_age" data-facet-label="Age"></select>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <lable class="control-label">Credit rating:</lable>
-                                <div class="controls">
-                                    <select list-facet data-facet-id="credit_rating" data-facet-label="Credit rating"></select>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <lable class="control-label">Gender:</lable>
-                                <div class="controls">
-                                    <select list-facet data-facet-id="gender" data-facet-label="Gender"></select>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <div class="controls">
-                                    <label class="checkbox">
-                                        <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number" data-facet-label="Phone listed" data-checked-value="T"/>Has phone number
-                                    </label>
-                                </div>
-                            </div>
-
-                        </form>
+                    <div class="control-group">
+                        <lable class="control-label">Paste a list of zip codes</lable>
+                        <div class="controls">
+                            <textarea multiline-facet data-facet-id="zip" data-facet-label="Zip" or-group="geo"></textarea>
+                        </div>
                     </div>
-                </pane>
-
-                <pane title="Psychographics">
-                    <div ng-controller="PsychographicsController">
-                        <form class="form-horizontal">
-                            <div class="control-group">
-                                <div class="controls">
-                                    <label class="checkbox">
-                                        <input type="checkbox" checkbox-facet data-facet-id="tennis" data-facet-label="Tennis" data-checked-value="y"/>Tennis
-                                    </label>
+                </form>
+            </div>
+            <div ng-controller="WizardController">
+                <tabs display-tabs="false">
+                    <pane title="Demographics">
+                        <div>
+                            <form class="form-horizontal">
+                                <div class="control-group">
+                                    <lable class="control-label">Income:</lable>
+                                    <div class="controls">
+                                        <div class="slider" slider-facet data-facet-id="income_estimated_household" data-facet-label="Income"></div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="control-group">
-                                <div class="controls">
-                                    <label class="checkbox">
-                                        <input type="checkbox" checkbox-facet data-facet-id="golf" data-facet-label="Golf" data-checked-value="y"/>Golf
-                                    </label>
+                                <div class="control-group">
+                                    <lable class="control-label">Net Worth:</lable>
+                                    <div class="controls">
+                                        <div class="slider" slider-facet data-facet-id="net_worth" data-facet-label="Net worth"></div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="control-group">
-                                <div class="controls">
-                                    <label class="checkbox">
-                                        <input type="checkbox" checkbox-facet data-facet-id="snow_skiing" data-facet-label="Skiing" data-checked-value="y"/>Skiing
-                                    </label>
+                                <div class="control-group">
+                                    <lable class="control-label">Language:</lable>
+                                    <div class="controls">
+                                        <select list-facet data-facet-id="language" data-facet-label="Language"></select>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                </pane>
-            </tabs>
 
-        </span>
+                                <div class="control-group">
+                                    <lable class="control-label">Home owner:</lable>
+                                    <div class="controls">
+                                        <select list-facet data-facet-id="home_owner" data-facet-label="Home Owner"></select>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <lable class="control-label">Age:</lable>
+                                    <div class="controls">
+                                        <div class="slider" slider-facet data-facet-id="exact_age" data-facet-label="Age"></div>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <lable class="control-label">Credit rating:</lable>
+                                    <div class="controls">
+                                        <div class="slider" slider-facet data-facet-id="credit_rating" data-facet-label="Credit rating"></div>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <lable class="control-label">Gender:</lable>
+                                    <div class="controls">
+                                        <select list-facet data-facet-id="gender" data-facet-label="Gender"></select>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number" data-facet-label="Phone listed" data-checked-value="T"/>Has phone number
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </pane>
+
+                    <pane title="Psychographics">
+                        <div>
+                            <form class="form-horizontal">
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <input type="checkbox" checkbox-facet data-facet-id="tennis" data-facet-label="Tennis" data-checked-value="y"/>Tennis
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <input type="checkbox" checkbox-facet data-facet-id="golf" data-facet-label="Golf" data-checked-value="y"/>Golf
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <input type="checkbox" checkbox-facet data-facet-id="snow_skiing" data-facet-label="Skiing" data-checked-value="y"/>Skiing
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </pane>
+                </tabs>
+            </div>
+    </span>
         <span class="span4">
             <div ng-controller="SummeryController">
                 You have selected {{total}} leads so far
@@ -142,6 +148,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.7.2/angular-strap.min.js"></script>
+<script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 <script src="js/app.js"></script>
 <script src="js/services.js"></script>

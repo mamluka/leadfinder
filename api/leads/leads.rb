@@ -14,35 +14,30 @@ class Leads < Grape::API
 
   get :total do
     params.delete(:route_info)
-    current_facets = params
+
+    terms = Hash.new
+    ranges = Hash.new
+    multi_term = Hash.new
+
+    params.each do |k, v|
+      ranges[k]=v if v.include?('-')
+      multi_term[k]=v if v.include?(',')
+      terms[k]=v
+    end
 
     s = Tire.search 'leads' do
       query do
-        boolean do
-          current_facets.each { |k, v| must { string "#{k}:#{v}" } }
+        constant_score do
+          terms.each { |k, v| filter :term, {k.to_sym => v} }
+          multi_term.each { |k, v| filter :terms, {k.to_sym => v.split(',')} }
+          ranges.each { |k, v| filter :range, k.to_sym => {gte: v.split('-')[0], lt: v.split('-')[1]} }
         end
       end
 
-      size 0
     end
+
+    p s.to_json
 
     {total: s.results.total}
   end
-
-  get :download do
-    params.delete(:route_info)
-    current_facets = params
-
-    s = Tire.search 'leads' do
-      query do
-        boolean do
-          current_facets.each { |k, v| must { string "#{k}:#{v}" } }
-        end
-      end
-
-      size Integer::MAX
-    end
-  end
-
-
 end

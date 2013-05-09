@@ -2,21 +2,67 @@ require 'tire'
 require 'csv'
 require 'time'
 require 'securerandom'
+require 'logger'
 
-csv_file ='/media/98645a03-5644-4968-b77a-165525ae1f1a/10mil.csv'
+income = {
+    A: 0,
+    B: 10000,
+    C: 15000,
+    D: 20000,
+    E: 25000,
+    F: 30000,
+    G: 35000,
+    H: 40000,
+    I: 45000,
+    J: 50000,
+    K: 55000,
+    L: 60000,
+    M: 65000,
+    N: 70000,
+    O: 100000,
+    P: 15000,
+    Q: 175000,
+    O: 200000,
+    R: 250000,
+    S: 300000,
+}
+
+net_worth = {
+    A: 0,
+    B: 5000,
+    C: 10000,
+    D: 25000,
+    E: 50000,
+    F: 100000,
+    G: 250000,
+    H: 500000,
+    I: 1000000,
+}
+
+credit_rating = {
+    A: 1000,
+    B: 800,
+    C: 750,
+    D: 700,
+    E: 650,
+    F: 600,
+    G: 550,
+    H: 500,
+}
+
+logger = Logger.new('logfile.log')
+
+csv_file = ARGV[0]
 
 leads = Array.new
 
-Tire.index 'leads' do
-  delete
-end
-
 counter = 0
 start_time = Time.now
-
+total_time = Time.now
 CSV.foreach(csv_file, {:headers => true, :header_converters => :symbol}) { |csv|
 
   leads << {
+      first_name: csv[:fn],
       last_name: csv[:ln],
       name_prefix: csv[:name_pre],
       address: csv[:addr],
@@ -29,7 +75,7 @@ CSV.foreach(csv_file, {:headers => true, :header_converters => :symbol}) { |csv|
       time_zone: csv[:time_zn],
       gender: csv[:gender],
       inferred_household_rank: csv[:inf_hh_rank],
-      exact_age: csv[:exact_age],
+      exact_age: csv[:exact_age].to_i,
       most_recent_mortgage_amount: csv[:mr_amt],
       most_recent_mortgage_date: csv[:mr_dt],
       most_recent_mortgage_loan_type: csv[:mr_loan_typ],
@@ -52,9 +98,9 @@ CSV.foreach(csv_file, {:headers => true, :header_converters => :symbol}) { |csv|
       bank_card_holder: csv[:cc_hldr_bank],
       credit_card_user: csv[:cc_user],
       bank_card_presence_in_household: csv[:cc_bank_cd_in_hh],
-      income_estimated_household: csv[:hh_income],
-      net_worth: csv[:net_worth],
-      credit_rating: csv[:credit_rating],
+      income_estimated_household: csv[:hh_income].nil? ? nil : income[csv[:hh_income].to_sym],
+      net_worth: csv[:net_worth].nil? ? nil : net_worth[csv[:net_worth].to_sym],
+      credit_rating: csv[:credit_rating].nil? ? nil : credit_rating[csv[:credit_rating].to_sym],
       ethnic: csv[:ethnic],
       language: csv[:ethnic_lang],
       presence_of_children: csv[:pres_kids],
@@ -173,15 +219,16 @@ CSV.foreach(csv_file, {:headers => true, :header_converters => :symbol}) { |csv|
       import leads
     end
 
-    puts "Possessed #{counter}, this batch took #{Time.now-start_time} seconds"
+    logger.info "Possessed #{counter}, this batch took #{Time.now-start_time} seconds"
     start_time = Time.now
+    logger.info "Total time passed is #{Time.now-total_time} seconds"
     leads.clear
   end
 
 
 }
 
-puts "Possessed #{counter}"
+logger.info "Possessed #{counter}"
 
 Tire.index 'leads' do
   import leads
