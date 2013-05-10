@@ -56,13 +56,13 @@ class IndexLeads
           language: csv[:ethnic_lang],
           credit_rating: convert.convert(:credit_rating, csv[:credit_rating]),
           pool: convert.from_yes_no(csv[:prop_pool]),
-          mortgage_purchase_date_ccyymmdd: (Time.parse(csv[:genl_purch_dt]).to_i rescue nil),
+          mortgage_purchase_date_ccyymmdd: (Time.parse(csv[:genl_purch_dt]).year rescue nil),
           mortgage_purchase_price: csv[:genl_purch_amt].to_i,
           most_recent_mortgage_amount: csv[:mr_amt].to_i,
-          most_recent_mortgage_date: (Time.parse(csv[:mr_dt]).to_i rescue nil),
+          most_recent_mortgage_date: (Time.parse(csv[:mr_dt]).year rescue nil),
           most_recent_mortgage_loan_type: csv[:mr_loan_typ],
           second_most_recent_mortgage_amount: csv[:mr2_amt],
-          second_most_recent_mortgage_date: (Time.parse(csv[:mr2_dt]).to_i rescue nil),
+          second_most_recent_mortgage_date: (Time.parse(csv[:mr2_dt]).year rescue nil),
           second_most_recent_mortgage_loan_type: csv[:mr2_loan_typ],
           most_recent_lender: csv[:mr_lendr_cd],
           second_most_recent_lender: csv[:mr2_lendr_cd],
@@ -72,7 +72,7 @@ class IndexLeads
           second_most_recent_mortgage_interest_rate_type: csv[:mr2_rate_typ],
           purchase_1st_mortgage_amount: csv[:p1_amt].to_i,
           purchase_second_mortgage_amount: csv[:p2_amt].to_i,
-          purchase_mortgage_date: (Time.parse(csv[:p1_dt]).to_i rescue nil),
+          purchase_mortgage_date: (Time.parse(csv[:p1_dt]).year rescue nil),
           purchase_1st_mortgage_loan_type: csv[:p1_loan_typ],
           purchase_second_mortgage_loan_type: csv[:p2_loan_typ],
           purchase_lender: csv[:p1_lendr_cd],
@@ -147,9 +147,9 @@ class IndexLeads
           community_charities: convert.from_yes_no(csv[:donr_comm_char]),
       } if not csv.header_row?
 
-      counter =counter + 1
+      counter = counter + 1
 
-      if leads.length % 2000 == 0
+      if leads.length % 1500 == 0
         Tire.index 'leads' do
           import leads
         end
