@@ -13,24 +13,34 @@
     <div class="row-fluid">
         <span class="span8">
             <div ng-controller="GeographicsController">
-                <form class="form-horizontal">
+                <form class="form-horizontal" ng-show="displayGeo">
                     <div class="control-group">
-                        <lable class="control-label">Choose a state</lable>
-                        <div class="controls">
-                            <select list-facet data-facet-id="state" data-facet-label="State" or-group="geo"></select>
+                        <label class="radio">
+
+                        </label>
+                        <lable class="control-label wide"><input facet-excluder type="radio" value="zip" name="geo" style="float:left" ng-checked="true" exclude="geoExcluded"/>Choose a state</lable>
+                        <div class="controls wide">
+                            <select list-facet data-facet-id="state" data-facet-label="State" exclude="geoExcluded"></select>
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <lable class="control-label">Paste a list of zip codes</lable>
-                        <div class="controls">
-                            <textarea multiline-facet data-facet-id="zip" data-facet-label="Zip" or-group="geo"></textarea>
+                        <lable class="control-label wide"><input facet-excluder type="radio" value="state" name="geo" style="float:left" exclude="geoExcluded"/>Fill in a list of zip codes</lable>
+                        <div class="controls wide">
+                            <textarea multiline-facet data-facet-id="zip" data-facet-label="Zip" exclude="geoExcluded" class="input-xlarge" rows="10"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="control-group">
+                        <div class="controls wide">
+                            <button class="btn" ng-click="next()">Next step (demographics)</button>
                         </div>
                     </div>
                 </form>
             </div>
             <div ng-controller="WizardController">
-                <tabs display-tabs="false">
+                <tabs display-tabs="displayTabs">
                     <pane title="Demographics">
                         <div>
                             <form class="form-horizontal">
@@ -63,6 +73,13 @@
                                 </div>
 
                                 <div class="control-group">
+                                    <lable class="control-label">Home market value:</lable>
+                                    <div class="controls">
+                                        <div class="slider" slider-facet data-facet-id="home_market_value" data-facet-label="Home market value"></div>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
                                     <lable class="control-label">Age:</lable>
                                     <div class="controls">
                                         <div class="slider" slider-facet data-facet-id="exact_age" data-facet-label="Age"></div>
@@ -86,6 +103,14 @@
                                 <div class="control-group">
                                     <div class="controls">
                                         <label class="checkbox">
+                                            <input type="checkbox" checkbox-facet data-facet-id="presence_of_children" data-facet-label="Has children" data-checked-value="y"/>Has children
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox">
                                             <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number" data-facet-label="Phone listed" data-checked-value="T"/>Has phone number
                                         </label>
                                     </div>
@@ -95,7 +120,7 @@
                         </div>
                     </pane>
 
-                    <pane title="Psychographics">
+                    <pane title="Mortgage">
                         <div>
                             <form class="form-horizontal">
                                 <div class="control-group">

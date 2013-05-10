@@ -16,18 +16,34 @@ class Download < Grape::API
     params.delete(:route_info)
     params.delete(:format)
 
-    current_facets = params
+    terms = Hash.new
+    ranges = Hash.new
+    multi_term = Hash.new
 
     start_time = Time.now
 
-    s = Tire.search 'leads' do
-      query do
-        boolean do
-          current_facets.each { |k, v| must { string "#{k}:#{v}" } }
-        end
+    params.each do |k, v|
+      if v.include?('-')
+        ranges[k]=v
+        next
       end
 
-      fields :last_name, :address, :state, :city, :telephone_number
+      if v.include?(',')
+        multi_term[k]=v
+        next
+      end
+
+      terms[k]=v
+    end
+
+    s = Tire.search 'leads' do
+      query do
+        constant_score do
+          filter :bool, {:must => terms.map { |k, v| {:term => {k.to_sym => v}} }
+          .concat(multi_term.map { |k, v| {:terms => {k.to_sym => v.split(',')}} })
+          .concat(ranges.map { |k, v| {:range => {k.to_sym => {gte: v.split('-')[0], lt: v.split('-')[1]}}} })}
+        end
+      end
 
       size 100000
     end

@@ -14,13 +14,17 @@ angular.module('leadFinder.services', [])
     }])
     .factory('Wizard', ['$http', 'apiUrl', function ($http, apiUrl) {
 
+        function _getExclude() {
+            return window.sessionStorage.getItem('leadFinder.wizard.exclude')
+        }
+
         function _getSelectedFacets() {
             var state = JSON.parse(window.sessionStorage.getItem('leadFinder.wizard.state')) || {};
 
             var selected_facets = {};
 
             for (var key in state) {
-                if (state.hasOwnProperty(key) && state[key] != "none")
+                if (state.hasOwnProperty(key) && state[key] != "none" && key != _getExclude())
                     selected_facets[key] = state[key]
             }
 
@@ -60,7 +64,7 @@ angular.module('leadFinder.services', [])
                 var state = JSON.parse(window.sessionStorage.getItem('leadFinder.wizard.state')) || {};
                 var value = state[facetId];
 
-                if (value &&  value.indexOf('-') !== -1)
+                if (value && value.indexOf('-') !== -1)
                     return value.split('-')
 
                 return value
@@ -68,8 +72,11 @@ angular.module('leadFinder.services', [])
             getSelectedFacets: _getSelectedFacets,
             download: function () {
                 window.location.href = apiUrl + '/download/all.csv?' + jQuery.param(_getSelectedFacets());
-            }
-
+            },
+            setExclude: function (value) {
+                window.sessionStorage.setItem('leadFinder.wizard.exclude', value)
+            },
+            getExclude: _getExclude
         }
     }])
     .factory('Leads', ['$http', 'apiUrl', function ($http, apiUrl) {
@@ -77,7 +84,7 @@ angular.module('leadFinder.services', [])
             getTotalLeadsByFacets: function (facets) {
 
                 var url = apiUrl + '/leads/total';
-                return $.getJSON(url, facets)
+                return $.post(url, facets)
             }
         }
     }]);

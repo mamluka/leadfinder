@@ -20,9 +20,8 @@ income = {
     M: 65000,
     N: 70000,
     O: 100000,
-    P: 15000,
+    P: 150000,
     Q: 175000,
-    O: 200000,
     R: 250000,
     S: 300000,
 }
@@ -48,6 +47,28 @@ credit_rating = {
     F: 600,
     G: 550,
     H: 500,
+}
+
+home_market_value = {
+    A: 0,
+    B: 25000,
+    C: 50000,
+    D: 75000,
+    E: 100000,
+    F: 125000,
+    G: 150000,
+    H: 175000,
+    I: 200000,
+    J: 250000,
+    K: 275000,
+    L: 300000,
+    M: 350000,
+    N: 400000,
+    O: 450000,
+    P: 500000,
+    Q: 750000,
+    R: 1000000,
+    S: 2000000,
 }
 
 logger = Logger.new('logfile.log')
@@ -105,7 +126,8 @@ CSV.foreach(csv_file, {:headers => true, :header_converters => :symbol}) { |csv|
       language: csv[:ethnic_lang],
       presence_of_children: csv[:pres_kids],
       education: csv[:educ],
-      purchase_date_ccyymmdd: csv[:genl_purch_dt],
+      home_market_value: csv[:home_mkt_value].nil? ? nil : home_market_value[csv[:home_mkt_value].to_sym],
+      purchase_date_ccyymmdd: csv[:genl_purch_dt].nil? ? nil : Time.parse(csv[:genl_purch_dt]).to_i,
       sales_transaction: csv[:genl_sls_trans],
       purchase_1st_mortgage_amount: csv[:p1_amt],
       purchase_second_mortgage_amount: csv[:p2_amt],

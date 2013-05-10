@@ -44,7 +44,7 @@ class Facets < Grape::API
     end
 
     def get_facets_list
-      facet_array = %w(state income_estimated_household net_worth language home_owner credit_rating exact_age)
+      facet_array = %w(state income_estimated_household net_worth language home_owner credit_rating exact_age home_market_value)
     end
   end
 
