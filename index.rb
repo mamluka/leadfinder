@@ -4,261 +4,177 @@ require 'time'
 require 'securerandom'
 require 'logger'
 
-income = {
-    A: 0,
-    B: 10000,
-    C: 15000,
-    D: 20000,
-    E: 25000,
-    F: 30000,
-    G: 35000,
-    H: 40000,
-    I: 45000,
-    J: 50000,
-    K: 55000,
-    L: 60000,
-    M: 65000,
-    N: 70000,
-    O: 100000,
-    P: 150000,
-    Q: 175000,
-    R: 250000,
-    S: 300000,
-}
+require_relative 'datafile-converters'
 
-net_worth = {
-    A: 0,
-    B: 5000,
-    C: 10000,
-    D: 25000,
-    E: 50000,
-    F: 100000,
-    G: 250000,
-    H: 500000,
-    I: 1000000,
-}
+class IndexLeads
+  def initialize
+    @logger = Logger.new('logfile.log')
+  end
 
-credit_rating = {
-    A: 1000,
-    B: 800,
-    C: 750,
-    D: 700,
-    E: 650,
-    F: 600,
-    G: 550,
-    H: 500,
-}
+  def index(file)
 
-home_market_value = {
-    A: 0,
-    B: 25000,
-    C: 50000,
-    D: 75000,
-    E: 100000,
-    F: 125000,
-    G: 150000,
-    H: 175000,
-    I: 200000,
-    J: 250000,
-    K: 275000,
-    L: 300000,
-    M: 350000,
-    N: 400000,
-    O: 450000,
-    P: 500000,
-    Q: 750000,
-    R: 1000000,
-    S: 2000000,
-}
+    convert = DataConverters.new
 
-logger = Logger.new('logfile.log')
+    leads = Array.new
 
-csv_file = ARGV[0]
+    counter = 0
 
-leads = Array.new
+    start_time = Time.now
+    total_time = Time.now
+    CSV.foreach(file, {:headers => true, :header_converters => :symbol}) { |csv|
+      leads << {
+          first_name: csv[:fn],
+          last_name: csv[:ln],
+          name_prefix: csv[:name_pre],
+          address: csv[:addr],
+          apartment: csv[:apt],
+          state: csv[:st],
+          city: csv[:city],
+          zip: csv[:zip],
+          has_telephone_number: !csv[:phone].nil?,
+          telephone_number: csv[:phone],
+          do_not_call: csv[:do_not_call],
+          gender: csv[:gender],
+          inferred_household_rank: csv[:inf_hh_rank],
+          exact_age: csv[:exact_age].to_i,
+          income_estimated_household: convert.convert(:income_estimated_household, csv[:hh_income]),
+          net_worth: convert.convert(:net_worth, csv[:net_worth]),
+          number_of_lines_of_credit: csv[:credit_lines],
+          credit_range_of_new_credit: csv[:credit_range_new],
+          education: csv[:educ],
+          occupation: csv[:occ_occup],
+          occupation_detailed: csv[:occ_occup_det],
+          business_owner: csv[:occ_busn_ownr],
+          number_of_children: csv[:num_kids],
+          marital_status_in_the_hhld: csv[:hh_marital_stat],
+          home_owner: csv[:home_ownr],
+          length_of_residence: csv[:lor],
+          dwelling_type: csv[:dwell_typ],
+          home_market_value: convert.convert(:home_market_value, csv[:home_mkt_value]),
+          language: csv[:ethnic_lang],
+          credit_rating: convert.convert(:credit_rating, csv[:credit_rating]),
+          pool: csv[:prop_pool],
+          mortgage_purchase_date_ccyymmdd: (Time.parse(csv[:genl_purch_dt]).to_i rescue nil),
+          mortgage_purchase_price: csv[:genl_purch_amt],
+          most_recent_mortgage_amount: csv[:mr_amt],
+          most_recent_mortgage_date: (Time.parse(csv[:mr_dt]).to_i rescue nil),
+          most_recent_mortgage_loan_type: csv[:mr_loan_typ],
+          second_most_recent_mortgage_amount: csv[:mr2_amt],
+          second_most_recent_mortgage_date: (Time.parse(csv[:mr2_dt]).to_i rescue nil),
+          second_most_recent_mortgage_loan_type: csv[:mr2_loan_typ],
+          most_recent_lender: csv[:mr_lendr_cd],
+          second_most_recent_lender: csv[:mr2_lendr_cd],
+          most_recent_lender_name: csv[:mr_lendr],
+          second_most_recent_lender_name: csv[:mr2_lendr],
+          most_recent_mortgage_interest_rate_type: csv[:mr_rate_typ],
+          second_most_recent_mortgage_interest_rate_type: csv[:mr2_rate_typ],
+          purchase_1st_mortgage_amount: csv[:p1_amt],
+          purchase_second_mortgage_amount: csv[:p2_amt],
+          purchase_mortgage_date: (Time.parse(csv[:p1_dt]).to_i rescue nil),
+          purchase_1st_mortgage_loan_type: csv[:p1_loan_typ],
+          purchase_second_mortgage_loan_type: csv[:p2_loan_typ],
+          purchase_lender: csv[:p1_lendr_cd],
+          purchase_lender_name: csv[:p1_lendr],
+          purchase_1st_mortgage_interest_rate_type: csv[:p1_rate_typ],
+          purchase_second_mortgage_interest_rate_type: csv[:p2_rate_typ],
+          most_recent_mortgage_interest_rate: csv[:mr_rate],
+          second_most_recent_mortgage_interest_rate: csv[:mr2_rate],
+          purchase_1st_mortgage_interest_rate: csv[:p1_rate],
+          purchase_second_mortgage_interest_rate: csv[:p2_rate],
+          investing_active: csv[:invest_act],
+          investments_personal: csv[:invest_pers],
+          investments_real_estate: csv[:invest_rl_est],
+          investments_stocks_bonds: csv[:invest_stocks],
+          reading_financial_newsletter_subscribers: csv[:invest_read_fin_news],
+          money_seekers: csv[:invest_money_seekr],
+          investing_finance_grouping: csv[:int_grp_invest],
+          investments_foreign: csv[:invest_foreign],
+          investment_estimated_residential_properties_owned: csv[:invest_est_prop_own],
+          american_express_gold_premium: csv[:cc_amex_prem],
+          american_express_regular: csv[:cc_amex_reg],
+          discover_gold_premium: csv[:cc_disc_prem],
+          discover_regular: csv[:cc_disc_reg],
+          gasoline_or_retail_card_gold_premium: csv[:cc_gas_prem],
+          gasoline_or_retail_card_regular: csv[:cc_gas_reg],
+          mastercard_gold_premium: csv[:cc_mc_prem],
+          mastercard_regular: csv[:cc_mc_reg],
+          visa_gold_premium: csv[:cc_visa_prem],
+          visa_regular: csv[:cc_visa_reg],
+          bank_card_holder: csv[:cc_hldr_bank],
+          gas_department_retail_card_holder: csv[:cc_hldr_gas],
+          travel_and_entertainment_card_holder: csv[:cc_hldr_te],
+          credit_card_holder_unknown_type: csv[:cc_hldr_unk],
+          premium_card_holder: csv[:cc_hldr_prem],
+          upscale_department_store_card_holder: csv[:cc_hldr_ups_dept],
+          credit_card_user: csv[:cc_user],
+          credit_card_new_issue: csv[:cc_new_issue],
+          bank_card_presence_in_household: csv[:cc_bank_cd_in_hh],
+          mail_order_buyer: csv[:buy_mo_buyer],
+          mail_order_responder: csv[:buy_mo_respdr],
+          online_purchasing_indicator: csv[:buy_ol_purch_ind],
+          membership_clubs: csv[:buy_mem_clubs],
+          value_priced_general_merchandise: csv[:buy_value_priced],
+          apparel_womens: csv[:buy_wmns_apparel],
+          apparel_womens_petite: csv[:buy_wmns_petite_apparel],
+          apparel_womens_plus_sizes: csv[:buy_wmns_plus_apparel],
+          young_womens_apparel: csv[:buy_young_wmns_apparel],
+          apparel_mens: csv[:buy_mns_apparel],
+          apparel_mens_big_and_tall: csv[:buy_mns_big_apparel],
+          young_mens_apparel: csv[:buy_young_mns_apparel],
+          apparel_hildrens: csv[:buy_kids_apparel],
+          health_and_beauty: csv[:buy_health_beauty],
+          beauty_cosmetics: csv[:buy_cosmetics],
+          jewelry: csv[:buy_jewelry],
+          donation_contribution: csv[:int_grp_donor],
+          mail_order_donor: csv[:donr_mail_ord],
+          charitable_donation: csv[:donr_charitable],
+          animal_welfare_charitable_donation: csv[:donr_animal],
+          arts_or_cultural_charitable_donation: csv[:donr_arts],
+          childrens_charitable_donation: csv[:donr_kids],
+          environment_or_wildlife_charitable_donation: csv[:donr_wildlife],
+          environmental_issues_charitable_donation: csv[:donr_environ],
+          health_charitable_donation: csv[:donr_health],
+          health_charitable_donation: csv[:donr_health],
+          international_aid_charitable_donation: csv[:donr_intl_aid],
+          political_charitable_donation: csv[:donr_pol],
+          political_conservative_charitable_donation: csv[:donr_pol_cons],
+          political_liberal_charitable_donation: csv[:donr_pol_lib],
+          religious_charitable_donation: csv[:donr_relig],
+          veterans_charitable_donation: csv[:donr_vets],
+          other_types_of_charitable_donations: csv[:donr_oth],
+          community_charities: csv[:donr_comm_char],
+      } if not csv.header_row?
 
-counter = 0
-start_time = Time.now
-total_time = Time.now
-CSV.foreach(csv_file, {:headers => true, :header_converters => :symbol}) { |csv|
+      counter =counter + 1
 
-  leads << {
-      first_name: csv[:fn],
-      last_name: csv[:ln],
-      name_prefix: csv[:name_pre],
-      address: csv[:addr],
-      apartment: csv[:apt],
-      state: csv[:st],
-      city: csv[:city],
-      zip: csv[:zip],
-      has_telephone_number: !csv[:phone].nil?,
-      telephone_number: csv[:phone],
-      time_zone: csv[:time_zn],
-      gender: csv[:gender],
-      inferred_household_rank: csv[:inf_hh_rank],
-      exact_age: csv[:exact_age].to_i,
-      most_recent_mortgage_amount: csv[:mr_amt],
-      most_recent_mortgage_date: csv[:mr_dt],
-      most_recent_mortgage_loan_type: csv[:mr_loan_typ],
-      second_most_recent_mortgage_amount: csv[:mr2_amt],
-      second_most_recent_mortgage_date: csv[:mr2_dt],
-      second_most_recent_mortgage_loan_type: csv[:mr2_loan_typ],
-      most_recent_lender: csv[:mr_lendr_cd],
-      second_most_recent_lender: csv[:mr2_lendr_cd],
-      most_recent_lender_name: csv[:mr_lendr],
-      second_most_recent_lender_name: csv[:mr2_lendr],
-      most_recent_mortgage_interest_rate_type: csv[:mr_rate_typ],
-      second_most_recent_mortgage_interest_rate_type: csv[:mr2_rate_typ],
-      loan_to_value: csv[:genl_loan_to_value],
-      purchase_price: csv[:genl_purch_amt],
-      air_conditioning: csv[:prop_ac],
-      pool: csv[:prop_pool],
-      home_owner: csv[:home_ownr],
-      length_of_residence: csv[:lor],
-      dwelling_type: csv[:dwell_typ],
-      bank_card_holder: csv[:cc_hldr_bank],
-      credit_card_user: csv[:cc_user],
-      bank_card_presence_in_household: csv[:cc_bank_cd_in_hh],
-      income_estimated_household: csv[:hh_income].nil? ? nil : income[csv[:hh_income].to_sym],
-      net_worth: csv[:net_worth].nil? ? nil : net_worth[csv[:net_worth].to_sym],
-      credit_rating: csv[:credit_rating].nil? ? nil : credit_rating[csv[:credit_rating].to_sym],
-      ethnic: csv[:ethnic],
-      language: csv[:ethnic_lang],
-      presence_of_children: csv[:pres_kids],
-      education: csv[:educ],
-      home_market_value: csv[:home_mkt_value].nil? ? nil : home_market_value[csv[:home_mkt_value].to_sym],
-      purchase_date_ccyymmdd: csv[:genl_purch_dt].nil? ? nil : Time.parse(csv[:genl_purch_dt]).to_i,
-      sales_transaction: csv[:genl_sls_trans],
-      purchase_1st_mortgage_amount: csv[:p1_amt],
-      purchase_second_mortgage_amount: csv[:p2_amt],
-      purchase_mortgage_date: csv[:p1_dt],
-      purchase_1st_mortgage_loan_type: csv[:p1_loan_typ],
-      purchase_second_mortgage_loan_type: csv[:p2_loan_typ],
-      purchase_lender: csv[:p1_lendr_cd],
-      purchase_lender_name: csv[:p1_lendr],
-      purchase_1st_mortgage_interest_rate_type: csv[:p1_rate_typ],
-      purchase_second_mortgage_interest_rate_type: csv[:p2_rate_typ],
-      most_recent_mortgage_interest_rate_note_inferred_decimal_nndddd: csv[:mr_rate],
-      second_most_recent_mortgage_interest_rate_note_inferred_decimal_nndddd: csv[:mr2_rate],
-      purchase_1st_mortgage_interest_rate_note_inferred_decimal_nndddd: csv[:p1_rate],
-      purchase_second_mortgage_interest_rate_note_inferred_decimal_nndddd: csv[:p2_rate],
-      year_built: csv[:prop_bld_yr],
-      zip4: csv[:zip4],
-      delivery_point_bar: csv[:dpc],
-      carrier_route: csv[:car_rte],
-      walk_sequence: csv[:walk_seq],
-      lot_carrier_line_of_travel: csv[:lot],
-      fips_state: csv[:fips_st],
-      fips_country: csv[:fips_cty],
-      latitude: csv[:latitude],
-      longitude: csv[:longitude],
-      address_type: csv[:addr_typ],
-      msa: csv[:msa],
-      cbsa: csv[:cbsa],
-      address_line: csv[:addr_line],
-      dma: csv[:dma_suppr],
-      geo_match_level: csv[:geo_match],
-      census_tract: csv[:cens_track],
-      census_block_group: csv[:cens_blk_grp],
-      census_block: csv[:cens_blk],
-      dsf_deliverability: csv[:dsf_ind],
-      delivery_point_drop: csv[:dpd_ind],
-      occupation: csv[:occ_occup],
-      occupation_detailed: csv[:occ_occup_det],
-      business_owner: csv[:occ_busn_ownr],
-      number_of_children: csv[:num_kids],
-      number_of_lines_of_credit_trade_counter: csv[:credit_lines],
-      credit_range_of_new_credit: csv[:credit_range_new],
-      mail_order_buyer: csv[:buy_mo_buyer],
-      mail_order_responder: csv[:buy_mo_respdr],
-      online_purchasing_indicator: csv[:buy_ol_purch_ind],
-      membership_clubs: csv[:buy_mem_clubs],
-      value_priced_general_merchandise: csv[:buy_value_priced],
-      apparel_womens: csv[:buy_wmns_apparel],
-      apparel_womens_petite: csv[:buy_wmns_petite_apparel],
-      apparel_womens_plus_sizes: csv[:buy_wmns_plus_apparel],
-      young_womens_apparel: csv[:buy_young_wmns_apparel],
-      apparel_mens: csv[:buy_mns_apparel],
-      apparel_mens_big_and_tall: csv[:buy_mns_big_apparel],
-      young_mens_apparel: csv[:buy_young_mns_apparel],
-      apparel_hildrens: csv[:buy_kids_apparel],
-      health_and_beauty: csv[:buy_health_beauty],
-      beauty_cosmetics: csv[:buy_cosmetics],
-      jewelry: csv[:buy_jewelry],
-      luggage: csv[:buy_luggage],
-      travel_domestic: csv[:int_trav_us],
-      travel_international: csv[:int_trav_intl],
-      travel_cruise_vacations: csv[:int_trav_cruise],
-      home_living: csv[:life_home],
-      diy_living: csv[:life_diy],
-      sporty_living: csv[:life_sporty],
-      upscale_living: csv[:life_upscale],
-      cultural_artistic_living: csv[:life_culture],
-      highbrow: csv[:life_highbrow],
-      high_tech_living: csv[:life_ht],
-      common_living: csv[:life_common],
-      professional_living: csv[:life_prof],
-      broader_living: csv[:life_broader],
-      exercise_health_grouping: csv[:int_grp_exer],
-      exercise_running_jogging: csv[:int_fit_jog],
-      exercise_walking: csv[:int_fit_walk],
-      exercise_aerobic: csv[:int_fit_aerob],
-      spectator_sports_auto_motorcycle_racing: csv[:int_sport_spect_auto],
-      spectator_sports_tv_sports: csv[:int_sport_spect_tv_sports],
-      spectator_sports_football: csv[:int_sport_spect_foot],
-      spectator_sports_baseball: csv[:int_sport_spect_base],
-      spectator_sports_basketball: csv[:int_sport_spect_bskt],
-      spectator_sports_hockey: csv[:int_sport_spect_hockey],
-      spectator_sports_soccer: csv[:int_sport_spect_soccer],
-      tennis: csv[:int_sport_tennis],
-      golf: csv[:int_sport_golf],
-      snow_skiing: csv[:int_sport_snow_ski],
-      motorcycling: csv[:int_sport_mtrcycl],
-      nascar: csv[:int_sport_nascar],
-      boating_sailing: csv[:int_sport_boating],
-      scuba_diving: csv[:int_sport_scuba],
-      sports_and_leisure: csv[:buy_sport_leis],
-      hunting: csv[:buy_hunting],
-      fishing: csv[:int_sport_fishing],
-      camping_hiking: csv[:int_sport_camp],
-      hunting_shooting: csv[:int_sport_shoot],
-      sports_grouping: csv[:int_grp_sports],
-      outdoors_grouping: csv[:int_grp_outdoor],
-      health_medical: csv[:int_fit_health_med],
-      dieting_weight_loss: csv[:int_fit_diet],
-      self_improvement: csv[:int_fit_self_imp],
-      automotive_auto_parts_and_accessories: csv[:buy_auto_parts],
-      pass_prospector_value: csv[:genl_pp_home_value],
-      sweepstakes_contests: csv[:int_hob_sweeps],
-      travel_grouping: csv[:int_grp_travel],
-      travel: csv[:int_trav_genl],
-  } if not csv.header_row?
+      if leads.length % 2000 == 0
+        Tire.index 'leads' do
+          import leads
+        end
 
-  counter =counter + 1
+        @logger.info "Possessed #{counter}, this batch took #{Time.now-start_time} seconds"
+        start_time = Time.now
+        @logger.info "Total time passed is #{Time.now-total_time} seconds"
+        leads.clear
+      end
 
-  if leads.length % 2000 == 0
+
+    }
+
+    @logger.info "Possessed #{counter}"
+
     Tire.index 'leads' do
       import leads
     end
 
-    logger.info "Possessed #{counter}, this batch took #{Time.now-start_time} seconds"
-    start_time = Time.now
-    logger.info "Total time passed is #{Time.now-total_time} seconds"
-    leads.clear
+    Tire.index 'leads' do
+      refresh
+    end
   end
-
-
-}
-
-logger.info "Possessed #{counter}"
-
-Tire.index 'leads' do
-  import leads
 end
 
-Tire.index 'leads' do
-  refresh
-end
+index = IndexLeads.new
+index.index ARGV[0]
 
 
 
