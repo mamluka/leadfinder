@@ -68,6 +68,14 @@ class DataConverters
   end
 
   def convert(key, value)
-    @dic[key][value]
+    value.nil? ? nil : @dic[key][value.to_sym]
+  end
+
+  def from_yes_no(value)
+    !value.nil? && value.downcase == 'y'
+  end
+
+  def to_percent(value)
+    value.to_f/10000
   end
 end
