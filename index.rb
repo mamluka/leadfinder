@@ -46,6 +46,7 @@ class IndexLeads
           occupation: csv[:occ_occup],
           occupation_detailed: csv[:occ_occup_det],
           business_owner: csv[:occ_busn_ownr],
+          has_children: (csv[:num_kids].to_i > 0),
           number_of_children: csv[:num_kids].to_i,
           marital_status_in_the_hhld: csv[:hh_marital_stat],
           home_owner: csv[:home_ownr],
