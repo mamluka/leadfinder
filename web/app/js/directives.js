@@ -134,7 +134,13 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         stop: function (event, ui) {
                             var min = ui.values[0];
                             var max = ui.values[1];
-                            var minmax = [sortedFacetValues[min].value, sortedFacetValues[max].value]
+
+                            var minmax
+
+                            if (min == 0 && max == numberOfPoints)
+                                minmax = 'none';
+                            else
+                                minmax = [sortedFacetValues[min].text, sortedFacetValues[max].text];
 
                             wizard.update(facetId, minmax)
 
@@ -330,27 +336,4 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 '</div>',
             replace: true
         };
-    })
-    .directive('rangeSlider', function () {
-        return {
-            restrict: 'A',
-            scope: {
-                min: '=minValue',
-                test: '@test'
-            },
-            link: function (scope, element) {
-                alert(scope.test)
-                $(element).slider({
-                    range: true,
-                    min: 0,
-                    max: 500,
-                    values: [ 75, 300 ],
-                    slide: function (event, ui) {
-                        scope.$apply(function () {
-                            scope.min = ui.values[0];
-                        })
-                    }
-                });
-            }
-        }
     });

@@ -433,7 +433,7 @@ class FacetsTextTranslator
             '7' => 'Maker/Manufacturer',
             '8' => 'Owner',
             '9' => 'Partner',
-            :A => 'Self-Employed'
+            'A' => 'Self-Employed'
         },
         home_owner: {
             O: 'Home Owner',
@@ -865,20 +865,53 @@ class FacetsTextTranslator
             '419' => 'WORLD SVGS BK FSB',
             '420' => 'WR STARKEY MTG LLP',
         },
-        load_type: {
+        loan_type: {
             '5' => 'COMMUNITY DEVELOPMENT AUTHORITY',
-            :C => 'CONVENTIONAL',
-            :F => 'FHA',
-            :P => 'PRIVATE PARTY LENDER',
-            :S => 'SMALL BUSINESS ADMINISTRATION',
-            :V => 'VA ',
-            :W => 'WRAP-AROUND MORTGAGE',
+            'C' => 'CONVENTIONAL',
+            'F' => 'FHA',
+            'P' => 'PRIVATE PARTY LENDER',
+            'S' => 'SMALL BUSINESS ADMINISTRATION',
+            'V' => 'VA ',
+            'W' => 'WRAP-AROUND MORTGAGE',
+        },
+        interest_rate_type: {
+            A: 'Adjustable',
+            B: 'Balloon',
+            F: 'Fixed'
         }
     }
+    @keys = {
+        most_recent_lender: :lender_code,
+        second_most_recent_lender: :lender_code,
+        purchase_lender: :lender_code,
+        most_recent_mortgage_loan_type: :loan_type,
+        purchase_1st_mortgage_loan_type: :loan_type,
+        purchase_second_mortgage_loan_type: :loan_type,
+        second_most_recent_mortgage_loan_type: :loan_type,
+        most_recent_mortgage_interest_rate_type: :interest_rate_type,
+        second_most_recent_mortgage_interest_rate_type: :interest_rate_type,
+        purchase_1st_mortgage_interest_rate_type: :interest_rate_type,
+        purchase_second_mortgage_interest_rate_type: :interest_rate_type,
+    }
+
+    @string_values = [:loan_type, :business_owner, :lender_code]
   end
 
   def translate(key, value)
-    value = @translation[key.to_sym][value.capitalize.to_sym] if @translation.has_key?(key.to_sym)
+    key = key.to_sym
+    key = @keys[key] if @keys.has_key?(key)
+
+    return value if not @translation.has_key?(key)
+
+    p key
+    p value
+
+    if @string_values.include?(key)
+      value = value.capitalize rescue value.to_s
+    else
+      value = value.capitalize.to_sym
+    end
+    value = @translation[key][value]
     value
   end
 end

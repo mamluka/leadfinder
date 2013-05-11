@@ -76,7 +76,10 @@ angular.module('leadFinder.services', [])
             setExclude: function (value) {
                 window.sessionStorage.setItem('leadFinder.wizard.exclude', value)
             },
-            getExclude: _getExclude
+            getExclude: _getExclude,
+            clear: function () {
+                window.sessionStorage.removeItem('leadFinder.wizard.state')
+            }
         }
     }])
     .factory('Leads', ['$http', 'apiUrl', function ($http, apiUrl) {
