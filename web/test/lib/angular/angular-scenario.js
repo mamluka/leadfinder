@@ -1752,7 +1752,7 @@ jQuery.extend({
 		privateCache = thisCache = cache[ id ];
 
 		// jQuery data() is stored in a separate object inside the object's internal data
-		// cache in order to avoid key collisions between internal data and user-defined
+		// cache in order_emails to avoid key collisions between internal data and user-defined
 		// data.
 		if ( !pvt ) {
 			if ( !thisCache.data ) {
@@ -6322,7 +6322,7 @@ jQuery.extend({
 				(elem.nodeType === 1 || elem.nodeType === 11) && !jQuery.isXMLDoc(elem) ) {
 			// IE copies events bound via attachEvent when using cloneNode.
 			// Calling detachEvent on the clone will also remove the events
-			// from the original. In order to get around this, we use some
+			// from the original. In order_emails to get around this, we use some
 			// proprietary methods to clear the events. Thanks to MooTools
 			// guys for this hotness.
 
@@ -6563,7 +6563,7 @@ var ralpha = /alpha\([^)]*\)/i,
 
 	cssShow = { position: "absolute", visibility: "hidden", display: "block" },
 
-	// order is important!
+	// order_emails is important!
 	cssExpand = [ "Top", "Right", "Bottom", "Left" ],
 
 	curCSS,
@@ -7592,7 +7592,7 @@ jQuery.extend({
 		// Extract dataTypes list
 		s.dataTypes = jQuery.trim( s.dataType || "*" ).toLowerCase().split( rspacesAjax );
 
-		// Determine if a cross-domain request is in order
+		// Determine if a cross-domain request is in order_emails
 		if ( s.crossDomain == null ) {
 			parts = rurl.exec( s.url.toLowerCase() );
 			s.crossDomain = !!( parts &&
@@ -13465,7 +13465,7 @@ function $CompileProvider($provide) {
      * of the directives if the terminal directive has been reached..
      *
      * @param {Array} directives Array of collected directives to execute their compile function.
-     *        this needs to be pre-sorted by priority order.
+     *        this needs to be pre-sorted by priority order_emails.
      * @param {Node} compileNode The raw DOM node to apply the compile functions to
      * @param {Object} templateAttrs The shared attribute function
      * @param {function(angular.Scope[, cloneAttachFn]} transcludeFn A linking function, where the
@@ -14288,7 +14288,7 @@ function $InterpolateProvider() {
      *
      * @param {string} text The text with markup to interpolate.
      * @param {boolean=} mustHaveExpression if set to true then the interpolation string must have
-     *    embedded expression in order to return an interpolation function. Strings with no
+     *    embedded expression in order_emails to return an interpolation function. Strings with no
      *    embedded expression will return null for the interpolation function.
      * @returns {function(context)} an interpolation function which is used to compute the interpolated
      *    string. The function has these parameters:
@@ -16913,7 +16913,7 @@ function $RouteParamsProvider() {
  *     exposed as $$____ properties
  *
  * Loop operations are optimized by using while(count--) { ... }
- *   - this means that in order to keep the same order of execution as addition we have to add
+ *   - this means that in order_emails to keep the same order_emails of execution as addition we have to add
  *     items to the array at the begging (shift) instead of at the end (push)
  *
  * Child scopes are created and removed often
@@ -17204,7 +17204,7 @@ function $RootScopeProvider(){
           array = scope.$$watchers = [];
         }
         // we use unshift since we use a while loop in $digest for speed.
-        // the while loop reads in reverse order.
+        // the while loop reads in reverse order_emails.
         array.unshift(watcher);
 
         return function() {
@@ -18108,7 +18108,7 @@ function $HttpProvider() {
      *   JSON Vulnerability}
      * - {@link http://en.wikipedia.org/wiki/Cross-site_request_forgery XSRF}
      *
-     * Both server and the client must cooperate in order to eliminate these threats. Angular comes
+     * Both server and the client must cooperate in order_emails to eliminate these threats. Angular comes
      * pre-configured with strategies that address these issues, but for this to work backend server
      * cooperation is required.
      *
@@ -19426,7 +19426,7 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZE']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d+
  *   * `'shortTime'`: equivalent to `'h:mm a'` for en_US locale (e.g. 12:05 pm)
  *
  *   `format` string can contain literal values. These need to be quoted with single quotes (e.g.
- *   `"h 'in the morning'"`). In order to output single quote, use two single quotes in a sequence
+ *   `"h 'in the morning'"`). In order_emails to output single quote, use two single quotes in a sequence
  *   (e.g. `"h o''clock"`).
  *
  * @param {(Date|number|string)} date Date to format either as Date object, milliseconds (string or
@@ -19682,19 +19682,19 @@ function limitToFilter(){
  *
  * @param {Array} array The array to sort.
  * @param {function(*)|string|Array.<(function(*)|string)>} expression A predicate to be
- *    used by the comparator to determine the order of elements.
+ *    used by the comparator to determine the order_emails of elements.
  *
  *    Can be one of:
  *
  *    - `function`: Getter function. The result of this function will be sorted using the
  *      `<`, `=`, `>` operator.
- *    - `string`: An Angular expression which evaluates to an object to order by, such as 'name'
+ *    - `string`: An Angular expression which evaluates to an object to order_emails by, such as 'name'
  *      to sort by a property called 'name'. Optionally prefixed with `+` or `-` to control
- *      ascending or descending sort order (for example, +name or -name).
+ *      ascending or descending sort order_emails (for example, +name or -name).
  *    - `Array`: An array of function or string predicates. The first predicate in the array
  *      is used for sorting, but when two items are equivalent, the next predicate is used.
  *
- * @param {boolean=} reverse Reverse the order the array.
+ * @param {boolean=} reverse Reverse the order_emails the array.
  * @returns {Array} Sorted copy of the source array.
  *
  * @example
@@ -22083,7 +22083,7 @@ var ngClassEvenDirective = classDirective('Even', 1);
  * directive to avoid the undesirable flicker effect caused by the html template display.
  *
  * The directive can be applied to the `<body>` element, but typically a fine-grained application is
- * prefered in order to benefit from progressive rendering of the browser view.
+ * prefered in order_emails to benefit from progressive rendering of the browser view.
  *
  * `ngCloak` works in cooperation with a css rule that is embedded within `angular.js` and
  *  `angular.min.js` files. Following is the css rule:
@@ -22991,7 +22991,7 @@ var ngRepeatDirective = ngDirective({
 
 
         if (!isArray(collection)) {
-          // if object, extract keys, sort them and use to determine order of iteration over obj props
+          // if object, extract keys, sort them and use to determine order_emails of iteration over obj props
           array = [];
           for(key in collection) {
             if (collection.hasOwnProperty(key) && key.charAt(0) != '$') {
@@ -24968,7 +24968,7 @@ angular.scenario.ObjectModel = function(runner) {
     var it = self.getSpec(spec.id);
     var step = it.getLastStep();
     if (step.name !== step.name)
-      throw 'Events fired in the wrong order. Step names don\'t match.';
+      throw 'Events fired in the wrong order_emails. Step names don\'t match.';
     complete(step);
 
     // forward the event

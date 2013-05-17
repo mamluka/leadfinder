@@ -8,7 +8,7 @@ angular.module('leadFinder.services', [])
 
         return {
             get: function () {
-                return $http.get(apiUrl + '/facets/all')
+                return $http.get(apiUrl + '/facets/all-cached')
             }
         }
     }])
@@ -46,20 +46,6 @@ angular.module('leadFinder.services', [])
 
 
             },
-            getAllAvailableFacets: function () {
-
-                var selected_facets = _getSelectedFacets()
-
-                var url = apiUrl + '/facets/get-available';
-                $.getJSON(url, selected_facets).done(function (data) {
-                    window.sessionStorage.setItem('leadFinder.wizard.facets.available', JSON.stringify(data));
-                    $(window).trigger('facets-selected');
-                })
-            },
-            getAvailableFacetsFor: function (facetId) {
-                var facets = JSON.parse(window.sessionStorage.getItem('leadFinder.wizard.facets.available')) || {};
-                return facets[facetId];
-            },
             getSavedFacetFor: function (facetId) {
                 var state = JSON.parse(window.sessionStorage.getItem('leadFinder.wizard.state')) || {};
                 var value = state[facetId];
@@ -88,6 +74,19 @@ angular.module('leadFinder.services', [])
 
                 var url = apiUrl + '/leads/total';
                 return $.post(url, facets)
+            }
+        }
+    }])
+    .factory('BuyingLeads', ['$http', 'apiUrl', 'Wizard', function ($http, apiUrl, wizard) {
+        return {
+            buy: function (details) {
+
+                var facets = wizard.getSelectedFacets();
+
+                details.facets = JSON.stringify(facets);
+
+                var url = apiUrl + '/buy/buy';
+                return $.post(url, details)
             }
         }
     }]);

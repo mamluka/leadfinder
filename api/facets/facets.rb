@@ -6,7 +6,8 @@ require_relative 'facets_text_translator'
 
 class Facets < Grape::API
 
-  format :json
+  format :txt
+  content_type :txt, 'application/json'
 
   use Rack::Cors do
     allow do
@@ -46,7 +47,7 @@ class Facets < Grape::API
     end
 
     def get_facets_list
-      facet_array = %w(state income_estimated_household net_worth language home_owner credit_rating exact_age home_market_value mortgage_purchase_date_ccyymmdd purchase_second_mortgage_interest_rate most_recent_mortgage_date purchase_mortgage_date most_recent_mortgage_loan_type second_most_recent_mortgage_loan_type purchase_1st_mortgage_loan_type purchase_second_mortgage_loan_type most_recent_lender most_recent_lender_name second_most_recent_lender second_most_recent_lender_name  purchase_lender purchase_lender_name most_recent_mortgage_interest_rate_type purchase_1st_mortgage_interest_rate_type second_most_recent_mortgage_interest_rate_type most_recent_mortgage_interest_rate purchase_1st_mortgage_interest_rate most_recent_mortgage_interest_rate purchase_second_mortgage_interest_rate )
+      facet_array = %w(state income_estimated_household net_worth language home_owner credit_rating exact_age home_market_value mortgage_purchase_date_ccyymmdd purchase_second_mortgage_interest_rate most_recent_mortgage_date purchase_mortgage_date most_recent_mortgage_loan_type second_most_recent_mortgage_loan_type purchase_1st_mortgage_loan_type purchase_second_mortgage_loan_type most_recent_lender most_recent_lender_name second_most_recent_lender second_most_recent_lender_name  purchase_lender purchase_lender_name most_recent_mortgage_interest_rate_type purchase_1st_mortgage_interest_rate_type second_most_recent_mortgage_interest_rate_type most_recent_mortgage_interest_rate purchase_1st_mortgage_interest_rate most_recent_mortgage_interest_rate purchase_second_mortgage_interest_rate mortgage_purchase_price most_recent_mortgage_amount second_most_recent_mortgage_amount purchase_1st_mortgage_amount purchase_second_mortgage_amount)
     end
   end
 
@@ -68,6 +69,11 @@ class Facets < Grape::API
     end
 
     api_response(s)
+  end
+
+  get 'all-cached' do
+
+    File.read(File.dirname(__FILE__) + '/all-facets.json')
   end
 
   get 'get-available' do

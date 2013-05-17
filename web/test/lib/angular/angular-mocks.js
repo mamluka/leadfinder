@@ -685,7 +685,7 @@ angular.mock.dump = function(object) {
  *
  * Request expectations provide a way to make assertions about requests made by the application and
  * to define responses for those requests. The test will fail if the expected requests are not made
- * or they are made in the wrong order.
+ * or they are made in the wrong order_emails.
  *
  * Backend definitions allow you to define a fake backend for your application which doesn't assert
  * if a particular request was made or not, it just returns a trained response if a request is made.
@@ -733,7 +733,7 @@ angular.mock.dump = function(object) {
  * definitions for an appropriate response.
  *
  * If a request didn't match any expectation or if the expectation doesn't have the response
- * defined, the backend definitions are evaluated in sequential order to see if any of them match
+ * defined, the backend definitions are evaluated in sequential order_emails to see if any of them match
  * the request. The response from the first matched definition is returned.
  *
  *
@@ -1163,7 +1163,7 @@ function createHttpBackendMock($delegate, $browser) {
    * @description
    * Flushes all pending requests using the trained responses.
    *
-   * @param {number=} count Number of responses to flush (in the order they arrived). If undefined,
+   * @param {number=} count Number of responses to flush (in the order_emails they arrived). If undefined,
    *   all pending requests will be flushed. If there are no pending requests when the flush method
    *   is called an exception is thrown (as this typically a sign of programming error).
    */

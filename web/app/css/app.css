@@ -19,3 +19,29 @@
 .form-horizontal .controls.wide {
     margin-left: 200px;
 }
+
+.cool-slider {
+    width: 700px;
+}
+
+#loader {
+    text-align: center;
+    width: 200px;
+    height: 200px;
+}
+
+.jslider {
+    margin-top: 5px;
+}
+
+.wizard-tabs .control-group .controls {
+    height: 40px;
+}
+
+.wizard-tabs .control-group:first-child {
+    margin-top: 5px;
+}
+
+.money-calculation {
+    font-size: 22px;
+}

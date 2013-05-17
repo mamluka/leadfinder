@@ -4,66 +4,83 @@
 
 angular.module('leadFinder.controllers', ['leadFinder.services']).
     controller('WizardController', ['$scope', '$rootScope', function ($scope, $rootScope) {
-        $scope.displayTabs = false;
+        $scope.showPage = true;
+        $scope.displayAllTabs = true;
+        $rootScope.$on('change-page', function (e, data) {
+            $scope.showPage = data.page == "wizard";
+        });
 
-        $rootScope.$on('display-tabs', function () {
-            $scope.displayTabs = true;
+
+    }])
+    .controller('GeographicsController', ['$scope', '$rootScope', 'Wizard', function ($scope, $rootScope, wizard) {
+
+        $scope.showPage = true;
+
+        $scope.next = function () {
+
+            var facets = wizard.getSelectedFacets();
+
+            if (facets.hasOwnProperty('state') || facets.hasOwnProperty('zip')) {
+                $rootScope.$broadcast('change-page', {page: 'wizard'});
+            } else {
+                alert('Please select a state or a zip list')
+            }
+        };
+
+        $rootScope.$on('change-page', function (e, data) {
+            $scope.showPage = data.page == "geo";
         });
 
     }])
-    .controller('GeographicsController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+    .controller('SummeryController', ['$scope', 'Wizard', 'Leads', '$rootScope', function ($scope, wizard, leads, $rootScope) {
 
-        $scope.displayGeo = true;
 
-        $scope.next = function () {
-            $scope.displayGeo = false;
-            $rootScope.$broadcast('display-tabs');
-        }
-
-    }])
-    .controller('SummeryController', ['$scope', 'Wizard', 'Leads', function ($scope, wizard, leads) {
-
-        $scope.selectedFacetsIndicators = [];
+        $scope.howManyLeads = 1000;
+        $scope.showLeadCountChooser = false;
 
         $scope.$on('facets-recalculate-total', function () {
 
-            var selectedFacets = wizard.getSelectedFacets()
+            var selectedFacets = wizard.getSelectedFacets();
+
             leads.getTotalLeadsByFacets(selectedFacets).done(function (data) {
                 $scope.$apply(function () {
                     $scope.total = data.total;
+                    $scope.pricePerLead = data.pricePerLead;
+                    $scope.showLeadCountChooser = true;
                 })
             })
-        })
+        });
 
-        $scope.$on('facets-selected', function (e, data) {
+        $scope.prepareToBuy = function () {
+            $rootScope.$broadcast('buy-committed', {howManyLeads: $scope.howManyLeads, pricePerLead: $scope.pricePerLead});
 
-            if (data.value == "none") {
-                $scope.selectedFacetsIndicators = _.reject($scope.selectedFacetsIndicators, function (x) {
-                    return x.label == data.label;
-                });
-                return;
-            }
-
-            var alreadyUsed = _.some($scope.selectedFacetsIndicators, function (x) {
-                return x.label == data.label
-            });
-
-            if (alreadyUsed) {
-                $scope.selectedFacetsIndicators = _.map($scope.selectedFacetsIndicators, function (x) {
-                    if (x.label == data.label) {
-                        x.value = data.value;
-                        return x;
-                    }
-                    return x;
-                })
-            }
-            else {
-                $scope.selectedFacetsIndicators.push({label: data.label, value: data.value});
-            }
-        })
-
-        $scope.download = function () {
-            wizard.download()
+            $rootScope.$broadcast('change-page', {page: 'buy'});
         }
     }])
-;
+    .controller('BuyController', ['$scope', '$rootScope', 'BuyingLeads', function ($scope, $rootScope, buyingLeads) {
+
+        $rootScope.$on('change-page', function (e, data) {
+            $scope.showPage = data.page == "buy";
+        });
+
+        $rootScope.$on('buy-committed', function (e, data) {
+            $scope.howManyLeads = data.howManyLeads;
+            $scope.pricePerLead = data.pricePerLead;
+        });
+
+        $scope.buy = function () {
+
+            buyingLeads.buy({
+                firstName: $scope.firstName,
+                lastName: $scope.lastName,
+                email: $scope.email,
+                ccNumber: $scope.ccNumber,
+                ccMonth: $scope.ccMonth,
+                ccYear: $scope.ccYear,
+                ccCCV: $scope.ccCCV,
+                howManyLeads: $scope.howManyLeads
+            })
+        }
+
+
+    }]);

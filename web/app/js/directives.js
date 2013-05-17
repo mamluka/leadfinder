@@ -31,6 +31,10 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     return $('option:selected', elm).val();
                 };
 
+                $scope.getText = function () {
+                    return $('option:selected', elm).html();
+                };
+
                 $scope.createOption = function (text, val) {
                     var option = $('<option></option>');
                     option.val(val);
@@ -39,8 +43,8 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 };
 
                 $scope.updateLabel = function (set_value) {
-                    var value = set_value || $scope.getValue();
-                    facetEvents.facetsSelected(facetLabel, value, facetId)
+                    var value = set_value || $scope.getText();
+                    facetEvents.facetsSelected(facetLabel, value, facetId);
                 };
 
                 $scope.updateState = function () {
@@ -110,13 +114,16 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             }
         }
     }])
-    .directive('sliderFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
+    .directive('coolSliderFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
         return{
-            link: function (scope, element) {
-
-                var elm = $(element);
+            link: function ($scope, $element) {
+                var elm = $($element)
                 var facetId = elm.data('facet-id');
                 var facetLabel = elm.data('facet-label');
+                var lastValue = elm.data('facet-last-value');
+                var handleLabel = elm.data('facet-handle-label')
+                var smooth = elm.data('smooth')
+
 
                 facets.get(facetId).success(function (facets) {
 
@@ -126,21 +133,38 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
                     var numberOfPoints = _.size(sortedFacetValues) - 1;
 
+                    if (lastValue) {
+                        sortedFacetValues[numberOfPoints].text = lastValue
+                    }
+
+                    var scale = _.map(sortedFacetValues, function (x, i) {
+                        if (i % 4 == 0) {
+                            if (elm.data('use-thousands'))
+                                return parseInt(x.text) / 1000 + 'K';
+                            return x.text;
+                        }
+
+                        return '|';
+                    });
+
                     elm.slider({
-                        range: true,
-                        min: 0,
-                        max: numberOfPoints,
-                        values: [ 0, numberOfPoints],
-                        stop: function (event, ui) {
-                            var min = ui.values[0];
-                            var max = ui.values[1];
+                        from: 0,
+                        to: numberOfPoints,
+                        scale: scale,
+                        step: 1,
+                        smooth: smooth || false,
+                        dimension: '&nbsp;' + handleLabel,
+                        callback: function (value) {
+                            var values = value.split(';');
+                            var min = values[0]
+                            var max = values[1];
 
                             var minmax
 
                             if (min == 0 && max == numberOfPoints)
                                 minmax = 'none';
                             else
-                                minmax = [sortedFacetValues[min].text, sortedFacetValues[max].text];
+                                minmax = [sortedFacetValues[min].value, sortedFacetValues[max].value];
 
                             wizard.update(facetId, minmax)
 
@@ -148,29 +172,18 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                                 facetEvents.facetsSelected(facetLabel, minmax, facetId)
                                 facetEvents.recalculateTotal();
                             })
+                        },
+                        calculate: function (value) {
+                            var text = sortedFacetValues[value].text;
+                            if (elm.data('use-thousands'))
+                                return parseInt(text) / 1000 + 'K';
+
+                            return  text;
                         }
+                    });
 
-                    })
-
-                    var savedFacet = wizard.getSavedFacetFor(facetId)
-                    if (savedFacet) {
-
-                        var min = _.find(sortedFacetValues, function (x) {
-                            return x.value == savedFacet[0];
-                        });
-
-                        min = sortedFacetValues.indexOf(min);
-
-                        var max = _.find(sortedFacetValues, function (x) {
-                            return x.value == savedFacet[1];
-                        });
-
-                        max = sortedFacetValues.indexOf(max);
-
-                        elm.slider("values", [min, max]);
-
-                        facetEvents.facetsSelected(facetLabel, savedFacet, facetId)
-                    }
+                    elm.slider("value", 0, numberOfPoints);
+                    elm.data('loaded', 'true');
                 });
             }
         }
@@ -189,7 +202,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
             elm.change(function () {
                 var self = $(this)
-                var value = self.is(':checked') ? self.data('checked-value') : 'none';
+                var value = self.is(':checked') ? "Yes" : 'none';
 
                 wizard.update(facetId, value);
                 $rootScope.$apply(function () {
@@ -216,8 +229,12 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     return  value;
                 };
 
+                $scope.getText = function () {
+                    return $('option:selected', elm).html();
+                };
+
                 $scope.updateLabel = function (set_value) {
-                    var value = set_value || $scope.getValue();
+                    var value = set_value || $scope.getText();
                     facetEvents.facetsSelected(facetLabel, value, facetId)
                 };
 
@@ -291,13 +308,17 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 });
 
             }}
-    }]).
-    directive('tabs',function () {
+    }])
+    .directive('tabs', function () {
         return {
             restrict: 'E',
-            scope: {displayTabs: '='},
+            scope: {
+                displayTabs: '=',
+                displayAllTabs: '='
+            },
             transclude: true,
             controller: function ($scope, $element) {
+
                 var panes = $scope.panes = [];
 
                 $scope.select = function (pane) {
@@ -311,6 +332,18 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     if (panes.length == 0) $scope.select(pane);
                     panes.push(pane);
                 }
+
+                $scope.$watch('displayAllTabs', function () {
+                    if ($scope.displayAllTabs) {
+                        _.each(panes, function (x) {
+                            x.selected = true;
+                        })
+                    }
+                    else {
+                        $scope.select(panes[0])
+                    }
+
+                });
             },
             template: '<div class="tabbable" ng-show="displayTabs">' +
                 '<ul class="nav nav-tabs">' +
@@ -322,8 +355,9 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 '</div>',
             replace: true
         };
-    }).
-    directive('pane', function () {
+    })
+
+    .directive('pane', function () {
         return {
             require: '^tabs',
             restrict: 'E',
@@ -333,6 +367,55 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 tabsCtrl.addPane(scope);
             },
             template: '<div class="tab-pane" ng-class="{active: selected}" ng-transclude>' +
+                '</div>',
+            replace: true
+        };
+    })
+    .directive('facets', function () {
+        return {
+            restrict: 'E',
+            controller: function ($scope, $element) {
+
+                $scope.selectedFacetsIndicators = [];
+
+                $scope.$on('facets-selected', function (e, data) {
+
+                    if (data.value == "none") {
+                        $scope.selectedFacetsIndicators = _.reject($scope.selectedFacetsIndicators, function (x) {
+                            return x.label == data.label;
+                        });
+                        return;
+                    }
+
+                    var alreadyUsed = _.some($scope.selectedFacetsIndicators, function (x) {
+                        return x.label == data.label
+                    });
+
+                    if (alreadyUsed) {
+                        $scope.selectedFacetsIndicators = _.map($scope.selectedFacetsIndicators, function (x) {
+                            if (x.label == data.label) {
+                                x.value = format(data.value);
+                                return x;
+                            }
+                            return x;
+                        })
+                    }
+                    else {
+                        $scope.selectedFacetsIndicators.push({label: data.label, value: format(data.value)});
+                    }
+
+                    function format(value) {
+                        if (_.isArray(value)) {
+                            return value[0] + " - " + value[1]
+                        }
+
+                        return value;
+                    }
+                });
+
+            },
+            template: '<div ng-repeat="facetIndicator in selectedFacetsIndicators">' +
+                '<span><strong>{{facetIndicator.label}}</strong></span>: <span class="label label-info">{{facetIndicator.value}}</span>' +
                 '</div>',
             replace: true
         };
