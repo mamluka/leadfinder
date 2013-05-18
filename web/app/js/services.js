@@ -89,4 +89,19 @@ angular.module('leadFinder.services', [])
                 return $.post(url, details)
             }
         }
-    }]);
+    }])
+    .factory('facetEvents', ['$rootScope', function ($rootScope) {
+        return {
+            facetsSelected: function (label, value, id) {
+                $rootScope.$broadcast('facets-selected', {
+                    label: label,
+                    value: value,
+                    id: id
+                });
+            },
+            recalculateTotal: function () {
+                $rootScope.$broadcast('facets-recalculate-total');
+            }
+        }
+    }])
+;

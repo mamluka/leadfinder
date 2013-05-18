@@ -4,20 +4,6 @@
 
 
 angular.module('leadFinder.directives', ['leadFinder.services'])
-    .factory('facetEvents', ['$rootScope', function ($rootScope) {
-        return {
-            facetsSelected: function (label, value, id, opt) {
-                $rootScope.$broadcast('facets-selected', {
-                    label: label,
-                    value: value,
-                    id: id
-                });
-            },
-            recalculateTotal: function () {
-                $rootScope.$broadcast('facets-recalculate-total');
-            }
-        }
-    }])
     .directive('listFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
         return {
             scope: {exclude: '='},
@@ -113,6 +99,55 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 });
             }
         }
+    }]).directive('displayListFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
+        return {
+            scope: { selectedData: '='},
+            link: function ($scope, element) {
+
+                var elm = $(element);
+                var facetId = elm.data('facet-id')
+                var facetLabel = elm.data('facet-label')
+
+                $scope.createOption = function (text, val) {
+                    var option = $('<option></option>');
+                    option.val(val);
+                    option.text(text);
+                    return option;
+                };
+
+                $scope.getValue = function () {
+                    return $('option:selected', elm).val();
+                };
+
+                $scope.getText = function () {
+                    return $('option:selected', elm).html();
+                };
+
+                facets.get(facetId).success(function (facets) {
+
+                    _.each(facets[facetId], function (facet) {
+
+                        var text = facet.text;
+                        var option = $scope.createOption(text, facet.value);
+
+                        elm.append(option)
+                    });
+
+                    elm.prepend($scope.createOption('Select', 'none'));
+                });
+
+                elm.change(function () {
+                    $scope.$apply(function () {
+                        $scope.selectedData = {
+                            text: $('option:selected', elm).html(),
+                            value: $('option:selected', elm).val(),
+                            facetId: facetId,
+                            facetLabel: facetLabel
+                        }
+                    });
+                });
+            }
+        }
     }])
     .directive('coolSliderFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
         return{
@@ -137,11 +172,11 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         sortedFacetValues[numberOfPoints].text = lastValue
                     }
 
+                    var modForScale = numberOfPoints > 20 ? Math.round(numberOfPoints / 20) : 4;
+
                     var scale = _.map(sortedFacetValues, function (x, i) {
-                        if (i % 4 == 0) {
-                            if (elm.data('use-thousands'))
-                                return parseInt(x.text) / 1000 + 'K';
-                            return x.text;
+                        if (i % modForScale == 0) {
+                            return formatValue(x.text)
                         }
 
                         return '|';
@@ -159,7 +194,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                             var min = values[0]
                             var max = values[1];
 
-                            var minmax
+                            var minmax;
 
                             if (min == 0 && max == numberOfPoints)
                                 minmax = 'none';
@@ -175,16 +210,20 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         },
                         calculate: function (value) {
                             var text = sortedFacetValues[value].text;
-                            if (elm.data('use-thousands'))
-                                return parseInt(text) / 1000 + 'K';
-
-                            return  text;
+                            return formatValue(text);
                         }
                     });
 
                     elm.slider("value", 0, numberOfPoints);
                     elm.data('loaded', 'true');
                 });
+
+                function formatValue(value) {
+                    if (elm.data('use-thousands'))
+                        return parseInt(value) / 1000 + 'K';
+
+                    return  value;
+                }
             }
         }
     }])
@@ -394,29 +433,50 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     if (alreadyUsed) {
                         $scope.selectedFacetsIndicators = _.map($scope.selectedFacetsIndicators, function (x) {
                             if (x.label == data.label) {
-                                x.value = format(data.value);
+                                x.values = format(data.value);
                                 return x;
                             }
                             return x;
                         })
                     }
                     else {
-                        $scope.selectedFacetsIndicators.push({label: data.label, value: format(data.value)});
+                        $scope.selectedFacetsIndicators.push({label: data.label, values: format(data.value)});
                     }
 
                     function format(value) {
                         if (_.isArray(value)) {
-                            return value[0] + " - " + value[1]
+                            return [value[0] + " - " + value[1]]
                         }
 
-                        return value;
+                        if (value.indexOf(',') > -1)
+                            return value.split(',')
+
+                        return [value];
                     }
                 });
 
             },
-            template: '<div ng-repeat="facetIndicator in selectedFacetsIndicators">' +
-                '<span><strong>{{facetIndicator.label}}</strong></span>: <span class="label label-info">{{facetIndicator.value}}</span>' +
-                '</div>',
+            templateUrl: 'partials/components/facets.html',
+            transclude: true,
+            replace: true
+        };
+    })
+    .directive('chooseNumberOfLeads', function () {
+        return {
+            scope: {
+                howManyLeads: '=',
+                pricePerLead: '='
+
+            },
+            transclude: true,
+            controller: function ($scope, $element) {
+
+                $scope.$watch('howManyLeads', function () {
+                    $scope.totalPrice = $.formatNumber($scope.howManyLeads * $scope.pricePerLead / 1000);
+                });
+
+            },
+            templateUrl: 'partials/components/choose-how-many-leads.html',
             replace: true
         };
     });

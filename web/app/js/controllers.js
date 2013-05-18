@@ -12,7 +12,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
 
 
     }])
-    .controller('GeographicsController', ['$scope', '$rootScope', 'Wizard', function ($scope, $rootScope, wizard) {
+    .controller('GeographicsController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
 
         $scope.showPage = true;
 
@@ -31,11 +31,35 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
             $scope.showPage = data.page == "geo";
         });
 
+        $scope.selectedStates = [];
+
+        $scope.addState = function () {
+            var selectedState = $scope.selectedState;
+
+            if (!selectedState || selectedState.value === "none") {
+                alert('Please select a state to add');
+                return;
+            }
+
+            $scope.selectedStates.push(selectedState);
+
+            var value = _.map($scope.selectedStates, function (x) {
+                return x.value
+            }).join(',');
+
+            var text = _.map($scope.selectedStates, function (x) {
+                return x.text
+            }).join(',');
+
+            wizard.update(selectedState.facetId, value);
+            facetEvents.facetsSelected(selectedState.facetLabel, text, selectedState.facetId);
+            facetEvents.recalculateTotal();
+        }
+
     }])
     .controller('SummeryController', ['$scope', 'Wizard', 'Leads', '$rootScope', function ($scope, wizard, leads, $rootScope) {
 
 
-        $scope.howManyLeads = 1000;
         $scope.showLeadCountChooser = false;
 
         $scope.$on('facets-recalculate-total', function () {
@@ -47,13 +71,19 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
                     $scope.total = data.total;
                     $scope.pricePerLead = data.pricePerLead;
                     $scope.showLeadCountChooser = true;
+                    $scope.howManyLeads = data.total;
                 })
             })
         });
 
         $scope.prepareToBuy = function () {
-            $rootScope.$broadcast('buy-committed', {howManyLeads: $scope.howManyLeads, pricePerLead: $scope.pricePerLead});
 
+            if ($scope.howManyLeads > $scope.total) {
+                alert("Yuo can't buy more leads then we have!");
+                return;
+            }
+
+            $rootScope.$broadcast('buy-committed', {howManyLeads: $scope.howManyLeads, pricePerLead: $scope.pricePerLead});
             $rootScope.$broadcast('change-page', {page: 'buy'});
         }
     }])
@@ -69,6 +99,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
         });
 
         $scope.buy = function () {
+
 
             buyingLeads.buy({
                 firstName: $scope.firstName,

@@ -1,0 +1,9 @@
+<div>
+    <div ng-repeat="facetIndicator in selectedFacetsIndicators">
+        <span><strong>{{facetIndicator.label}}</strong></span>:
+        <span class="inline" ng-repeat="value in facetIndicator.values">
+            <span class="label label-info">{{value}}</span>
+        </span>
+
+    </div>
+</div>

@@ -13,204 +13,265 @@
         "id": "gender",
         "value": "m",
         "text": "Male"
-    }],
-    "state": [
-    {
-        "id": "state",
-        "value": "ae",
-        "text": "ae"
-    },
-    {
-        "id": "state",
-        "value": "al",
-        "text": "al"
-    },
-    {
-        "id": "state",
-        "value": "ar",
-        "text": "ar"
-    },
-    {
-        "id": "state",
-        "value": "ct",
-        "text": "ct"
-    },
-    {
-        "id": "state",
-        "value": "dc",
-        "text": "dc"
-    },
-    {
-        "id": "state",
-        "value": "de",
-        "text": "de"
-    },
-    {
-        "id": "state",
-        "value": "fl",
-        "text": "fl"
-    },
-    {
-        "id": "state",
-        "value": "ga",
-        "text": "ga"
-    },
-    {
-        "id": "state",
-        "value": "ia",
-        "text": "ia"
-    },
-    {
-        "id": "state",
-        "value": "il",
-        "text": "il"
-    },
-    {
-        "id": "state",
-        "value": "ks",
-        "text": "ks"
-    },
-    {
-        "id": "state",
-        "value": "ky",
-        "text": "ky"
-    },
-    {
-        "id": "state",
-        "value": "la",
-        "text": "la"
-    },
-    {
-        "id": "state",
-        "value": "ma",
-        "text": "ma"
-    },
-    {
-        "id": "state",
-        "value": "md",
-        "text": "md"
-    },
-    {
-        "id": "state",
-        "value": "me",
-        "text": "me"
-    },
-    {
-        "id": "state",
-        "value": "mi",
-        "text": "mi"
-    },
-    {
-        "id": "state",
-        "value": "mn",
-        "text": "mn"
-    },
-    {
-        "id": "state",
-        "value": "mo",
-        "text": "mo"
-    },
-    {
-        "id": "state",
-        "value": "ms",
-        "text": "ms"
-    },
-    {
-        "id": "state",
-        "value": "mt",
-        "text": "mt"
-    },
-    {
-        "id": "state",
-        "value": "nc",
-        "text": "nc"
-    },
-    {
-        "id": "state",
-        "value": "nd",
-        "text": "nd"
-    },
-    {
-        "id": "state",
-        "value": "ne",
-        "text": "ne"
-    },
-    {
-        "id": "state",
-        "value": "nh",
-        "text": "nh"
-    },
-    {
-        "id": "state",
-        "value": "nj",
-        "text": "nj"
-    },
-    {
-        "id": "state",
-        "value": "ny",
-        "text": "ny"
-    },
-    {
-        "id": "state",
-        "value": "oh",
-        "text": "oh"
-    },
-    {
-        "id": "state",
-        "value": "ok",
-        "text": "ok"
-    },
-    {
-        "id": "state",
-        "value": "pa",
-        "text": "pa"
-    },
-    {
-        "id": "state",
-        "value": "pr",
-        "text": "pr"
-    },
-    {
-        "id": "state",
-        "value": "ri",
-        "text": "ri"
-    },
-    {
-        "id": "state",
-        "value": "sc",
-        "text": "sc"
-    },
-    {
-        "id": "state",
-        "value": "sd",
-        "text": "sd"
-    },
-    {
-        "id": "state",
-        "value": "tn",
-        "text": "tn"
-    },
-    {
-        "id": "state",
-        "value": "va",
-        "text": "va"
-    },
-    {
-        "id": "state",
-        "value": "vi",
-        "text": "vi"
-    },
-    {
-        "id": "state",
-        "value": "vt",
-        "text": "vt"
-    },
-    {
-        "id": "state",
-        "value": "wi",
-        "text": "wi"
     }
-], "income_estimated_household": [
+],
+    "state": [
+        {
+            "id": "state",
+            "value": "al",
+            "text": "Alabama"
+        },
+        {
+            "id": "state",
+            "value": "ak",
+            "text": "Alaska"
+        },
+        {
+            "id": "state",
+            "value": "az",
+            "text": "Arizona"
+        },
+        {
+            "id": "state",
+            "value": "ar",
+            "text": "Arkansas"
+        },
+        {
+            "id": "state",
+            "value": "ca",
+            "text": "California"
+        },
+        {
+            "id": "state",
+            "value": "co",
+            "text": "Colorado"
+        },
+        {
+            "id": "state",
+            "value": "ct",
+            "text": "Connecticut"
+        },
+        {
+            "id": "state",
+            "value": "de",
+            "text": "Delaware"
+        },
+        {
+            "id": "state",
+            "value": "dc",
+            "text": "District of Columbia"
+        },
+        {
+            "id": "state",
+            "value": "fl",
+            "text": "Florida"
+        },
+        {
+            "id": "state",
+            "value": "ga",
+            "text": "Georgia"
+        },
+        {
+            "id": "state",
+            "value": "hi",
+            "text": "Hawaii"
+        },
+        {
+            "id": "state",
+            "value": "id",
+            "text": "Idaho"
+        },
+        {
+            "id": "state",
+            "value": "il",
+            "text": "Illinois"
+        },
+        {
+            "id": "state",
+            "value": "in",
+            "text": "Indiana"
+        },
+        {
+            "id": "state",
+            "value": "ia",
+            "text": "Iowa"
+        },
+        {
+            "id": "state",
+            "value": "ks",
+            "text": "Kansas"
+        },
+        {
+            "id": "state",
+            "value": "ky",
+            "text": "Kentucky"
+        },
+        {
+            "id": "state",
+            "value": "la",
+            "text": "Louisiana"
+        },
+        {
+            "id": "state",
+            "value": "me",
+            "text": "Maine"
+        },
+        {
+            "id": "state",
+            "value": "mt",
+            "text": "Montana"
+        },
+        {
+            "id": "state",
+            "value": "ne",
+            "text": "Nebraska"
+        },
+        {
+            "id": "state",
+            "value": "nv",
+            "text": "Nevada"
+        },
+        {
+            "id": "state",
+            "value": "nh",
+            "text": "New Hampshire"
+        },
+        {
+            "id": "state",
+            "value": "nj",
+            "text": "New Jersey"
+        },
+        {
+            "id": "state",
+            "value": "nm",
+            "text": "New Mexico"
+        },
+        {
+            "id": "state",
+            "value": "ny",
+            "text": "New York"
+        },
+        {
+            "id": "state",
+            "value": "nc",
+            "text": "North Carolina"
+        },
+        {
+            "id": "state",
+            "value": "nd",
+            "text": "North Dakota"
+        },
+        {
+            "id": "state",
+            "value": "oh",
+            "text": "Ohio"
+        },
+        {
+            "id": "state",
+            "value": "ok",
+            "text": "Oklahoma"
+        },
+        {
+            "id": "state",
+            "value": "or",
+            "text": "Oregon"
+        },
+        {
+            "id": "state",
+            "value": "md",
+            "text": "Maryland"
+        },
+        {
+            "id": "state",
+            "value": "ma",
+            "text": "Massachusetts"
+        },
+        {
+            "id": "state",
+            "value": "mi",
+            "text": "Michigan"
+        },
+        {
+            "id": "state",
+            "value": "mn",
+            "text": "Minnesota"
+        },
+        {
+            "id": "state",
+            "value": "ms",
+            "text": "Mississippi"
+        },
+        {
+            "id": "state",
+            "value": "mo",
+            "text": "Missouri"
+        },
+        {
+            "id": "state",
+            "value": "pa",
+            "text": "Pennsylvania"
+        },
+        {
+            "id": "state",
+            "value": "ri",
+            "text": "Rhode Island"
+        },
+        {
+            "id": "state",
+            "value": "sc",
+            "text": "South Carolina"
+        },
+        {
+            "id": "state",
+            "value": "sd",
+            "text": "South Dakota"
+        },
+        {
+            "id": "state",
+            "value": "tn",
+            "text": "Tennessee"
+        },
+        {
+            "id": "state",
+            "value": "tx",
+            "text": "Texas"
+        },
+        {
+            "id": "state",
+            "value": "ut",
+            "text": "Utah"
+        },
+        {
+            "id": "state",
+            "value": "vt",
+            "text": "Vermont"
+        },
+        {
+            "id": "state",
+            "value": "va",
+            "text": "Virginia"
+        },
+        {
+            "id": "state",
+            "value": "wa",
+            "text": "Washington"
+        },
+        {
+            "id": "state",
+            "value": "wv",
+            "text": "West Virginia"
+        },
+        {
+            "id": "state",
+            "value": "wi",
+            "text": "Wisconsin"
+        },
+        {
+            "id": "state",
+            "value": "wy",
+            "text": "Wyoming"
+        }
+    ], "income_estimated_household": [
     {
         "id": "income_estimated_household",
         "value": 0,
@@ -303,7 +364,7 @@
     },
     {
         "id": "income_estimated_household",
-        "value": 140000,
+        "value": 70000,
         "text": 70000
     }
 ], "net_worth": [
@@ -349,8 +410,49 @@
     },
     {
         "id": "net_worth",
-        "value": 1000000,
+        "value": 500000,
         "text": 500000
+    }
+], "credit_range_of_new_credit": [
+    {
+        "id": "credit_range_of_new_credit",
+        "value": 0,
+        "text": 100
+    },
+    {
+        "id": "credit_range_of_new_credit",
+        "value": 1,
+        "text": 300
+    },
+    {
+        "id": "credit_range_of_new_credit",
+        "value": 2,
+        "text": 500
+    },
+    {
+        "id": "credit_range_of_new_credit",
+        "value": 3,
+        "text": 1000
+    },
+    {
+        "id": "credit_range_of_new_credit",
+        "value": 4,
+        "text": 3000
+    },
+    {
+        "id": "credit_range_of_new_credit",
+        "value": 5,
+        "text": 5000
+    },
+    {
+        "id": "credit_range_of_new_credit",
+        "value": 6,
+        "text": 10000
+    },
+    {
+        "id": "credit_range_of_new_credit",
+        "value": 7,
+        "text": "+20000"
     }
 ], "language": [
     {
@@ -1279,7 +1381,7 @@
     },
     {
         "id": "home_market_value",
-        "value": 1500000,
+        "value": 750000,
         "text": 750000
     }
 ], "mortgage_purchase_date_ccyymmdd": [
@@ -1790,6 +1892,92 @@
         "text": 0.0
     }
 ], "most_recent_mortgage_date": [
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 1995,
+        "text": 1995
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 1996,
+        "text": 1996
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 1997,
+        "text": 1997
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 1998,
+        "text": 1998
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 1999,
+        "text": 1999
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2000,
+        "text": 2000
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2001,
+        "text": 2001
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2002,
+        "text": 2002
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2003,
+        "text": 2003
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2004,
+        "text": 2004
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2005,
+        "text": 2005
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2006,
+        "text": 2006
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2007,
+        "text": 2007
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2008,
+        "text": 2008
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2009,
+        "text": 2009
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2010,
+        "text": 2010
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 4022,
+        "text": 2011
+    }
+], "second_most_recent_mortgage_date": [
     {
         "id": "most_recent_mortgage_date",
         "value": 1995,
@@ -5650,6 +5838,507 @@
         "value": 18,
         "text": 9.75
     }
+], "second_most_recent_mortgage_interest_rate": [
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 0.0,
+        "text": 0.0
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 1.0,
+        "text": 1.0
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 1.25,
+        "text": 1.25
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 1.5,
+        "text": 1.5
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 10.0,
+        "text": 10.0
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 12.0,
+        "text": 12.0
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 2.0,
+        "text": 2.0
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 3.0,
+        "text": 3.0
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 3.125,
+        "text": 3.125
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 3.25,
+        "text": 3.25
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 3.375,
+        "text": 3.375
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 3.5,
+        "text": 3.5
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 3.625,
+        "text": 3.625
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 3.75,
+        "text": 3.75
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 3.87,
+        "text": 3.87
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 3.875,
+        "text": 3.875
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 3.99,
+        "text": 3.99
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.0,
+        "text": 4.0
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.12,
+        "text": 4.12
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.125,
+        "text": 4.125
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.25,
+        "text": 4.25
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.37,
+        "text": 4.37
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.375,
+        "text": 4.375
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.5,
+        "text": 4.5
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.62,
+        "text": 4.62
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.625,
+        "text": 4.625
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.75,
+        "text": 4.75
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.87,
+        "text": 4.87
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.875,
+        "text": 4.875
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 4.99,
+        "text": 4.99
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.0,
+        "text": 5.0
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.12,
+        "text": 5.12
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.125,
+        "text": 5.125
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.25,
+        "text": 5.25
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.37,
+        "text": 5.37
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.375,
+        "text": 5.375
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.49,
+        "text": 5.49
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.5,
+        "text": 5.5
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.62,
+        "text": 5.62
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.625,
+        "text": 5.625
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.74,
+        "text": 5.74
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.75,
+        "text": 5.75
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.87,
+        "text": 5.87
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.875,
+        "text": 5.875
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.95,
+        "text": 5.95
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 5.99,
+        "text": 5.99
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.0,
+        "text": 6.0
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.12,
+        "text": 6.12
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.125,
+        "text": 6.125
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.24,
+        "text": 6.24
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.25,
+        "text": 6.25
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.37,
+        "text": 6.37
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.375,
+        "text": 6.375
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.4,
+        "text": 6.4
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.45,
+        "text": 6.45
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.49,
+        "text": 6.49
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.5,
+        "text": 6.5
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.6,
+        "text": 6.6
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.62,
+        "text": 6.62
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.625,
+        "text": 6.625
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.74,
+        "text": 6.74
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.75,
+        "text": 6.75
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.87,
+        "text": 6.87
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.875,
+        "text": 6.875
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.95,
+        "text": 6.95
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 6.99,
+        "text": 6.99
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.0,
+        "text": 7.0
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.125,
+        "text": 7.125
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.24,
+        "text": 7.24
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.25,
+        "text": 7.25
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.35,
+        "text": 7.35
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.375,
+        "text": 7.375
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.45,
+        "text": 7.45
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.49,
+        "text": 7.49
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.5,
+        "text": 7.5
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.6,
+        "text": 7.6
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.625,
+        "text": 7.625
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.65,
+        "text": 7.65
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.7,
+        "text": 7.7
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.74,
+        "text": 7.74
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.75,
+        "text": 7.75
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.8,
+        "text": 7.8
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.85,
+        "text": 7.85
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.875,
+        "text": 7.875
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.9,
+        "text": 7.9
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.95,
+        "text": 7.95
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 7.99,
+        "text": 7.99
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 8.0,
+        "text": 8.0
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 8.125,
+        "text": 8.125
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 8.25,
+        "text": 8.25
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 8.375,
+        "text": 8.375
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 8.5,
+        "text": 8.5
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 8.625,
+        "text": 8.625
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 8.75,
+        "text": 8.75
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 8.875,
+        "text": 8.875
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 8.99,
+        "text": 8.99
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 9.0,
+        "text": 9.0
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 9.25,
+        "text": 9.25
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 9.5,
+        "text": 9.5
+    },
+    {
+        "id": "most_recent_mortgage_interest_rate",
+        "value": 18,
+        "text": 9.75
+    }
 ], "purchase_1st_mortgage_interest_rate": [
     {
         "id": "purchase_1st_mortgage_interest_rate",
@@ -6655,503 +7344,108 @@
 ], "most_recent_mortgage_amount": [
     {
         "id": "most_recent_mortgage_amount",
-        "value": 0,
-        "text": 0
+        "value": "0",
+        "text": "0"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 10000,
-        "text": 10000
+        "value": "50000",
+        "text": "50000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 100000,
-        "text": 100000
+        "value": "100000",
+        "text": "100000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 1000000,
-        "text": 1000000
+        "value": "150000",
+        "text": "150000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 105000,
-        "text": 105000
+        "value": "200000",
+        "text": "200000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 108000,
-        "text": 108000
+        "value": "250000",
+        "text": "250000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 110000,
-        "text": 110000
+        "value": "300000",
+        "text": "300000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 112000,
-        "text": 112000
+        "value": "350000",
+        "text": "350000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 115000,
-        "text": 115000
+        "value": "400000",
+        "text": "400000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 12000,
-        "text": 12000
+        "value": "450000",
+        "text": "450000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 120000,
-        "text": 120000
+        "value": "500000",
+        "text": "500000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 125000,
-        "text": 125000
+        "value": "550000",
+        "text": "550000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 128000,
-        "text": 128000
+        "value": "600000",
+        "text": "600000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 130000,
-        "text": 130000
+        "value": "650000",
+        "text": "650000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 132000,
-        "text": 132000
+        "value": "700000",
+        "text": "700000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 135000,
-        "text": 135000
+        "value": "750000",
+        "text": "750000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 136000,
-        "text": 136000
+        "value": "800000",
+        "text": "800000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 140000,
-        "text": 140000
+        "value": "850000",
+        "text": "850000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 144000,
-        "text": 144000
+        "value": "900000",
+        "text": "900000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 145000,
-        "text": 145000
+        "value": "950000",
+        "text": "950000"
     },
     {
         "id": "most_recent_mortgage_amount",
-        "value": 148000,
-        "text": 148000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 15000,
-        "text": 15000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 150000,
-        "text": 150000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 152000,
-        "text": 152000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 155000,
-        "text": 155000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 156000,
-        "text": 156000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 160000,
-        "text": 160000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 165000,
-        "text": 165000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 168000,
-        "text": 168000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 170000,
-        "text": 170000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 172000,
-        "text": 172000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 175000,
-        "text": 175000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 176000,
-        "text": 176000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 180000,
-        "text": 180000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 184000,
-        "text": 184000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 185000,
-        "text": 185000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 188000,
-        "text": 188000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 190000,
-        "text": 190000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 192000,
-        "text": 192000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 195000,
-        "text": 195000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 196000,
-        "text": 196000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 20000,
-        "text": 20000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 200000,
-        "text": 200000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 204000,
-        "text": 204000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 205000,
-        "text": 205000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 208000,
-        "text": 208000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 210000,
-        "text": 210000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 212000,
-        "text": 212000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 215000,
-        "text": 215000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 216000,
-        "text": 216000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 220000,
-        "text": 220000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 224000,
-        "text": 224000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 225000,
-        "text": 225000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 228000,
-        "text": 228000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 230000,
-        "text": 230000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 232000,
-        "text": 232000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 235000,
-        "text": 235000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 240000,
-        "text": 240000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 245000,
-        "text": 245000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 248000,
-        "text": 248000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 25000,
-        "text": 25000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 250000,
-        "text": 250000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 252000,
-        "text": 252000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 255000,
-        "text": 255000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 260000,
-        "text": 260000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 265000,
-        "text": 265000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 270000,
-        "text": 270000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 275000,
-        "text": 275000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 280000,
-        "text": 280000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 285000,
-        "text": 285000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 290000,
-        "text": 290000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 30000,
-        "text": 30000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 300000,
-        "text": 300000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 315000,
-        "text": 315000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 320000,
-        "text": 320000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 325000,
-        "text": 325000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 330000,
-        "text": 330000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 340000,
-        "text": 340000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 35000,
-        "text": 35000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 350000,
-        "text": 350000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 360000,
-        "text": 360000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 40000,
-        "text": 40000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 400000,
-        "text": 400000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 417000,
-        "text": 417000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 45000,
-        "text": 45000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 50000,
-        "text": 50000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 500000,
-        "text": 500000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 55000,
-        "text": 55000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 60000,
-        "text": 60000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 65000,
-        "text": 65000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 68000,
-        "text": 68000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 70000,
-        "text": 70000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 72000,
-        "text": 72000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 75000,
-        "text": 75000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 80000,
-        "text": 80000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 85000,
-        "text": 85000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 88000,
-        "text": 88000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 90000,
-        "text": 90000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 92000,
-        "text": 92000
-    },
-    {
-        "id": "most_recent_mortgage_amount",
-        "value": 190000,
-        "text": 95000
+        "value": "1000000",
+        "text": "1000000"
     }
 ], "second_most_recent_mortgage_amount": [
     {
@@ -7161,13 +7455,8 @@
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "1",
-        "text": "1"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "10000",
-        "text": "10000"
+        "value": "50000",
+        "text": "50000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
@@ -7176,203 +7465,8 @@
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "104000",
-        "text": "104000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "105000",
-        "text": "105000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "108000",
-        "text": "108000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "110000",
-        "text": "110000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "112000",
-        "text": "112000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "115000",
-        "text": "115000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "116000",
-        "text": "116000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "12000",
-        "text": "12000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "120000",
-        "text": "120000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "125000",
-        "text": "125000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "128000",
-        "text": "128000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "130000",
-        "text": "130000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "132000",
-        "text": "132000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "135000",
-        "text": "135000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "136000",
-        "text": "136000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "140000",
-        "text": "140000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "144000",
-        "text": "144000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "145000",
-        "text": "145000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "148000",
-        "text": "148000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "15000",
-        "text": "15000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
         "value": "150000",
         "text": "150000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "152000",
-        "text": "152000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "155000",
-        "text": "155000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "156000",
-        "text": "156000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "160000",
-        "text": "160000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "165000",
-        "text": "165000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "168000",
-        "text": "168000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "170000",
-        "text": "170000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "172000",
-        "text": "172000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "175000",
-        "text": "175000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "176000",
-        "text": "176000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "18000",
-        "text": "18000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "180000",
-        "text": "180000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "184000",
-        "text": "184000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "185000",
-        "text": "185000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "188000",
-        "text": "188000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "190000",
-        "text": "190000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "192000",
-        "text": "192000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "195000",
-        "text": "195000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "20000",
-        "text": "20000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
@@ -7381,138 +7475,8 @@
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "205000",
-        "text": "205000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "208000",
-        "text": "208000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "210000",
-        "text": "210000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "212000",
-        "text": "212000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "215000",
-        "text": "215000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "216000",
-        "text": "216000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "22000",
-        "text": "22000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "220000",
-        "text": "220000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "224000",
-        "text": "224000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "225000",
-        "text": "225000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "230000",
-        "text": "230000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "235000",
-        "text": "235000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "240000",
-        "text": "240000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "245000",
-        "text": "245000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "25000",
-        "text": "25000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
         "value": "250000",
         "text": "250000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "252000",
-        "text": "252000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "255000",
-        "text": "255000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "260000",
-        "text": "260000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "265000",
-        "text": "265000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "270000",
-        "text": "270000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "275000",
-        "text": "275000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "28000",
-        "text": "28000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "280000",
-        "text": "280000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "285000",
-        "text": "285000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "290000",
-        "text": "290000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "30000",
-        "text": "30000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
@@ -7521,53 +7485,8 @@
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "310000",
-        "text": "310000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "32000",
-        "text": "32000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "320000",
-        "text": "320000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "322700",
-        "text": "322700"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "325000",
-        "text": "325000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "340000",
-        "text": "340000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "35000",
-        "text": "35000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
         "value": "350000",
         "text": "350000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "360000",
-        "text": "360000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "40000",
-        "text": "40000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
@@ -7576,18 +7495,8 @@
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "417000",
-        "text": "417000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "45000",
-        "text": "45000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "50000",
-        "text": "50000"
+        "value": "450000",
+        "text": "450000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
@@ -7596,63 +7505,53 @@
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "55000",
-        "text": "55000"
+        "value": "550000",
+        "text": "550000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "60000",
-        "text": "60000"
+        "value": "600000",
+        "text": "600000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "65000",
-        "text": "65000"
+        "value": "650000",
+        "text": "650000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "70000",
-        "text": "70000"
+        "value": "700000",
+        "text": "700000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "72000",
-        "text": "72000"
+        "value": "750000",
+        "text": "750000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "75000",
-        "text": "75000"
+        "value": "800000",
+        "text": "800000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "80000",
-        "text": "80000"
+        "value": "850000",
+        "text": "850000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "85000",
-        "text": "85000"
+        "value": "900000",
+        "text": "900000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "88000",
-        "text": "88000"
+        "value": "950000",
+        "text": "950000"
     },
     {
         "id": "second_most_recent_mortgage_amount",
-        "value": "90000",
-        "text": "90000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": "92000",
-        "text": "92000"
-    },
-    {
-        "id": "second_most_recent_mortgage_amount",
-        "value": 190000,
-        "text": "95000"
+        "value": "1000000",
+        "text": "1000000"
     }
 ], "purchase_1st_mortgage_amount": [
     {

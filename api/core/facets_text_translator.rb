@@ -435,6 +435,16 @@ class FacetsTextTranslator
             '9' => 'Partner',
             'A' => 'Self-Employed'
         },
+        credit_range_of_new_credit: {
+            '0' => '100',
+            '1' => '300',
+            '2' => '500',
+            '3' => '1000',
+            '4' => '3000',
+            '5' => '5000',
+            '6' => '10000',
+            '7' => '+10000',
+        },
         home_owner: {
             O: 'Home Owner',
             R: 'Renter',
@@ -878,6 +888,70 @@ class FacetsTextTranslator
             A: 'Adjustable',
             B: 'Balloon',
             F: 'Fixed'
+        },
+        #state: {
+        #    al: 'Alabama',
+        #    ak: 'Alaska',
+        #    az: 'Arizona',
+        #    ar: 'Arkansas',
+        #    ca: 'California',
+        #    co: 'Colorado',
+        #    ct: 'Connecticut',
+        #    de: 'Delaware',
+        #    dc: 'District of Columbia',
+        #    fl: 'Florida',
+        #    ga: 'Georgia',
+        #    hi: 'Hawaii',
+        #    id: 'Idaho',
+        #    il: 'Illinois',
+        #    in: 'Indiana',
+        #    ia: 'Iowa',
+        #    ks: 'Kansas',
+        #    ky: 'Kentucky',
+        #    la: 'Louisiana',
+        #    me: 'Maine',
+        #    mt: 'Montana',
+        #    ne: 'Nebraska',
+        #    nv: 'Nevada',
+        #    nh: 'New Hampshire',
+        #    nj: 'New Jersey',
+        #    nm: 'New Mexico',
+        #    ny: 'New York',
+        #    nc: 'North Carolina',
+        #    nd: 'North Dakota',
+        #    oh: 'Ohio',
+        #    ok: 'Oklahoma',
+        #    or: 'Oregon',
+        #    md: 'Maryland',
+        #    ma: 'Massachusetts',
+        #    mi: 'Michigan',
+        #    mn: 'Minnesota',
+        #    ms: 'Mississippi',
+        #    mo: 'Missouri',
+        #    pa: 'Pennsylvania',
+        #    ri: 'Rhode Island',
+        #    sc: 'South Carolina',
+        #    sd: 'South Dakota',
+        #    tn: 'Tennessee',
+        #    tx: 'Texas',
+        #    ut: 'Utah',
+        #    vt: 'Vermont',
+        #    va: 'Virginia',
+        #    wa: 'Washington',
+        #    wv: 'West Virginia',
+        #    wi: 'Wisconsin',
+        #    wy: 'Wyoming',
+        #},
+        gender: {
+            M: 'Male',
+            F: 'Female',
+            U: 'Unknown'
+        },
+        marital_status_in_the_hhld: {
+            M: 'Married',
+            S: 'Single',
+            A: 'Inferred Married',
+            B: 'Inferred Single'
         }
     }
     @keys = {
@@ -898,6 +972,9 @@ class FacetsTextTranslator
   end
 
   def translate(key, value)
+
+    return 'Not Specified' if value.nil?
+
     key = key.to_sym
     key = @keys[key] if @keys.has_key?(key)
 

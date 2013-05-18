@@ -1,5 +1,3 @@
-require_relative 'mail_base'
-
 class OrderEmails < EmailBase
   def download_order(email, file_id)
 

@@ -1,13 +1,4 @@
 /* app css stylesheet */
-
-.search-box {
-    padding: 150px;
-}
-
-.search-input {
-    padding: 10px;
-}
-
 .slider {
     width: 500px;
 }
@@ -21,7 +12,7 @@
 }
 
 .cool-slider {
-    width: 700px;
+    width: 500px;
 }
 
 #loader {
@@ -34,14 +25,14 @@
     margin-top: 5px;
 }
 
-.wizard-tabs .control-group .controls {
-    height: 40px;
-}
-
 .wizard-tabs .control-group:first-child {
     margin-top: 5px;
 }
 
 .money-calculation {
     font-size: 22px;
+}
+
+.no-label {
+    margin-left: 180px;
 }

@@ -2,7 +2,7 @@ require 'grape'
 require 'tire'
 require 'rack/cors'
 
-require_relative 'facets_text_translator'
+require_relative '../core/facets_text_translator'
 
 class Facets < Grape::API
 
