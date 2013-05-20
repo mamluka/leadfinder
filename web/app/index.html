@@ -7,6 +7,7 @@
     <link href="css/jslider.css" rel="stylesheet">
     <link rel="stylesheet" href="css/app.css"/>
     <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/msgBoxLight.css"/>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
     <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -107,7 +108,7 @@
                         </label>
 
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number" data-facet-label="Phone listed" data-checked-value="T"/>Has phone number
+                            <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number" data-facet-label="Phone listed" data-checked-value="T"/><strong>Has phone number</strong>
                         </label>
 
                         <label class="checkbox">
@@ -648,7 +649,7 @@
                             <label class="control-label">Your Order of:</label>
 
                             <div class="controls">
-                                <input type="text" class="input-small" ng-model="howManyLeads"/> X {{pricePerLead}}¢ = {{howManyLeads * pricePerLead}}¢
+                                <div choose-number-of-leads how-many-leads="howManyLeads" price-per-lead="pricePerLead"></div>
                             </div>
                         </div>
 
@@ -723,7 +724,7 @@
 
                         <div class="control-group">
                             <div class="controls">
-                                <button class="btn" ng-click="buy()" ng-disabled="buyForm.$invalid">Purchase Records</button>
+                                <button class="btn" ng-click="buy()" ng-disabled="isBuyButtonDisabled()">{{buyButtonText}}</button>
                             </div>
                         </div>
                     </form>
@@ -759,6 +760,7 @@
 <script src="js/plugins/slider/jshashtable-2.1_src.js"></script>
 <script src="js/plugins/slider/jquery.numberformatter-1.2.3.js"></script>
 <script src="js/plugins/slider/jquery.slider.js"></script>
+<script src="js/plugins/msgbox/jquery.msgBox.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.7.2/angular-strap.min.js"></script>

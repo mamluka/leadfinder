@@ -3,6 +3,8 @@ require 'rack/cors'
 require 'typhoeus'
 require 'json'
 require 'backburner'
+require 'securerandom'
+require 'time'
 
 require_relative '../core/queries'
 require_relative '../core/pricing'
@@ -20,6 +22,14 @@ class Buy < Grape::API
     end
   end
 
+  helpers do
+    def save_order(order)
+      json_order = JSON.generate(order)
+      filename = File.dirname(__FILE__) + "/orders/#{order[:first_name]}-#{order[:last_name]}-#{Time.now} + #{SecureRandom.uuid}.json"
+      File.open(filename, 'w') { |file| file.write(json_order) }
+    end
+  end
+
 
   post :buy do
 
@@ -30,24 +40,26 @@ class Buy < Grape::API
 
     count = query.count_leads(facets).total
     number_of_leads_requested = params[:howManyLeads].to_f
-
-    p number_of_leads_requested
-
     amount = number_of_leads_requested * pricing.get_price_for_count(count, facets)
-
-    p amount
 
     pay_junction = PayJunction.new
 
-    result = pay_junction.charge({
-                                     first_name: params[:firstName],
-                                     last_name: params[:lastName],
-                                     cc_number: params[:ccNumber],
-                                     cc_year: params[:ccYear],
-                                     cc_month: params[:ccMonth],
-                                     cc_ccv: params[:ccCCV],
-                                     amount: amount
-                                 })
+    hash = {
+        first_name: params[:firstName],
+        last_name: params[:lastName],
+        cc_number: params[:ccNumber],
+        cc_year: params[:ccYear],
+        cc_month: params[:ccMonth],
+        cc_ccv: params[:ccCCV],
+        amount: amount
+    }
+
+    result = pay_junction.charge(hash)
+
+    hash[:amount] = amount
+    hash[:number_of_leads_requested] = number_of_leads_requested
+    hash[:count] = count
+
 
     if result[:success]
 
@@ -66,6 +78,12 @@ class Buy < Grape::API
       }
     end
 
+    hash[:response] = response
+
+    save_order hash
+
     response
   end
+
+
 end

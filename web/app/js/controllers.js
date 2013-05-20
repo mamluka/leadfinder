@@ -1,7 +1,5 @@
 'use strict';
 
-/* Controllers */
-
 angular.module('leadFinder.controllers', ['leadFinder.services']).
     controller('WizardController', ['$scope', '$rootScope', function ($scope, $rootScope) {
         $scope.showPage = true;
@@ -41,13 +39,18 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
                 return;
             }
 
+            if (_.some($scope.selectedStates, function (x) {
+                return x.value == selectedState.value
+            }))
+                return;
+
             $scope.selectedStates.push(selectedState);
 
-            var value = _.map($scope.selectedStates, function (x) {
+            var value = _.map($scope.selectedStates,function (x) {
                 return x.value
             }).join(',');
 
-            var text = _.map($scope.selectedStates, function (x) {
+            var text = _.map($scope.selectedStates,function (x) {
                 return x.text
             }).join(',');
 
@@ -89,6 +92,9 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
     }])
     .controller('BuyController', ['$scope', '$rootScope', 'BuyingLeads', function ($scope, $rootScope, buyingLeads) {
 
+        $scope.inProgress = false;
+        $scope.buyButtonText = 'Purchase Records';
+
         $rootScope.$on('change-page', function (e, data) {
             $scope.showPage = data.page == "buy";
         });
@@ -98,20 +104,61 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
             $scope.pricePerLead = data.pricePerLead;
         });
 
+        $scope.isBuyButtonDisabled = function () {
+            return $scope.inProgress || $scope.buyForm.$invalid
+        };
+
         $scope.buy = function () {
 
+            var email = $scope.email;
 
-            buyingLeads.buy({
+            var buyCall = buyingLeads.buy({
                 firstName: $scope.firstName,
                 lastName: $scope.lastName,
-                email: $scope.email,
+                email: email,
                 ccNumber: $scope.ccNumber,
                 ccMonth: $scope.ccMonth,
                 ccYear: $scope.ccYear,
                 ccCCV: $scope.ccCCV,
                 howManyLeads: $scope.howManyLeads
+            });
+
+            $scope.inProgress = true;
+            $scope.buyButtonText = 'Please wait';
+
+            buyCall.done(function (data) {
+                if (data.success) {
+                    $.msgBox({
+                        title: "Your order was processed",
+                        content: "Your order was processed successfully, a download link will be send to:" + email,
+                        type: "Info",
+                        buttons: [
+                            { value: "Great!" }
+                        ],
+                        beforeClose: function (result) {
+                            window.location.reload();
+                            $scope.$apply(function () {
+                                $scope.inProgress = false;
+                                $scope.buyButtonText = 'Purchase Records';
+                            })
+                        }
+                    });
+                } else {
+                    $.msgBox({
+                        title: "Something went wrong",
+                        content: "There is a problem with your order: " + data.error_message,
+                        type: "error",
+                        buttons: [
+                            { value: "Confirm" }
+                        ],
+                        beforeClose: function (result) {
+                            $scope.$apply(function () {
+                                $scope.inProgress = false;
+                                $scope.buyButtonText = 'Purchase Records';
+                            })
+                        }
+                    });
+                }
             })
         }
-
-
     }]);

@@ -7,8 +7,8 @@ facet_id = ARGV[3]
 
 output = Array.new
 
-Range.new(start, stop/jump).each do |x|
-  value = (x*jump).to_i.to_s
+Range.new(0, (stop-start)/jump).each do |x|
+  value = (start + x*jump).to_f.to_s
   output << {id: facet_id, value: value, text: value}
 end
 

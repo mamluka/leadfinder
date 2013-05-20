@@ -1,8 +1,8 @@
 {"gender": [
     {
         "id": "gender",
-        "value": "u",
-        "text": "Unknown"
+        "value": "m",
+        "text": "Male"
     },
     {
         "id": "gender",
@@ -11,8 +11,8 @@
     },
     {
         "id": "gender",
-        "value": "m",
-        "text": "Male"
+        "value": "u,m,f",
+        "text": "Both"
     }
 ],
     "state": [
@@ -457,298 +457,8 @@
 ], "language": [
     {
         "id": "language",
-        "value": "a1",
-        "text": "Afrikaans"
-    },
-    {
-        "id": "language",
-        "value": "a2",
-        "text": "Albanian"
-    },
-    {
-        "id": "language",
-        "value": "a3",
-        "text": "Amharic"
-    },
-    {
-        "id": "language",
-        "value": "a4",
-        "text": "Arabic"
-    },
-    {
-        "id": "language",
-        "value": "a5",
-        "text": "Armenian"
-    },
-    {
-        "id": "language",
-        "value": "a6",
-        "text": "Ashanti"
-    },
-    {
-        "id": "language",
-        "value": "a7",
-        "text": "Azeri"
-    },
-    {
-        "id": "language",
-        "value": "b2",
-        "text": "Basque"
-    },
-    {
-        "id": "language",
-        "value": "b3",
-        "text": "Bengali"
-    },
-    {
-        "id": "language",
-        "value": "b4",
-        "text": "Bulgarian"
-    },
-    {
-        "id": "language",
-        "value": "b5",
-        "text": "Burmese"
-    },
-    {
-        "id": "language",
-        "value": "c1",
-        "text": "Chinese"
-    },
-    {
-        "id": "language",
-        "value": "c3",
-        "text": "Czech"
-    },
-    {
-        "id": "language",
-        "value": "d1",
-        "text": "Danish"
-    },
-    {
-        "id": "language",
-        "value": "d2",
-        "text": "Dutch"
-    },
-    {
-        "id": "language",
-        "value": "d3",
-        "text": "Dzongha"
-    },
-    {
-        "id": "language",
         "value": "e1",
         "text": "English"
-    },
-    {
-        "id": "language",
-        "value": "e2",
-        "text": "Estonian"
-    },
-    {
-        "id": "language",
-        "value": "f1",
-        "text": "Farsi"
-    },
-    {
-        "id": "language",
-        "value": "f2",
-        "text": "Finnish"
-    },
-    {
-        "id": "language",
-        "value": "f3",
-        "text": "French"
-    },
-    {
-        "id": "language",
-        "value": "g1",
-        "text": "Georgian"
-    },
-    {
-        "id": "language",
-        "value": "g2",
-        "text": "German"
-    },
-    {
-        "id": "language",
-        "value": "g3",
-        "text": "Ga"
-    },
-    {
-        "id": "language",
-        "value": "g4",
-        "text": "Greek"
-    },
-    {
-        "id": "language",
-        "value": "h2",
-        "text": "Hebrew"
-    },
-    {
-        "id": "language",
-        "value": "h3",
-        "text": "Hindi"
-    },
-    {
-        "id": "language",
-        "value": "h4",
-        "text": "Hungarian"
-    },
-    {
-        "id": "language",
-        "value": "i1",
-        "text": "Icelandic"
-    },
-    {
-        "id": "language",
-        "value": "i2",
-        "text": "Indonesian"
-    },
-    {
-        "id": "language",
-        "value": "i3",
-        "text": "Italian"
-    },
-    {
-        "id": "language",
-        "value": "j1",
-        "text": "Japanese"
-    },
-    {
-        "id": "language",
-        "value": "k1",
-        "text": "Kazakh"
-    },
-    {
-        "id": "language",
-        "value": "k2",
-        "text": "Khmer"
-    },
-    {
-        "id": "language",
-        "value": "k3",
-        "text": "Kirghiz"
-    },
-    {
-        "id": "language",
-        "value": "k4",
-        "text": "Korean"
-    },
-    {
-        "id": "language",
-        "value": "l1",
-        "text": "Laotian"
-    },
-    {
-        "id": "language",
-        "value": "l2",
-        "text": "Latvian"
-    },
-    {
-        "id": "language",
-        "value": "l3",
-        "text": "Lithuanian"
-    },
-    {
-        "id": "language",
-        "value": "m1",
-        "text": "Macedonian"
-    },
-    {
-        "id": "language",
-        "value": "m2",
-        "text": "Malagasy"
-    },
-    {
-        "id": "language",
-        "value": "m3",
-        "text": "Malay"
-    },
-    {
-        "id": "language",
-        "value": "m4",
-        "text": "Moldavian"
-    },
-    {
-        "id": "language",
-        "value": "m5",
-        "text": "Mongolian"
-    },
-    {
-        "id": "language",
-        "value": "n1",
-        "text": "Nepali"
-    },
-    {
-        "id": "language",
-        "value": "n2",
-        "text": "Norwegian"
-    },
-    {
-        "id": "language",
-        "value": "o1",
-        "text": "Oromo"
-    },
-    {
-        "id": "language",
-        "value": "p1",
-        "text": "Pashto"
-    },
-    {
-        "id": "language",
-        "value": "p2",
-        "text": "Polish"
-    },
-    {
-        "id": "language",
-        "value": "p3",
-        "text": "Portuguese"
-    },
-    {
-        "id": "language",
-        "value": "r1",
-        "text": "Romanian"
-    },
-    {
-        "id": "language",
-        "value": "r2",
-        "text": "Russian"
-    },
-    {
-        "id": "language",
-        "value": "s1",
-        "text": "Samoan"
-    },
-    {
-        "id": "language",
-        "value": "s2",
-        "text": null
-    },
-    {
-        "id": "language",
-        "value": "s3",
-        "text": "Sinhalese"
-    },
-    {
-        "id": "language",
-        "value": "s4",
-        "text": "Slovakian"
-    },
-    {
-        "id": "language",
-        "value": "s5",
-        "text": "Slovenian"
-    },
-    {
-        "id": "language",
-        "value": "s6",
-        "text": "Somali"
-    },
-    {
-        "id": "language",
-        "value": "s7",
-        "text": "Sotho"
     },
     {
         "id": "language",
@@ -757,63 +467,8 @@
     },
     {
         "id": "language",
-        "value": "s9",
-        "text": "Swahili"
-    },
-    {
-        "id": "language",
-        "value": "sb",
-        "text": null
-    },
-    {
-        "id": "language",
-        "value": "t1",
-        "text": "Tagalog"
-    },
-    {
-        "id": "language",
-        "value": "t2",
-        "text": "Tajik"
-    },
-    {
-        "id": "language",
-        "value": "t3",
-        "text": "Thai"
-    },
-    {
-        "id": "language",
-        "value": "t4",
-        "text": "Tibetan"
-    },
-    {
-        "id": "language",
-        "value": "t5",
-        "text": "Tongan"
-    },
-    {
-        "id": "language",
-        "value": "t6",
-        "text": "Turkish"
-    },
-    {
-        "id": "language",
-        "value": "t7",
-        "text": "Turkmeni"
-    },
-    {
-        "id": "language",
-        "value": "t8",
-        "text": "Tswana"
-    },
-    {
-        "id": "language",
-        "value": "u1",
-        "text": "Urdu"
-    },
-    {
-        "id": "language",
-        "value": "u2",
-        "text": "Uzbeki"
+        "value": "c1",
+        "text": "Chinese"
     },
     {
         "id": "language",
@@ -822,13 +477,28 @@
     },
     {
         "id": "language",
-        "value": "x1",
-        "text": "Xhosa"
+        "value": "h3",
+        "text": "Hindi"
     },
     {
         "id": "language",
-        "value": "z1",
-        "text": "Zulu"
+        "value": "p3",
+        "text": "Portuguese"
+    },
+    {
+        "id": "language",
+        "value": "i3",
+        "text": "Italian"
+    },
+    {
+        "id": "language",
+        "value": "k4",
+        "text": "Korean"
+    },
+    {
+        "id": "language",
+        "value": "a4",
+        "text": "Arabic"
     }
 ], "home_owner": [
     {
@@ -5340,1004 +5010,454 @@
 ], "most_recent_mortgage_interest_rate": [
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 0.0,
-        "text": 0.0
+        "value": "2.0",
+        "text": "2.0"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 1.0,
-        "text": 1.0
+        "value": "2.25",
+        "text": "2.25"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 1.25,
-        "text": 1.25
+        "value": "2.5",
+        "text": "2.5"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 1.5,
-        "text": 1.5
+        "value": "2.75",
+        "text": "2.75"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 10.0,
-        "text": 10.0
+        "value": "3.0",
+        "text": "3.0"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 12.0,
-        "text": 12.0
+        "value": "3.25",
+        "text": "3.25"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 2.0,
-        "text": 2.0
+        "value": "3.5",
+        "text": "3.5"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 3.0,
-        "text": 3.0
+        "value": "3.75",
+        "text": "3.75"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 3.125,
-        "text": 3.125
+        "value": "4.0",
+        "text": "4.0"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 3.25,
-        "text": 3.25
+        "value": "4.25",
+        "text": "4.25"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 3.375,
-        "text": 3.375
+        "value": "4.5",
+        "text": "4.5"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 3.5,
-        "text": 3.5
+        "value": "4.75",
+        "text": "4.75"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 3.625,
-        "text": 3.625
+        "value": "5.0",
+        "text": "5.0"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 3.75,
-        "text": 3.75
+        "value": "5.25",
+        "text": "5.25"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 3.87,
-        "text": 3.87
+        "value": "5.5",
+        "text": "5.5"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 3.875,
-        "text": 3.875
+        "value": "5.75",
+        "text": "5.75"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 3.99,
-        "text": 3.99
+        "value": "6.0",
+        "text": "6.0"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.0,
-        "text": 4.0
+        "value": "6.25",
+        "text": "6.25"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.12,
-        "text": 4.12
+        "value": "6.5",
+        "text": "6.5"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.125,
-        "text": 4.125
+        "value": "6.75",
+        "text": "6.75"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.25,
-        "text": 4.25
+        "value": "7.0",
+        "text": "7.0"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.37,
-        "text": 4.37
+        "value": "7.25",
+        "text": "7.25"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.375,
-        "text": 4.375
+        "value": "7.5",
+        "text": "7.5"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.5,
-        "text": 4.5
+        "value": "7.75",
+        "text": "7.75"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.62,
-        "text": 4.62
+        "value": "8.0",
+        "text": "8.0"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.625,
-        "text": 4.625
+        "value": "8.25",
+        "text": "8.25"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.75,
-        "text": 4.75
+        "value": "8.5",
+        "text": "8.5"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.87,
-        "text": 4.87
+        "value": "8.75",
+        "text": "8.75"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.875,
-        "text": 4.875
+        "value": "9.0",
+        "text": "9.0"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 4.99,
-        "text": 4.99
+        "value": "9.25",
+        "text": "9.25"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.0,
-        "text": 5.0
+        "value": "9.5",
+        "text": "9.5"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.12,
-        "text": 5.12
+        "value": "9.75",
+        "text": "9.75"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.125,
-        "text": 5.125
+        "value": "10.0",
+        "text": "10.0"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.25,
-        "text": 5.25
+        "value": "10.25",
+        "text": "10.25"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.37,
-        "text": 5.37
+        "value": "10.5",
+        "text": "10.5"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.375,
-        "text": 5.375
+        "value": "10.75",
+        "text": "10.75"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.49,
-        "text": 5.49
+        "value": "11.0",
+        "text": "11.0"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.5,
-        "text": 5.5
+        "value": "11.25",
+        "text": "11.25"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.62,
-        "text": 5.62
+        "value": "11.5",
+        "text": "11.5"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.625,
-        "text": 5.625
+        "value": "11.75",
+        "text": "11.75"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.74,
-        "text": 5.74
+        "value": "12.0",
+        "text": "12.0"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.75,
-        "text": 5.75
+        "value": "12.25",
+        "text": "12.25"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.87,
-        "text": 5.87
+        "value": "12.5",
+        "text": "12.5"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.875,
-        "text": 5.875
+        "value": "12.75",
+        "text": "12.75"
     },
     {
         "id": "most_recent_mortgage_interest_rate",
-        "value": 5.95,
-        "text": 5.95
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.99,
-        "text": 5.99
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.0,
-        "text": 6.0
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.12,
-        "text": 6.12
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.125,
-        "text": 6.125
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.24,
-        "text": 6.24
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.25,
-        "text": 6.25
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.37,
-        "text": 6.37
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.375,
-        "text": 6.375
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.4,
-        "text": 6.4
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.45,
-        "text": 6.45
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.49,
-        "text": 6.49
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.5,
-        "text": 6.5
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.6,
-        "text": 6.6
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.62,
-        "text": 6.62
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.625,
-        "text": 6.625
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.74,
-        "text": 6.74
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.75,
-        "text": 6.75
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.87,
-        "text": 6.87
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.875,
-        "text": 6.875
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.95,
-        "text": 6.95
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.99,
-        "text": 6.99
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.0,
-        "text": 7.0
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.125,
-        "text": 7.125
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.24,
-        "text": 7.24
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.25,
-        "text": 7.25
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.35,
-        "text": 7.35
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.375,
-        "text": 7.375
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.45,
-        "text": 7.45
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.49,
-        "text": 7.49
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.5,
-        "text": 7.5
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.6,
-        "text": 7.6
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.625,
-        "text": 7.625
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.65,
-        "text": 7.65
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.7,
-        "text": 7.7
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.74,
-        "text": 7.74
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.75,
-        "text": 7.75
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.8,
-        "text": 7.8
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.85,
-        "text": 7.85
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.875,
-        "text": 7.875
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.9,
-        "text": 7.9
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.95,
-        "text": 7.95
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.99,
-        "text": 7.99
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.0,
-        "text": 8.0
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.125,
-        "text": 8.125
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.25,
-        "text": 8.25
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.375,
-        "text": 8.375
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.5,
-        "text": 8.5
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.625,
-        "text": 8.625
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.75,
-        "text": 8.75
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.875,
-        "text": 8.875
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.99,
-        "text": 8.99
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 9.0,
-        "text": 9.0
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 9.25,
-        "text": 9.25
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 9.5,
-        "text": 9.5
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 18,
-        "text": 9.75
+        "value": "13.0",
+        "text": "13.0"
     }
 ], "second_most_recent_mortgage_interest_rate": [
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 0.0,
-        "text": 0.0
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "2.0",
+        "text": "2.0"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 1.0,
-        "text": 1.0
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "2.25",
+        "text": "2.25"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 1.25,
-        "text": 1.25
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "2.5",
+        "text": "2.5"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 1.5,
-        "text": 1.5
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "2.75",
+        "text": "2.75"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 10.0,
-        "text": 10.0
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "3.0",
+        "text": "3.0"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 12.0,
-        "text": 12.0
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "3.25",
+        "text": "3.25"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 2.0,
-        "text": 2.0
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "3.5",
+        "text": "3.5"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 3.0,
-        "text": 3.0
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "3.75",
+        "text": "3.75"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 3.125,
-        "text": 3.125
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "4.0",
+        "text": "4.0"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 3.25,
-        "text": 3.25
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "4.25",
+        "text": "4.25"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 3.375,
-        "text": 3.375
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "4.5",
+        "text": "4.5"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 3.5,
-        "text": 3.5
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "4.75",
+        "text": "4.75"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 3.625,
-        "text": 3.625
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "5.0",
+        "text": "5.0"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 3.75,
-        "text": 3.75
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "5.25",
+        "text": "5.25"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 3.87,
-        "text": 3.87
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "5.5",
+        "text": "5.5"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 3.875,
-        "text": 3.875
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "5.75",
+        "text": "5.75"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 3.99,
-        "text": 3.99
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "6.0",
+        "text": "6.0"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.0,
-        "text": 4.0
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "6.25",
+        "text": "6.25"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.12,
-        "text": 4.12
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "6.5",
+        "text": "6.5"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.125,
-        "text": 4.125
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "6.75",
+        "text": "6.75"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.25,
-        "text": 4.25
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "7.0",
+        "text": "7.0"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.37,
-        "text": 4.37
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "7.25",
+        "text": "7.25"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.375,
-        "text": 4.375
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "7.5",
+        "text": "7.5"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.5,
-        "text": 4.5
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "7.75",
+        "text": "7.75"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.62,
-        "text": 4.62
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "8.0",
+        "text": "8.0"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.625,
-        "text": 4.625
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "8.25",
+        "text": "8.25"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.75,
-        "text": 4.75
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "8.5",
+        "text": "8.5"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.87,
-        "text": 4.87
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "8.75",
+        "text": "8.75"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.875,
-        "text": 4.875
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "9.0",
+        "text": "9.0"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 4.99,
-        "text": 4.99
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "9.25",
+        "text": "9.25"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.0,
-        "text": 5.0
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "9.5",
+        "text": "9.5"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.12,
-        "text": 5.12
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "9.75",
+        "text": "9.75"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.125,
-        "text": 5.125
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "10.0",
+        "text": "10.0"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.25,
-        "text": 5.25
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "10.25",
+        "text": "10.25"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.37,
-        "text": 5.37
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "10.5",
+        "text": "10.5"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.375,
-        "text": 5.375
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "10.75",
+        "text": "10.75"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.49,
-        "text": 5.49
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "11.0",
+        "text": "11.0"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.5,
-        "text": 5.5
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "11.25",
+        "text": "11.25"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.62,
-        "text": 5.62
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "11.5",
+        "text": "11.5"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.625,
-        "text": 5.625
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "11.75",
+        "text": "11.75"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.74,
-        "text": 5.74
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "12.0",
+        "text": "12.0"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.75,
-        "text": 5.75
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "12.25",
+        "text": "12.25"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.87,
-        "text": 5.87
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "12.5",
+        "text": "12.5"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.875,
-        "text": 5.875
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "12.75",
+        "text": "12.75"
     },
     {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.95,
-        "text": 5.95
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 5.99,
-        "text": 5.99
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.0,
-        "text": 6.0
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.12,
-        "text": 6.12
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.125,
-        "text": 6.125
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.24,
-        "text": 6.24
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.25,
-        "text": 6.25
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.37,
-        "text": 6.37
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.375,
-        "text": 6.375
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.4,
-        "text": 6.4
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.45,
-        "text": 6.45
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.49,
-        "text": 6.49
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.5,
-        "text": 6.5
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.6,
-        "text": 6.6
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.62,
-        "text": 6.62
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.625,
-        "text": 6.625
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.74,
-        "text": 6.74
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.75,
-        "text": 6.75
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.87,
-        "text": 6.87
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.875,
-        "text": 6.875
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.95,
-        "text": 6.95
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 6.99,
-        "text": 6.99
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.0,
-        "text": 7.0
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.125,
-        "text": 7.125
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.24,
-        "text": 7.24
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.25,
-        "text": 7.25
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.35,
-        "text": 7.35
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.375,
-        "text": 7.375
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.45,
-        "text": 7.45
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.49,
-        "text": 7.49
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.5,
-        "text": 7.5
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.6,
-        "text": 7.6
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.625,
-        "text": 7.625
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.65,
-        "text": 7.65
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.7,
-        "text": 7.7
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.74,
-        "text": 7.74
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.75,
-        "text": 7.75
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.8,
-        "text": 7.8
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.85,
-        "text": 7.85
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.875,
-        "text": 7.875
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.9,
-        "text": 7.9
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.95,
-        "text": 7.95
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 7.99,
-        "text": 7.99
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.0,
-        "text": 8.0
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.125,
-        "text": 8.125
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.25,
-        "text": 8.25
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.375,
-        "text": 8.375
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.5,
-        "text": 8.5
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.625,
-        "text": 8.625
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.75,
-        "text": 8.75
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.875,
-        "text": 8.875
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 8.99,
-        "text": 8.99
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 9.0,
-        "text": 9.0
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 9.25,
-        "text": 9.25
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 9.5,
-        "text": 9.5
-    },
-    {
-        "id": "most_recent_mortgage_interest_rate",
-        "value": 18,
-        "text": 9.75
+        "id": "second_most_recent_mortgage_interest_rate",
+        "value": "13.0",
+        "text": "13.0"
     }
 ], "purchase_1st_mortgage_interest_rate": [
     {
