@@ -981,9 +981,9 @@ class FacetsTextTranslator
     return value if not @translation.has_key?(key)
 
     if @string_values.include?(key)
-      value = value.capitalize rescue value.to_s
+      value = value.to_s.capitalize rescue value.to_s
     else
-      value = value.capitalize.to_sym
+      value = value.to_s.capitalize.to_sym
     end
     value = @translation[key][value]
     value
