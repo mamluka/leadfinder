@@ -234,7 +234,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
                 function formatValue(value) {
                     if (elm.data('use-thousands'))
-                        return parseInt(value) / 1000 + 'K';
+                        return parseInt(value) / 100 + 'K';
 
                     return  value;
                 }
