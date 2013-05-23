@@ -234,7 +234,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
                 function formatValue(value) {
                     if (elm.data('use-thousands'))
-                        return parseInt(value) / 100 + 'K';
+                        return parseInt(value) / 1000 + 'K';
 
                     return  value;
                 }
@@ -483,7 +483,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             controller: function ($scope, $element) {
 
                 $scope.$watch('howManyLeads', function () {
-                    $scope.totalPrice = $.formatNumber($scope.howManyLeads * $scope.pricePerLead / 1000);
+                    $scope.totalPrice = $.formatNumber($scope.howManyLeads * $scope.pricePerLead / 100);
                 });
 
             },
