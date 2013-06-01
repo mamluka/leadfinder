@@ -20,3 +20,4 @@ data/*
 .idea/*
 web/.idea/*
 downloads/*
+api/buy/orders/*
