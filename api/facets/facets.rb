@@ -51,26 +51,6 @@ class Facets < Grape::API
     end
   end
 
-
-  get :all do
-
-    facets_list = get_facets_list.uniq
-    s = Tire.search do
-
-      query do
-        string '*'
-      end
-
-      facets_list.each do |facet|
-        facet facet, :global => true do
-          terms facet.to_s, size: 100
-        end
-      end
-    end
-
-    api_response(s)
-  end
-
   get 'all-cached' do
 
     File.read(File.dirname(__FILE__) + '/all-facets.json')

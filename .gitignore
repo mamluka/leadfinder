@@ -20,3 +20,5 @@ data/*
 .idea/*
 web/.idea/*
 downloads/*
+api/log/*
+api/tmp/*
