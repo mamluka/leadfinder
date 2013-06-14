@@ -40,6 +40,7 @@ class PayJunction
         'M4' => 'Declined.',
         'DT' => 'Duplicate Transaction.',
     }
+	@config = JSON.parse(File.read(File.dirname(__FILE__)+'/config.json'))
   end
 
   def charge(details)
@@ -53,8 +54,8 @@ class PayJunction
     amount = details[:amount].to_f.round(2)
 
     hash = {
-        dc_logon: 'pj-ql-01',
-        dc_password: 'pj-ql-01p',
+        dc_logon: @config['logon'],
+        dc_password: @config['password'],
         dc_name: first_name,
         dc_first_name: first_name,
         dc_last_name: last_name,
@@ -68,7 +69,7 @@ class PayJunction
 
     p hash
 
-    result = Typhoeus.post "https://www.payjunctionlabs.com/quick_link", ssl_verifypeer: true, ssl_verifyhost: 2, body: hash
+    result = Typhoeus.post "https://www.payjunction.com/quick_link", ssl_verifypeer: true, ssl_verifyhost: 2, body: hash
 
     parsed_result = Hash[result.response_body
                          .split(/\u001C/)

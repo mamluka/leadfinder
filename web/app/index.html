@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/msgBoxLight.css"/>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
-    <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js"></script>
 </head>
 <body>
@@ -629,7 +629,7 @@
                     </div>
                 </div>
 
-
+	
             </pane>
 
             </tabs>
@@ -694,14 +694,14 @@
                                     <option value="2">02</option>
                                     <option value="3">03</option>
                                     <option value="4">04</option>
-                                    <option value="4">05</option>
-                                    <option value="4">06</option>
-                                    <option value="4">07</option>
-                                    <option value="4">08</option>
-                                    <option value="4">09</option>
-                                    <option value="4">10</option>
-                                    <option value="4">11</option>
-                                    <option value="4">12</option>
+                                    <option value="5">05</option>
+                                    <option value="6">06</option>
+                                    <option value="7">07</option>
+                                    <option value="8">08</option>
+                                    <option value="9">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
                                 </select>
 
                                 <select class="input-small inline" ng-model="ccYear">
@@ -713,11 +713,11 @@
                             </div>
                         </div>
 
-                        <div class="control-group">
+                        <div class="control-group" style="display:none">
                             <label class="control-label">CCV:</label>
 
                             <div class="controls">
-                                <input type="text" class="input-small" placeholder="CCV" ng-model="ccCCV" required/>
+                                <input type="text" class="input-small" placeholder="CCV" ng-model="ccCCV"  value="000"/>
                             </div>
                         </div>
 
@@ -738,10 +738,6 @@
                     <div>You have {{total}} leads to purchase</div>
 
                     <facets></facets>
-
-                    <h5>Please choose how many leads you like buy:</h5>
-
-                    <div choose-number-of-leads how-many-leads="howManyLeads" price-per-lead="pricePerLead"></div>
 
                     <div>
                         <button class="btn" ng-click="prepareToBuy()">Choose leads</button>

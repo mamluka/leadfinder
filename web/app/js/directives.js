@@ -483,7 +483,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             controller: function ($scope, $element) {
 
                 $scope.$watch('howManyLeads', function () {
-                    $scope.totalPrice = $.formatNumber($scope.howManyLeads * $scope.pricePerLead / 1000);
+                    $scope.totalPrice = $.formatNumber($scope.howManyLeads * $scope.pricePerLead / 100);
                 });
 
             },

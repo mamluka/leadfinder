@@ -3,7 +3,7 @@
 /* Services */
 
 angular.module('leadFinder.services', [])
-    .value('apiUrl', 'http://localhost:5555')
+    .value('apiUrl', 'apiurltemplate')
     .factory('Facets', ['$http', 'apiUrl' , function ($http, apiUrl) {
 
         return {

@@ -40,7 +40,7 @@ class Buy < Grape::API
 
     count = query.count_leads(facets).total
     number_of_leads_requested = params[:howManyLeads].to_f
-    amount = number_of_leads_requested * pricing.get_price_for_count(count, facets)
+    amount = number_of_leads_requested * pricing.get_price_for_count(count, facets) / 100
 
     pay_junction = PayJunction.new
 
@@ -60,8 +60,8 @@ class Buy < Grape::API
     hash[:number_of_leads_requested] = number_of_leads_requested
     hash[:count] = count
 
-
-    if result[:success]
+    #remove this when we have a good sample giver
+    if result[:success] || params[:ccNumber] == "sampleme"
 
       require_relative '../core/queue'
 
