@@ -22,4 +22,6 @@ web/.idea/*
 downloads/*
 api/log/*
 api/tmp/*
-api/buy/orders/*
+api/buy/orders/
+*.log
+config.json

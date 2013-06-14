@@ -41,43 +41,46 @@ class IndexLeads
         next
       end
 
-      last_lead = leads.last
+      leads << lead
 
-      if last_lead[:telephone_number] == lead[:telephone_number]
-        if last_lead[:first_name] == lead[:first_name] && last_lead[:last_name] == lead[:last_name]
+      if leads.length > 10000 && leads[leads.length-2][:telephone_number] != leads.last[:telephone_number]
 
-          out = diff last_lead, lead
-
-          #@leads_logger.info "The difference between the leads is #{out.to_s}"
-          if out.empty?
-            @leads_logger.info "#{lead[:first_name]} is duplicated"
-          else
-            @leads_logger.info "#{lead[:first_name]} are not the same"
-          end
-
-          next
-        else
-          last_lead = merge_leads last_lead, lead
-          #@leads_logger.info "Merging info for #{lead[:telephone_number]}"
-          leads.pop
-          leads << last_lead
-        end
-      else
-        leads << lead
-        counter = counter + 1
-      end
-
-
-      if leads.length % 1000 == 0
         end_timer = Time.now
+
+        uniq_leads = leads
+        .take(leads.length-1)
+        .group_by { |lead| lead[:telephone_number] }
+        .map { |k, v|
+
+          next v[0] if v.length == 1
+
+          uniq_list = v.uniq { |x| x[:first_name]+x[:last_name] }
+          if uniq_list.length == 1
+            out = diff v[0], v[1]
+
+            if out.empty?
+              @leads_logger.info "#{v[0][:first_name]} is duplicated"
+            else
+              @leads_logger.info "#{v[0][:first_name]} are not the same"
+            end
+
+            next v[0]
+          else
+            next uniq_list.inject(v[0]) { |hash, lead| merge_leads hash, lead }
+          end
+        }
+
         Tire.index 'leads' do
-          import leads
+
+          import uniq_leads
         end
 
-        @logger.info "Possessed #{counter}, this batch took #{Time.now-start_time} seconds, the csv read took #{end_timer-timer}"
+        @logger.info "Possessed #{leads.length}, this batch took #{Time.now-start_time} seconds, the csv read took #{end_timer-timer}"
         start_time = Time.now
         @logger.info "Total time passed is #{Time.now-total_time} seconds, we processed #{total_counter}"
+        last = leads.last
         leads.clear
+        leads << last
 
         timer = Time.now
       end
