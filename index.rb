@@ -43,7 +43,7 @@ class IndexLeads
 
       leads << lead
 
-      if leads.length > 10000 && leads[leads.length-2][:telephone_number] != leads.last[:telephone_number]
+      if leads.length > 3500 && leads[leads.length-2][:telephone_number] != leads.last[:telephone_number]
 
         end_timer = Time.now
 
