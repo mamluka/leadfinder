@@ -3,6 +3,7 @@ require 'csv'
 require 'time'
 require 'securerandom'
 require 'logger'
+require 'digest/md5'
 
 require_relative 'datafile-converters'
 
@@ -13,6 +14,15 @@ class IndexLeads
   end
 
   def index(file)
+
+    Tire.index 'leads' do
+      create :mappings => {
+          :person => {
+              _parent: {type: 'household'}
+          }
+      }
+    end
+
     converter = DataConverters.new
 
     leads = Array.new
@@ -47,32 +57,25 @@ class IndexLeads
 
         end_timer = Time.now
 
-        uniq_leads = leads
+        people = leads
         .take(leads.length-1)
-        .group_by { |lead| lead[:telephone_number] }
-        .map { |k, v|
-
-          next v[0] if v.length == 1
-
-          uniq_list = v.uniq { |x| x[:first_name]+x[:last_name] }
-          if uniq_list.length == 1
-            out = diff v[0], v[1]
-
-            if out.empty?
-              @leads_logger.info "#{v[0][:first_name]} is duplicated"
-            else
-              @leads_logger.info "#{v[0][:first_name]} are not the same"
-            end
-
-            next v[0]
+        .uniq { |x|
+          if x[:telephone_number] == '0000000000'
+            x[:full_address] + x[:first_name] + x[:last_name]
           else
-            next uniq_list.inject(v[0]) { |hash, lead| merge_leads hash, lead }
+            x[:telephone_number] + x[:first_name] + x[:last_name]
           end
+
         }
 
-        Tire.index 'leads' do
+        households = people.map { |x| {_id: x[:_parent], _type: 'household'} }
 
-          import uniq_leads
+        Tire.index 'leads' do
+          import households
+        end
+
+        Tire.index 'leads' do
+          import people
         end
 
         @logger.info "Possessed #{leads.length}, this batch took #{Time.now-start_time} seconds, the csv read took #{end_timer-timer}"
@@ -86,12 +89,6 @@ class IndexLeads
       end
 
     }
-    @logger.info "Possessed #{counter}"
-
-    Tire.index 'leads' do
-      import leads
-    end
-
   end
 
   def diff(first, second)
@@ -123,7 +120,12 @@ class IndexLeads
   end
 
   def extract_lead(convert, csv)
+    full_address = "#{csv[:st]}:#{csv[:city]}:#{csv[:addr]}:#{csv[:zip]}"
+    parent = csv[:phone].nil? ? Digest::MD5.hexdigest(full_address) : csv[:phone]
+
     {
+        _type: 'person',
+        _parent: parent,
         first_name: csv[:fn],
         last_name: csv[:ln],
         name_prefix: csv[:name_pre],
@@ -132,8 +134,9 @@ class IndexLeads
         state: csv[:st],
         city: csv[:city],
         zip: csv[:zip],
+        full_address: full_address,
         has_telephone_number: !csv[:phone].nil?,
-        telephone_number: csv[:phone],
+        telephone_number: csv[:phone].nil? ? '0000000000' : csv[:phone],
         do_not_call: convert.from_yes_no(csv[:do_not_call]),
         gender: csv[:gender],
         inferred_household_rank: csv[:inf_hh_rank].to_i,
