@@ -16,11 +16,20 @@ class IndexLeads
   def index(file)
 
     Tire.index 'leads' do
-      create :mappings => {
-          :person => {
+      create mappings: {
+          person: {
               _parent: {type: 'household'}
           }
-      }
+      },
+             settings: {
+                 number_of_shards: 3,
+                 number_of_replicas: 0,
+                 refresh_interval: -1,
+                 'translog.flush_threshold_ops' => 50000,
+                 'translog.flush_threshold_size' => '2000mb',
+                 'translog.flush_threshold_period' => '210m',
+                 'merge.policy.max_merge_at_once' => 2,
+             }
     end
 
     converter = DataConverters.new
