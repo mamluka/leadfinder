@@ -69,10 +69,13 @@ class IndexLeads
         .take(leads.length-1)
         .group_by { |x| x[:household_id] }
         .map { |k, v|
+          unique_leads = v.uniq { |x| x[:first_name] + x[:last_name] }
+
           {
               type: 'household',
               household_id: k,
-              people: v
+              household_size: v.length,
+              people: unique_leads
           }
         }
 
@@ -122,7 +125,7 @@ class IndexLeads
   end
 
   def extract_lead(convert, csv)
-    full_address = "#{csv[:st]}:#{csv[:city]}:#{csv[:addr]}:#{csv[:zip]}"
+    full_address = "#{csv[:st]}:#{csv[:city]}:#{csv[:addr]}:#{csv[:zip]}:#{csv[:apt]}"
     household_id = csv[:phone].nil? ? Digest::MD5.hexdigest(full_address) : Digest::MD5.hexdigest(csv[:phone])
 
     {
@@ -159,6 +162,7 @@ class IndexLeads
         language: csv[:ethnic_lang],
         credit_rating: convert.convert(:credit_rating, csv[:credit_rating]),
         pool: convert.from_yes_no(csv[:prop_pool]),
+        load_to_value: csv[:genl_loan_to_value],
         mortgage_purchase_date_ccyymmdd: (Time.parse(csv[:genl_purch_dt]).year rescue nil),
         mortgage_purchase_price: csv[:genl_purch_amt].to_i,
         most_recent_mortgage_amount: csv[:mr_amt].to_i,

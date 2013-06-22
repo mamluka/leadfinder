@@ -36,3 +36,9 @@
 .no-label {
     margin-left: 180px;
 }
+.state-checkbox {
+    width:200px;
+}
+.lead-count-loading {
+    margin-left:15px;
+}

@@ -973,7 +973,7 @@ class FacetsTextTranslator
 
   def translate(key, value)
 
-    return 'Not Specified' if value.nil?
+    return nil if value.nil?
 
     key = key.to_sym
     key = @keys[key] if @keys.has_key?(key)

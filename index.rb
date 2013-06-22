@@ -22,13 +22,14 @@ class IndexLeads
           }
       },
              settings: {
-                 number_of_shards: 3,
+                 number_of_shards: 1,
                  number_of_replicas: 0,
                  refresh_interval: -1,
                  'translog.flush_threshold_ops' => 50000,
                  'translog.flush_threshold_size' => '2000mb',
                  'translog.flush_threshold_period' => '210m',
-                 'merge.policy.max_merge_at_once' => 2,
+                 'merge.policy.max_merge_at_once' => 1,
+                 'merge.policy.max_merged_segment' => '2g',
              }
     end
 
@@ -168,7 +169,10 @@ class IndexLeads
         language: csv[:ethnic_lang],
         credit_rating: convert.convert(:credit_rating, csv[:credit_rating]),
         pool: convert.from_yes_no(csv[:prop_pool]),
+        year_built: csv[:prop_bld_yr].to_i,
+        air_conditioning: csv[:prop_ac],
         mortgage_purchase_date_ccyymmdd: (Time.parse(csv[:genl_purch_dt]).year rescue nil),
+        load_to_value: csv[:genl_loan_to_value].nil? ? nil : csv[:genl_loan_to_value].to_f/100,
         mortgage_purchase_price: csv[:genl_purch_amt].to_i,
         most_recent_mortgage_amount: csv[:mr_amt].to_i,
         most_recent_mortgage_date: (Time.parse(csv[:mr_dt]).year rescue nil),

@@ -7,8 +7,12 @@ class Queries
 
     s = Tire.search 'leads' do
       query do
-        filtered do
-          filter :bool, {:must => must_filters}
+        nested :path => 'people' do
+          query do
+            filtered do
+              filter :bool, {:must => must_filters}
+            end
+          end
         end
       end
 
@@ -26,14 +30,18 @@ class Queries
 
     s = Tire.search 'leads' do
       query do
-        filtered do
-          filter :bool, {:must => must_filters}
+        nested :path => 'people' do
+          query do
+            filtered do
+              filter :bool, {:must => must_filters}
+            end
+          end
         end
       end
 
       sort do
         by :_script, {
-            script: "org.elasticsearch.common.Digest.md5Hex(doc['_id'].value + salt)",
+            script: "org.elasticsearch.common.Digest.md5Hex(doc['household_id'].value + salt)",
             type: 'string',
             params: {
                 salt: SecureRandom.uuid
@@ -44,6 +52,8 @@ class Queries
 
       size size
     end
+
+    p s.to_json
 
     s.results
   end

@@ -1,7 +1,9 @@
 class OrderEmails < EmailBase
-  def download_order(email, file_id)
+  def download_order(email, name, order_id)
 
-    @file_id = file_id
-    prepare_email to: email, subject: 'Here is your order from LeadFinder'
+    @name = name
+    @order_id = order_id
+
+    prepare_email to: email, subject: 'ORDER CONFIRMATION'
   end
 end

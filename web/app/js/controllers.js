@@ -10,9 +10,11 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
 
 
     }])
-    .controller('GeographicsController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
+    .controller('GeographicsController', ['$scope', '$rootScope', 'Wizard', 'DefaultSearchConfigurations', function ($scope, $rootScope, wizard, defaultSearchConfigurations) {
 
         $scope.showPage = true;
+
+        defaultSearchConfigurations.apply();
 
         $scope.next = function () {
 
@@ -29,64 +31,45 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
             $scope.showPage = data.page == "geo";
         });
 
+        $scope.$watch('selectedPaneId', function () {
+            $rootScope.$broadcast('geo-include', {paneId: $scope.selectedPaneId});
+        })
+    }])
+    .controller('StateSelectController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
         $scope.selectedStates = [];
-
-        $scope.addState = function () {
-            var selectedState = $scope.selectedState;
-
-            if (!selectedState || selectedState.value === "none") {
-                alert('Please select a state to add');
-                return;
-            }
-
-            if (_.some($scope.selectedStates, function (x) {
-                return x.value == selectedState.value
-            }))
-                return;
-
-            $scope.selectedStates.push(selectedState);
-
-            var value = _.map($scope.selectedStates,function (x) {
-                return x.value
-            }).join(',');
-
-            var text = _.map($scope.selectedStates,function (x) {
-                return x.text
-            }).join(',');
-
-            wizard.update(selectedState.facetId, value);
-            facetEvents.facetsSelected(selectedState.facetLabel, text, selectedState.facetId);
-            facetEvents.recalculateTotal();
-        }
+    }])
+    .controller('ZipSelectController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
 
     }])
     .controller('SummeryController', ['$scope', 'Wizard', 'Leads', '$rootScope', function ($scope, wizard, leads, $rootScope) {
 
 
         $scope.showLeadCountChooser = false;
+        $scope.countingLeads = false
 
         $scope.$on('facets-recalculate-total', function () {
 
             var selectedFacets = wizard.getSelectedFacets();
+            $scope.countingLeads = true;
 
             leads.getTotalLeadsByFacets(selectedFacets).done(function (data) {
                 $scope.$apply(function () {
-                    $scope.total = data.total;
-                    $scope.pricePerLead = data.pricePerLead;
-                    $scope.showLeadCountChooser = true;
-                    $scope.howManyLeads = data.total;
+                    $scope.countingLeads = false;
+
+                    if (data.total == 0) {
+                        $scope.showLeadCountChooser = false;
+
+                    } else {
+                        $scope.showLeadCountChooser = true;
+                        $scope.total = $.formatNumber(data.total, {format: "#,###", locale: "us"});
+                        $scope.pricePerLead = data.pricePerLead;
+                    }
                 })
             })
         });
 
         $scope.prepareToBuy = function () {
-
-            if ($scope.howManyLeads > $scope.total) {
-                alert("Yuo can't buy more leads then we have!");
-                return;
-            }
-
-            $rootScope.$broadcast('buy-committed', {howManyLeads: $scope.howManyLeads, pricePerLead: $scope.pricePerLead});
+            $rootScope.$broadcast('buy-committed', {total: $scope.total, pricePerLead: $scope.pricePerLead});
             $rootScope.$broadcast('change-page', {page: 'buy'});
         }
     }])
@@ -100,7 +83,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
         });
 
         $rootScope.$on('buy-committed', function (e, data) {
-            $scope.howManyLeads = data.howManyLeads;
+            $scope.total = data.total;
             $scope.pricePerLead = data.pricePerLead;
         });
 

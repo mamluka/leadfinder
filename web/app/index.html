@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/app.css"/>
     <link rel="stylesheet" href="css/bootstrap.css"/>
     <link rel="stylesheet" href="css/msgBoxLight.css"/>
+    <link rel="stylesheet" href="css/chosen.css"/>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -33,7 +34,7 @@
             return $(x).data('loaded') == "true"
         });
 
-        if (allLoaded.length == 12) {
+        if (allLoaded.length == 13) {
 
             loader.remove();
 
@@ -55,28 +56,40 @@
 <span class="span8">
             <div ng-controller="GeographicsController">
                 <form class="form-horizontal" ng-show="showPage">
-                    <div class="control-group">
-                        <label class="radio">
+                    <tabs display-tabs="true" selected-pane-id="selectedPaneId">
+                        <pane title="States" id="state">
+                            <div ng-controller="StateSelectController">
+                                <div class="control-group">
+                                    <label class="control-label wide">Choose a state from checkbox list</label>
 
-                        </label>
-                        <label class="control-label wide"><input facet-excluder type="radio" value="zip" name="geo" style="float:left" ng-checked="true" exclude="geoExcluded"/>Choose a state</label>
+                                    <div class="controls wide">
+                                        <div class="form-inline" style="width:750px;" checkbox-list-facet data-facet-id="state" data-facet-label="State" selected-states="selectedStates"></div>
+                                    </div>
+                                </div>
 
-                        <div class="controls wide">
-                            <select display-list-facet data-facet-id="state" data-facet-label="State" selected-data="selectedState" exclude="geoExcluded"></select>
-                            <button class="btn btn-primary" ng-click="addState()">Add State</button>
-                        </div>
-                    </div>
+                                <!--<div class="control-group">-->
+                                <!--<label class="control-label wide">Use a map</label>-->
 
-                    <div class="control-group">
-                        <label class="control-label wide"><input facet-excluder type="radio" value="state" name="geo" style="float:left" exclude="geoExcluded"/>Fill in a list of zip codes</label>
+                                <!--<div class="controls wide">-->
+                                <!--<div us-map-facet style="width: 500px; height: 300px;" data-facet-id="state" data-facet-label="State" selected-states="selectedStates"></div>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                        </pane>
+                        <pane title="Zip Code List" id="zip">
+                            <div ng-controller="ZipSelectController">
+                                <div class="control-group">
+                                    <label class="control-label wide">Fill in a list of zip codes</label>
 
-                        <div class="controls wide">
-                            <textarea multiline-facet data-facet-id="zip" data-facet-label="Zip" exclude="geoExcluded" class="input-xlarge" rows="10"></textarea>
+                                    <div class="controls wide">
+                                        <textarea multiline-facet data-facet-id="zip" data-facet-label="Zip" class="input-xlarge" rows="10"></textarea>
+                                    </div>
+                                </div>
 
 
-                        </div>
-                    </div>
-
+                            </div>
+                        </pane>
+                    </tabs>
 
                     <div class="control-group">
                         <div class="controls wide">
@@ -104,19 +117,11 @@
                     <form class="form-inline no-label">
 
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="has_children" data-facet-label="Has children" data-checked-value="T"/>Has children
-                        </label>
-
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number" data-facet-label="Phone listed" data-checked-value="T"/><strong>Has phone number</strong>
+                            <input type="checkbox" checkbox-facet data-facet-id="has_children" data-facet-label="Has children" data-checked-value="true"/>Has children
                         </label>
 
                         <label class="checkbox">
                             <input type="checkbox" checkbox-facet data-facet-id="business_owner" data-facet-label="Business owner" data-checked-value="8"/>Business owner
-                        </label>
-
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="home_owner" data-facet-label="Home owner" data-checked-value="o"/>Home Owner
                         </label>
 
                     </form>
@@ -129,7 +134,7 @@
                             <label class="control-label">Language:</label>
 
                             <div class="controls">
-                                <select list-facet data-facet-id="language" data-facet-label="Language"></select>
+                                <select list-facet data-facet-id="language" data-facet-label="Language" multiple></select>
                             </div>
                         </div>
 
@@ -180,15 +185,15 @@
 
                     <form class="form-inline no-label">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="credit_card_user" data-facet-label="Credit card user" data-checked-value="T"/>Credit card holder
+                            <input type="checkbox" checkbox-facet data-facet-id="credit_card_user" data-facet-label="Credit card user" data-checked-value="true"/>Credit card holder
                         </label>
 
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="premium_card_holder" data-facet-label="Premium card holder" data-checked-value="T"/>Premium card holder
+                            <input type="checkbox" checkbox-facet data-facet-id="premium_card_holder" data-facet-label="Premium card holder" data-checked-value="true"/>Premium card holder
                         </label>
 
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="bank_card_holder" data-facet-label="Debit card holder" data-checked-value="T"/>Debit card holder
+                            <input type="checkbox" checkbox-facet data-facet-id="bank_card_holder" data-facet-label="Debit card holder" data-checked-value="true"/>Debit card holder
                         </label>
                     </form>
 
@@ -202,50 +207,29 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="control-group">
-                            <div class="controls">
-                                <label class="checkbox">
-                                    <input type="checkbox" checkbox-facet data-facet-id="investments_personal" data-facet-label="Personal investor" data-checked-value="T"/>Personal investor
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <div class="controls">
-                                <label class="checkbox">
-                                    <input type="checkbox" checkbox-facet data-facet-id="investments_real_estate" data-facet-label="Read estate investor" data-checked-value="T"/>Real estate investor
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <div class="controls">
-                                <label class="checkbox">
-                                    <input type="checkbox" checkbox-facet data-facet-id="investments_stocks_bonds" data-facet-label="Stocks investor" data-checked-value="T"/>Stocks investor
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <div class="controls">
-                                <label class="checkbox">
-                                    <input type="checkbox" checkbox-facet data-facet-id="money_seekers" data-facet-label="Money seeker" data-checked-value="T"/>Money seeker
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <div class="controls">
-                                <label class="checkbox">
-                                    <input type="checkbox" checkbox-facet data-facet-id="investments_foreign" data-facet-label="Foreign investor" data-checked-value="T"/>Foreign investor
-                                </label>
-                            </div>
-                        </div>
-
-
                     </form>
+                    <form class="form-inline no-label" style="width:500px;">
 
+                        <label class="checkbox">
+                            <input type="checkbox" checkbox-facet data-facet-id="investments_personal" data-facet-label="Personal investor" data-checked-value="true"/>Personal investor
+                        </label>
+
+                        <label class="checkbox">
+                            <input type="checkbox" checkbox-facet data-facet-id="investments_real_estate" data-facet-label="Read estate investor" data-checked-value="true"/>Real estate investor
+                        </label>
+
+                        <label class="checkbox">
+                            <input type="checkbox" checkbox-facet data-facet-id="investments_stocks_bonds" data-facet-label="Stocks investor" data-checked-value="true"/>Stocks investor
+                        </label>
+
+                        <label class="checkbox">
+                            <input type="checkbox" checkbox-facet data-facet-id="money_seekers" data-facet-label="Money seeker" data-checked-value="true"/>Money seeker
+                        </label>
+
+                        <label class="checkbox">
+                            <input type="checkbox" checkbox-facet data-facet-id="investments_foreign" data-facet-label="Foreign investor" data-checked-value="true"/>Foreign investor
+                        </label>
+                    </form>
 
                 </div>
             </pane>
@@ -253,6 +237,15 @@
             <pane title="Mortgage">
                 <div>
                     <form class="form-horizontal">
+
+                        <div class="control-group">
+
+                            <div class="controls">
+                                <label class="checkbox">
+                                    <input type="checkbox" checkbox-facet data-facet-id="home_owner" data-facet-label="Home owner" data-checked-value="o"/>Home Owner
+                                </label>
+                            </div>
+                        </div>
 
                         <div class="control-group">
                             <label class="control-label">Home market value:</label>
@@ -298,7 +291,7 @@
                             <label class="control-label">Most recent mortgage load type:</label>
 
                             <div class="controls">
-                                <select list-facet data-facet-id="most_recent_mortgage_loan_type" data-facet-label="Most recent mortgage load type"></select>
+                                <select list-facet data-facet-id="most_recent_mortgage_loan_type" data-facet-label="Most recent mortgage load type" multiple></select>
                             </div>
                         </div>
 
@@ -306,7 +299,7 @@
                             <label class="control-label">Most recent mortgage interest rate type:</label>
 
                             <div class="controls">
-                                <select list-facet data-facet-id="most_recent_mortgage_interest_rate_type" data-facet-label="Most recent mortgage interest rate type"></select>
+                                <select list-facet data-facet-id="most_recent_mortgage_interest_rate_type" data-facet-label="Most recent mortgage interest rate type" multiple></select>
                             </div>
                         </div>
 
@@ -314,7 +307,7 @@
                             <label class="control-label">Most recent lender name:</label>
 
                             <div class="controls">
-                                <select list-facet data-facet-id="most_recent_lender_name" data-facet-label="Most recent lender name"></select>
+                                <select list-facet data-facet-id="most_recent_lender" data-facet-label="Most recent lender name" multiple class="input-xxlarge"></select>
                             </div>
                         </div>
 
@@ -353,7 +346,7 @@
                             <label class="control-label">2nd Most recent mortgage load type:</label>
 
                             <div class="controls">
-                                <select list-facet data-facet-id="second_most_recent_mortgage_loan_type" data-facet-label="2nd Most recent mortgage load type"></select>
+                                <select list-facet data-facet-id="second_most_recent_mortgage_loan_type" data-facet-label="2nd Most recent mortgage load type" multiple></select>
                             </div>
                         </div>
 
@@ -361,7 +354,7 @@
                             <label class="control-label">2nd Most recent mortgage interest rate type:</label>
 
                             <div class="controls">
-                                <select list-facet data-facet-id="second_most_recent_mortgage_interest_rate_type" data-facet-label="2nd Most recent mortgage interest rate type"></select>
+                                <select list-facet data-facet-id="second_most_recent_mortgage_interest_rate_type" data-facet-label="2nd Most recent mortgage interest rate type" multiple></select>
                             </div>
                         </div>
 
@@ -369,7 +362,35 @@
                             <label class="control-label">2nd Most recent lender name:</label>
 
                             <div class="controls">
-                                <select list-facet data-facet-id="second_most_recent_lender_name" data-facet-label="2nd Most recent lender name"></select>
+                                <select list-facet data-facet-id="second_most_recent_lender" data-facet-label="2nd Most recent lender name" multiple class="input-xxlarge"></select>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">Year built:</label>
+
+                            <div class="controls">
+                                <div class="cool-slider">
+                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="year_built" data-facet-label="Year built" data-facet-handle-label="Year"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+
+                            <div class="controls">
+                                <label class="checkbox">
+                                    <input type="checkbox" checkbox-facet data-facet-id="pool" data-facet-label="Has pool" data-checked-value="true"/>Has pool
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+
+                            <div class="controls">
+                                <label class="checkbox">
+                                    <input type="checkbox" checkbox-facet data-facet-id="air_conditioning" data-facet-label="Home owner" data-checked-value="a,b,c,d,e,f,g,h,i,j,k,l"/>Air conditioning
+                                </label>
                             </div>
                         </div>
 
@@ -377,142 +398,12 @@
                 </div>
             </pane>
 
-            <!--<pane title="Credit Cards">-->
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="american_express_gold_premium" data-facet-label="AMEX gold premium" data-checked-value="T"/>AMEX gold premium-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="american_express_regular" data-facet-label="AMEX regular" data-checked-value="T"/>AMEX regular-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="discover_gold_premium" data-facet-label="Discover gold premium" data-checked-value="T"/>Discover gold premium-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="discover_regular" data-facet-label="Discover regular" data-checked-value="T"/>Discover regular-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="gasoline_or_retail_card_gold_premium" data-facet-label="Gasoline or retail gold premium" data-checked-value="T"/>Gasoline or retail gold premium-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="gasoline_or_retail_card_regular" data-facet-label="Gasoline or retail regular" data-checked-value="T"/>Gasoline or retail regular-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="mastercard_gold_premium" data-facet-label="Mastercard gold premium" data-checked-value="T"/>Mastercard gold premium-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="mastercard_regular" data-facet-label="Mastercard regular" data-checked-value="T"/>Mastercard regular-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="visa_gold_premium" data-facet-label="Visa gold" data-checked-value="T"/>Visa gold-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="visa_regular" data-facet-label="Visa regular" data-checked-value="T"/>Visa regular-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="gas_department_retail_card_holder" data-facet-label="Gas department retail card" data-checked-value="T"/>Gas department retail card-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="premium_card_holder" data-facet-label="Premium card holder" data-checked-value="T"/>Premium card holder-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="upscale_department_store_card_holder" data-facet-label="Upscale department store card holder" data-checked-value="T"/>Upscale department store card holder-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="travel_and_entertainment_card_holder" data-facet-label="Travel and Entertainment card holder" data-checked-value="T"/>Travel and Entertainment card holder-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="credit_card_new_issue" data-facet-label="Credit card new issue" data-checked-value="T"/>Credit card new issue-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="control-group">-->
-            <!--<div class="controls">-->
-            <!--<label class="checkbox">-->
-            <!--<input type="checkbox" checkbox-facet data-facet-id="bank_card_presence_in_household" data-facet-label="Bank card present in household" data-checked-value="T"/>Bank card present in household-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</pane>-->
-
-            <pane title="Customer Info">
+            <pane title="Lifestyle">
 
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="mail_order_buyer" data-facet-label="Mail order buyer" data-checked-value="T"/>Mail order buyer
+                            <input type="checkbox" checkbox-facet data-facet-id="mail_order_buyer" data-facet-label="Mail order buyer" data-checked-value="true"/>Mail order buyer
                         </label>
                     </div>
                 </div>
@@ -520,7 +411,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="mail_order_responder" data-facet-label="MAil order responder" data-checked-value="T"/>Mail order responder
+                            <input type="checkbox" checkbox-facet data-facet-id="mail_order_responder" data-facet-label="MAil order responder" data-checked-value="true"/>Mail order responder
                         </label>
                     </div>
                 </div>
@@ -528,7 +419,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="membership_clubs" data-facet-label="Membership clubs" data-checked-value="T"/>Membership clubs
+                            <input type="checkbox" checkbox-facet data-facet-id="membership_clubs" data-facet-label="Membership clubs" data-checked-value="true"/>Membership clubs
                         </label>
                     </div>
                 </div>
@@ -536,7 +427,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="value_priced_general_merchandise" data-facet-label="Value priced general merchandise" data-checked-value="T"/>Value priced general merchandise
+                            <input type="checkbox" checkbox-facet data-facet-id="value_priced_general_merchandise" data-facet-label="Value priced general merchandise" data-checked-value="true"/>Value priced general merchandise
                         </label>
                     </div>
                 </div>
@@ -544,7 +435,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="apparel_womens" data-facet-label="Women's Apparel" data-checked-value="T"/>Women's Apparel
+                            <input type="checkbox" checkbox-facet data-facet-id="apparel_womens" data-facet-label="Women's Apparel" data-checked-value="true"/>Women's Apparel
                         </label>
                     </div>
                 </div>
@@ -552,7 +443,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="apparel_womens_petite" data-facet-label="Petite women's apparel" data-checked-value="T"/>Petite women's apparel
+                            <input type="checkbox" checkbox-facet data-facet-id="apparel_womens_petite" data-facet-label="Petite women's apparel" data-checked-value="true"/>Petite women's apparel
                         </label>
                     </div>
                 </div>
@@ -560,7 +451,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="apparel_womens_plus_sizes" data-facet-label="Plus sizes women's apparel" data-checked-value="T"/>Plus sizes women's apparel
+                            <input type="checkbox" checkbox-facet data-facet-id="apparel_womens_plus_sizes" data-facet-label="Plus sizes women's apparel" data-checked-value="true"/>Plus sizes women's apparel
                         </label>
                     </div>
                 </div>
@@ -568,7 +459,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="young_womens_apparel" data-facet-label="Young women's apparel" data-checked-value="T"/>Young women's apparel
+                            <input type="checkbox" checkbox-facet data-facet-id="young_womens_apparel" data-facet-label="Young women's apparel" data-checked-value="true"/>Young women's apparel
                         </label>
                     </div>
                 </div>
@@ -576,7 +467,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="apparel_mens" data-facet-label="Men's apparel" data-checked-value="T"/>Men's apparel
+                            <input type="checkbox" checkbox-facet data-facet-id="apparel_mens" data-facet-label="Men's apparel" data-checked-value="true"/>Men's apparel
                         </label>
                     </div>
                 </div>
@@ -584,7 +475,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="apparel_mens_big_and_tall" data-facet-label="Big and tall men's apparel" data-checked-value="T"/>Big and tall men's apparel
+                            <input type="checkbox" checkbox-facet data-facet-id="apparel_mens_big_and_tall" data-facet-label="Big and tall men's apparel" data-checked-value="true"/>Big and tall men's apparel
                         </label>
                     </div>
                 </div>
@@ -592,7 +483,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="young_mens_apparel" data-facet-label="Young men's apparel" data-checked-value="T"/>Young men's apparel
+                            <input type="checkbox" checkbox-facet data-facet-id="young_mens_apparel" data-facet-label="Young men's apparel" data-checked-value="true"/>Young men's apparel
                         </label>
                     </div>
                 </div>
@@ -600,7 +491,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="apparel_hildrens" data-facet-label="Children apparel" data-checked-value="T"/>Children apparel
+                            <input type="checkbox" checkbox-facet data-facet-id="apparel_hildrens" data-facet-label="Children apparel" data-checked-value="true"/>Children apparel
                         </label>
                     </div>
                 </div>
@@ -608,7 +499,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="health_and_beauty" data-facet-label="Health and beauty" data-checked-value="T"/>Health and beauty
+                            <input type="checkbox" checkbox-facet data-facet-id="health_and_beauty" data-facet-label="Health and beauty" data-checked-value="true"/>Health and beauty
                         </label>
                     </div>
                 </div>
@@ -616,7 +507,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="beauty_cosmetics" data-facet-label="Beauty cosmetics" data-checked-value="T"/>Beauty cosmetics
+                            <input type="checkbox" checkbox-facet data-facet-id="beauty_cosmetics" data-facet-label="Beauty cosmetics" data-checked-value="true"/>Beauty cosmetics
                         </label>
                     </div>
                 </div>
@@ -624,12 +515,12 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="jewelry" data-facet-label="Jewelry" data-checked-value="T"/>Jewelry
+                            <input type="checkbox" checkbox-facet data-facet-id="jewelry" data-facet-label="Jewelry" data-checked-value="true"/>Jewelry
                         </label>
                     </div>
                 </div>
 
-	
+
             </pane>
 
             </tabs>
@@ -645,6 +536,16 @@
 
                     <form class="form-horizontal" name="buyForm">
 
+
+                        <div class="control-group">
+                            <label class="control-label">Available:</label>
+
+                            <div class="controls" style="padding-top:5px;font-size: 22px;">
+                                {{total}} leads
+                            </div>
+                        </div>
+
+
                         <div class="control-group">
                             <label class="control-label">Your Order of:</label>
 
@@ -652,6 +553,18 @@
                                 <div choose-number-of-leads how-many-leads="howManyLeads" price-per-lead="pricePerLead"></div>
                             </div>
                         </div>
+
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <label class="checkbox">
+                                    <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number" data-facet-label="Include leads without telephone number" data-checked-value="true,false" data-unchecked-value='true'/>Include
+                                    leads without telephone number
+                                </label>
+                            </div>
+                        </div>
+
+                        <hr/>
 
                         <div class="control-group">
                             <label class="control-label">Email:</label>
@@ -717,7 +630,7 @@
                             <label class="control-label">CCV:</label>
 
                             <div class="controls">
-                                <input type="text" class="input-small" placeholder="CCV" ng-model="ccCCV"  value="000"/>
+                                <input type="text" class="input-small" placeholder="CCV" ng-model="ccCCV" value="000"/>
                             </div>
                         </div>
 
@@ -735,12 +648,16 @@
             <div ng-controller="SummeryController">
 
                 <div ng-show="showLeadCountChooser">
-                    <div>You have {{total}} leads to purchase</div>
+                    <h4 class="pull-left">You have {{total}} leads to purchase</h4><h6 ng-show="countingLeads" class="pull-right lead-count-loading">counting<img src="img/lead-count-loading.gif" style="margin-left: 5px"/></h6>
 
-                    <facets></facets>
+                    <div style="clear:both"></div>
 
-                    <div>
-                        <button class="btn" ng-click="prepareToBuy()">Choose leads</button>
+                    <div class="well well-small">
+                        <facets></facets>
+                    </div>
+                    <hr/>
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-primary" ng-click="prepareToBuy()">Place order</button>
                     </div>
                 </div>
             </div>
@@ -758,12 +675,18 @@
 <script src="js/plugins/slider/jquery.slider.js"></script>
 <script src="js/plugins/msgbox/jquery.msgBox.js"></script>
 
+<script src="js/plugins/chosen/chosen.jquery.min.js"></script>
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.7.2/angular-strap.min.js"></script>
+
+<script src="js/lib/raphael-min.js"></script>
+<script src="js/plugins/usmap/us-map.js"></script>
 
 <script src="js/app.js"></script>
 <script src="js/services.js"></script>
 <script src="js/controllers.js"></script>
 <script src="js/directives.js"></script>
+<script src="js/api-url.js"></script>
 </body>
 </html>

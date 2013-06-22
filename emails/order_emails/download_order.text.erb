@@ -1,5 +1,15 @@
-Here is your file:
+Dear <%= @name %>,
 
-http://data.flowmediacorp.com/download/csv/<%= @file_id %>
+Thank you for your order.  This email is to inform you that your order is complete and ready for download.  You may retrieve your order by clicking here https://data.flowmediacorp.com/download/csv/<%= @order_id %>.csv.  This like will remain active for 4 weeks.
+If you have any issues downloading your order, please contact us at support@marketing-data.net and we will be happy to assist you.
 
-Have fun downloading it
+Thanks again for your order,
+
+
+Marketing-Data Customer Support
+
+support@marketing-data.net
+
+
+Your order reference id is:
+<%= @order_id %>

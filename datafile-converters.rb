@@ -76,6 +76,6 @@ class DataConverters
   end
 
   def to_percent(value)
-    value.to_f/10000
+    value.nil? ? nil : value.to_f/10000
   end
 end

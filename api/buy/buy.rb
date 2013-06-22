@@ -25,7 +25,7 @@ class Buy < Grape::API
   helpers do
     def save_order(order)
       json_order = JSON.generate(order)
-      filename = File.dirname(__FILE__) + "/orders/#{order[:first_name]}-#{order[:last_name]}-#{Time.now} + #{SecureRandom.uuid}.json"
+      filename = File.dirname(__FILE__) + "/orders/#{order[:first_name]}-#{order[:last_name]}-#{Time.now} + #{order[:id]}.json"
       File.open(filename, 'w') { |file| file.write(json_order) }
     end
   end
@@ -59,13 +59,15 @@ class Buy < Grape::API
     hash[:amount] = amount
     hash[:number_of_leads_requested] = number_of_leads_requested
     hash[:count] = count
+    hash[:facets] = facets
+    hash[:id] = SecureRandom.uuid
 
     #remove this when we have a good sample giver
     if result[:success] || params[:ccNumber] == "sampleme"
 
       require_relative '../core/queue'
 
-      Backburner.enqueue CreateCsvForCustomer, params[:email], number_of_leads_requested, facets
+      Backburner.enqueue CreateCsvForCustomer, params[:email], number_of_leads_requested, facets, {name: hash[:first_name] + ' ' + hash[:last_name], order_id: hash[:order_id]}
 
       response = {
           success: true

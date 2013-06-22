@@ -1644,8 +1644,114 @@
     },
     {
         "id": "most_recent_mortgage_date",
-        "value": 4022,
+        "value": 2011,
         "text": 2011
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2012,
+        "text": 2012
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 4022,
+        "text": 2013
+    }
+], "year_built": [
+    {
+        "id": "year_built",
+        "value": 1995,
+        "text": 1995
+    },
+    {
+        "id": "year_built",
+        "value": 1996,
+        "text": 1996
+    },
+    {
+        "id": "year_built",
+        "value": 1997,
+        "text": 1997
+    },
+    {
+        "id": "year_built",
+        "value": 1998,
+        "text": 1998
+    },
+    {
+        "id": "year_built",
+        "value": 1999,
+        "text": 1999
+    },
+    {
+        "id": "year_built",
+        "value": 2000,
+        "text": 2000
+    },
+    {
+        "id": "year_built",
+        "value": 2001,
+        "text": 2001
+    },
+    {
+        "id": "year_built",
+        "value": 2002,
+        "text": 2002
+    },
+    {
+        "id": "year_built",
+        "value": 2003,
+        "text": 2003
+    },
+    {
+        "id": "year_built",
+        "value": 2004,
+        "text": 2004
+    },
+    {
+        "id": "year_built",
+        "value": 2005,
+        "text": 2005
+    },
+    {
+        "id": "year_built",
+        "value": 2006,
+        "text": 2006
+    },
+    {
+        "id": "year_built",
+        "value": 2007,
+        "text": 2007
+    },
+    {
+        "id": "year_built",
+        "value": 2008,
+        "text": 2008
+    },
+    {
+        "id": "year_built",
+        "value": 2009,
+        "text": 2009
+    },
+    {
+        "id": "year_built",
+        "value": 2010,
+        "text": 2010
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2011,
+        "text": 2011
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2012,
+        "text": 2012
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 4022,
+        "text": 2013
     }
 ], "second_most_recent_mortgage_date": [
     {
@@ -1730,8 +1836,18 @@
     },
     {
         "id": "most_recent_mortgage_date",
-        "value": 4022,
+        "value": 2011,
         "text": 2011
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 2012,
+        "text": 2012
+    },
+    {
+        "id": "most_recent_mortgage_date",
+        "value": 4022,
+        "text": 2013
     }
 ], "purchase_mortgage_date": [
     {
@@ -1815,29 +1931,19 @@
         "text": 2010
     },
     {
-        "id": "purchase_mortgage_date",
+        "id": "most_recent_mortgage_date",
         "value": 2011,
         "text": 2011
     },
     {
-        "id": "purchase_mortgage_date",
-        "value": 3,
-        "text": 3
+        "id": "most_recent_mortgage_date",
+        "value": 2012,
+        "text": 2012
     },
     {
-        "id": "purchase_mortgage_date",
-        "value": 4,
-        "text": 4
-    },
-    {
-        "id": "purchase_mortgage_date",
-        "value": 5,
-        "text": 5
-    },
-    {
-        "id": "purchase_mortgage_date",
-        "value": 12,
-        "text": 6
+        "id": "most_recent_mortgage_date",
+        "value": 4022,
+        "text": 2013
     }
 ], "most_recent_mortgage_loan_type": [
     {
@@ -1969,11 +2075,6 @@
         "text": "VA "
     }
 ], "most_recent_lender": [
-    {
-        "id": "most_recent_lender",
-        "value": "000",
-        "text": null
-    },
     {
         "id": "most_recent_lender",
         "value": "002",
@@ -2971,11 +3072,6 @@
         "text": "world"
     }
 ], "second_most_recent_lender": [
-    {
-        "id": "second_most_recent_lender",
-        "value": "000",
-        "text": null
-    },
     {
         "id": "second_most_recent_lender",
         "value": "002",
