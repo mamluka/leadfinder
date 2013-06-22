@@ -42,7 +42,7 @@ class IndexLeads
     total_time = Time.now
 
     timer = Time.now
-    CSV.foreach(file, {:headers => true, :header_converters => :symbol}) { |csv|
+    CSV.foreach(file, {:headers => true, :header_converters => :symbol, :col_sep => '|'}) { |csv|
 
       total_counter = total_counter + 1
 
