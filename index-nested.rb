@@ -138,6 +138,7 @@ class IndexLeads
         state: csv[:st],
         city: csv[:city],
         zip: csv[:zip],
+        full_address: full_address,
         has_telephone_number: !csv[:phone].nil?,
         telephone_number: csv[:phone].nil? ? '0000000000' : csv[:phone],
         do_not_call: convert.from_yes_no(csv[:do_not_call]),
@@ -162,8 +163,10 @@ class IndexLeads
         language: csv[:ethnic_lang],
         credit_rating: convert.convert(:credit_rating, csv[:credit_rating]),
         pool: convert.from_yes_no(csv[:prop_pool]),
-        load_to_value: csv[:genl_loan_to_value],
+        year_built: csv[:prop_bld_yr].to_i,
+        air_conditioning: csv[:prop_ac],
         mortgage_purchase_date_ccyymmdd: (Time.parse(csv[:genl_purch_dt]).year rescue nil),
+        load_to_value: csv[:genl_loan_to_value].nil? ? nil : csv[:genl_loan_to_value].to_f/100,
         mortgage_purchase_price: csv[:genl_purch_amt].to_i,
         most_recent_mortgage_amount: csv[:mr_amt].to_i,
         most_recent_mortgage_date: (Time.parse(csv[:mr_dt]).year rescue nil),
@@ -251,7 +254,7 @@ class IndexLeads
         religious_charitable_donation: convert.from_yes_no(csv[:donr_relig]),
         veterans_charitable_donation: convert.from_yes_no(csv[:donr_vets]),
         other_types_of_charitable_donations: convert.from_yes_no(csv[:donr_oth]),
-        community_charities: convert.from_yes_no(csv[:donr_comm_char]),
+        community_charities: convert.from_yes_no(csv[:donr_comm_char])
     }
   end
 
