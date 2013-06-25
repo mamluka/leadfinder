@@ -38,7 +38,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         }).join(',');
                     }
 
-                    return $('option:selected', elm).val();
+                    return $('option:selected', elm).text();
                 };
 
                 $scope.createOption = function (text, val) {
@@ -262,6 +262,21 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     var all_states = $scope.createCheckbox('All States', 'al,ak,az,ar,ca,co,ct,de,dc,fl,ga,hi,id,il,in,ia,ks,ky,la,me,mt,ne,nv,nh,nj,nm,ny,nc,nd,oh,ok,or,md,ma,mi,mn,ms,mo,pa,ri,sc,sd,tn,tx,ut,vt,va,wa,wv,wi,wy')
 
                     elm.append(all_states);
+
+                    $('input[type=checkbox]', all_states).click(function () {
+                        var states = _.without($('input[type=checkbox]', elm), this);
+
+                        if ($(this).is(':checked'))
+                            _.each(states, function (x) {
+                                $(x).prop('checked', false)
+                                $(x).prop('disabled', true)
+                            });
+                        else
+                            _.each(states, function (x) {
+                                $(x).prop('disabled', false)
+                            });
+                    });
+
                     elm.append($('<div></div>').css('clear', 'both'));
 
                     _.each(facets[facetId], function (facet) {

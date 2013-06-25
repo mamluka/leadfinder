@@ -53,8 +53,6 @@ class IndexLeads
 
       lead = extract_lead(converter, csv)
 
-      next if lead[:telephone_number].nil?
-
       if leads.length == 0
         leads << lead
         counter = counter + 1

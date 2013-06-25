@@ -38,6 +38,40 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
     .controller('StateSelectController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
         $scope.selectedStates = [];
     }])
+    .controller('NavigationController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+
+        $scope.currentPage = 'geo';
+        $scope.disableOrderForm = true;
+
+        $scope.isActive = function (page) {
+            if (page == $scope.currentPage)
+                return 'active'
+        };
+
+        $rootScope.$on('buy-committed', function () {
+            $scope.disableOrderForm = false;
+        });
+
+        $scope.goTo = function (page) {
+            if ($scope.disableOrderForm && page == 'buy') {
+                $.msgBox({
+                    title: "Error",
+                    content: "You must select a filter before you can order",
+                    type: "error",
+                    showButtons: false,
+                    autoClose:true
+                });
+                return;
+            }
+
+            $rootScope.$broadcast('change-page', {page: page});
+        };
+
+        $rootScope.$on('change-page', function (e, data) {
+            $scope.currentPage = data.page
+        });
+
+    }])
     .controller('ZipSelectController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
 
     }])
@@ -49,7 +83,15 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
 
         $scope.$on('facets-recalculate-total', function () {
 
+            var excludedFacets = ['has_telephone_number'];
+
             var selectedFacets = wizard.getSelectedFacets();
+
+            if (_.difference(_.keys(selectedFacets), excludedFacets).length == 0) {
+                $scope.showLeadCountChooser = false;
+                return;
+            }
+
             $scope.countingLeads = true;
 
             leads.getTotalLeadsByFacets(selectedFacets).done(function (data) {
@@ -63,12 +105,16 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
                         $scope.showLeadCountChooser = true;
                         $scope.total = $.formatNumber(data.total, {format: "#,###", locale: "us"});
                         $scope.pricePerLead = data.pricePerLead;
+
+                        $rootScope.$broadcast('buy-committed', {total: $scope.total, pricePerLead: $scope.pricePerLead});
                     }
                 })
             })
         });
 
         $scope.prepareToBuy = function () {
+            $scope.orderFormLoaded = true
+
             $rootScope.$broadcast('buy-committed', {total: $scope.total, pricePerLead: $scope.pricePerLead});
             $rootScope.$broadcast('change-page', {page: 'buy'});
         }
