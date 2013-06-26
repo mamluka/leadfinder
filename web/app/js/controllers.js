@@ -59,7 +59,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
                     content: "You must select a filter before you can order",
                     type: "error",
                     showButtons: false,
-                    autoClose:true
+                    autoClose: true
                 });
                 return;
             }
@@ -80,6 +80,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
 
         $scope.showLeadCountChooser = false;
         $scope.countingLeads = false
+        $scope.currentCallTimestamp = 0;
 
         $scope.$on('facets-recalculate-total', function () {
 
@@ -95,6 +96,12 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
             $scope.countingLeads = true;
 
             leads.getTotalLeadsByFacets(selectedFacets).done(function (data) {
+
+                if ($scope.currentCallTimestamp > data.timestamp)
+                    return;
+
+                $scope.currentCallTimestamp = data.timestamp;
+
                 $scope.$apply(function () {
                     $scope.countingLeads = false;
 
@@ -113,11 +120,19 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
         });
 
         $scope.prepareToBuy = function () {
-            $scope.orderFormLoaded = true
+
 
             $rootScope.$broadcast('buy-committed', {total: $scope.total, pricePerLead: $scope.pricePerLead});
             $rootScope.$broadcast('change-page', {page: 'buy'});
         }
+
+        $rootScope.$on('change-page', function (e, data) {
+            if (data.page == 'buy')
+                $scope.orderFormLoaded = true;
+            else
+                $scope.orderFormLoaded = false;
+        });
+
     }])
     .controller('BuyController', ['$scope', '$rootScope', 'BuyingLeads', function ($scope, $rootScope, buyingLeads) {
 
