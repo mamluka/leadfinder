@@ -60,7 +60,7 @@ class Buy < Grape::API
     hash[:number_of_leads_requested] = number_of_leads_requested
     hash[:count] = count
     hash[:facets] = facets
-    hash[:id] = SecureRandom.uuid
+    hash[:order_id] = SecureRandom.uuid
 
     #remove this when we have a good sample giver
     if result[:success] || params[:ccNumber] == "sampleme"
