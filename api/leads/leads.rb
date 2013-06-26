@@ -34,6 +34,6 @@ class Leads < Grape::API
       redis.set hash, total
     end
 
-    {total: total, pricePerLead: pricing.get_price_for_count(total, params)}
+    {total: total, pricePerLead: pricing.get_price_for_count(total, params), timestamp: Time.now.to_i}
   end
 end

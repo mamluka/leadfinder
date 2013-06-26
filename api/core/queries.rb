@@ -65,12 +65,12 @@ class Queries
     multi_term = Hash.new
 
     params.each do |k, v|
-      if v.include?('-')
+      if v.to_s.include?('-')
         ranges[k]=v
         next
       end
 
-      if v.include?(',')
+      if v.to_s.include?(',')
         multi_term[k]=v
         next
       end

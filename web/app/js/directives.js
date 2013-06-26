@@ -260,10 +260,10 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 facets.get(facetId).success(function (facets) {
 
                     var all_states = $scope.createCheckbox('All States', 'al,ak,az,ar,ca,co,ct,de,dc,fl,ga,hi,id,il,in,ia,ks,ky,la,me,mt,ne,nv,nh,nj,nm,ny,nc,nd,oh,ok,or,md,ma,mi,mn,ms,mo,pa,ri,sc,sd,tn,tx,ut,vt,va,wa,wv,wi,wy')
+                    var all_states_checkbox = $('input[type=checkbox]', all_states);
 
                     elm.append(all_states);
-
-                    $('input[type=checkbox]', all_states).click(function () {
+                    all_states_checkbox.click(function () {
                         var states = _.without($('input[type=checkbox]', elm), this);
 
                         if ($(this).is(':checked'))
@@ -292,6 +292,8 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         $scope.updateValue();
 
                     })
+
+                    all_states_checkbox.trigger('click');
                 });
 
                 $scope.$watch('selectedStates', function () {
@@ -484,20 +486,25 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                             var max = values[1];
 
                             var minmax = null;
+                            var minmax_text = null;
 
                             if (min == 0 && max == numberOfPoints)
                                 minmax = 'none';
                             else {
-                                if (sortedFacetValues[min].value == sortedFacetValues[max].value)
+                                if (sortedFacetValues[min].value == sortedFacetValues[max].value) {
                                     minmax = sortedFacetValues[min].value
-                                else
+                                    minmax_text = sortedFacetValues[min].text
+                                }
+                                else {
                                     minmax = [sortedFacetValues[min].value, sortedFacetValues[max].value];
+                                    minmax_text = [sortedFacetValues[min].text, sortedFacetValues[max].text];
+                                }
                             }
 
                             wizard.update(facetId, minmax)
 
                             $rootScope.$apply(function () {
-                                facetEvents.facetsSelected(facetLabel, minmax, facetId)
+                                facetEvents.facetsSelected(facetLabel, minmax_text, facetId)
                                 facetEvents.recalculateTotal();
                             })
                         },
