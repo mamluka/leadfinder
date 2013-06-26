@@ -29,7 +29,6 @@ class CreateCsvForCustomer
           v = v.upcase
 
           if x[k].nil?
-            p x[:first_name] + ' ' + x[:last_name] + ' r ppl: ' + r[:people].length.to_s
             next false
           end
 
@@ -45,9 +44,7 @@ class CreateCsvForCustomer
           end
         end
       end
-      if people.empty?
-        p 'empty'
-      end
+
       people.first
     end
 
