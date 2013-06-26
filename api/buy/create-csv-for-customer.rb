@@ -26,21 +26,29 @@ class CreateCsvForCustomer
       r = r.to_hash
       people = r[:people].select do |x|
         facets.all? do |k, v|
-          v = v.upcase
+          v = v.to_s.upcase
+          k= k.to_sym
 
-          if x[k].nil?
+          lead_result = x[k]
+
+          if lead_result.nil?
             next false
           end
 
           if v == 'TRUE' || v == 'FALSE'
-            x[k] == (v == 'TRUE' ? true : false)
+            lead_result == (v == 'TRUE' ? true : false)
           elsif v.include?(',')
-            v.split(',').any? { |p| p == x[k] }
+            v.split(',').any? { |p| p == lead_result }
           elsif v.include?('-')
             minmax = v.split('-').map { |x| x.to_f }
-            x[k] >= minmax[0] && x[k] < minmax[1]
+            lead_result >= minmax[0] && lead_result < minmax[1]
           else
-            x[k] == v
+            if lead_result.kind_of?(Numeric)
+              lead_result == v.to_i
+            else
+              lead_result == v
+            end
+
           end
         end
       end
@@ -48,7 +56,7 @@ class CreateCsvForCustomer
       people.first
     end
 
-    file_name = order_details[:order_id] + '.csv'
+    file_name = order_details['order_id'] + '.csv'
 
     translator = FacetsTextTranslator.new
 
@@ -63,7 +71,7 @@ class CreateCsvForCustomer
     end
 
     require_relative '../../emails/mail_base'
-    OrderEmails.download_order(email, order_details[:name], order_details[:order_id]).deliver
+    OrderEmails.download_order(email, order_details['name'], order_details['order_id']).deliver
 
   end
 end
