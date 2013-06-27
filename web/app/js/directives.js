@@ -488,8 +488,12 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                             var minmax = null;
                             var minmax_text = null;
 
-                            if (min == 0 && max == numberOfPoints)
+                            if (min == 0 && max == numberOfPoints) {
                                 minmax = 'none';
+                                minmax_text = 'none';
+                            }
+
+
                             else {
                                 if (sortedFacetValues[min].value == sortedFacetValues[max].value) {
                                     minmax = sortedFacetValues[min].value
