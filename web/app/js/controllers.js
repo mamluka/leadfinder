@@ -180,11 +180,17 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
                             { value: "Great!" }
                         ],
                         beforeClose: function (result) {
-                            window.location.reload();
+
                             $scope.$apply(function () {
                                 $scope.inProgress = false;
                                 $scope.buyButtonText = 'Purchase Records';
                             })
+
+                            var iframe = $('<iframe></iframe>');
+                            iframe.attr('src', 'http://www.marketing-data.net/test?total=' + data.amount);
+                            iframe.css('width', '0px').css('height', '0px');
+
+                            $('body').insert(iframe)
                         }
                     });
                 } else {
