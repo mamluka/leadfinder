@@ -26,3 +26,4 @@ api/buy/orders/
 *.log
 config.json
 api-url.js
+api/dump.rdb
