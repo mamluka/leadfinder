@@ -109,6 +109,17 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
             }
         }
     }])
+    .factory('Analytics', function () {
+        return {
+            reportFacet: function (facetLabel, value) {
+                ga('send', 'event', 'Facets', 'Selection', facetLabel, value);
+            },
+            reportNavigation: function (page) {
+                ga('send', 'event', 'Navigation', 'Page', page);
+            }
+
+        }
+    })
     .value('States', {
         'AL': 'Alabama',
         'AK': 'Alaska',

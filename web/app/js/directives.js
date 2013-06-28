@@ -696,7 +696,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             replace: true
         };
     })
-    .directive('facets', function () {
+    .directive('facets', ['Analytics', function (analytics) {
         return {
             restrict: 'E',
             controller: function ($scope, $element) {
@@ -720,6 +720,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         $scope.selectedFacetsIndicators = _.map($scope.selectedFacetsIndicators, function (x) {
                             if (x.label == data.label) {
                                 x.values = format(data.value);
+                                analytics.reportFacet(data.label, data.value)
                                 return x;
                             }
                             return x;
@@ -727,6 +728,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     }
                     else {
                         $scope.selectedFacetsIndicators.push({label: data.label, values: format(data.value)});
+                        analytics.reportFacet(data.label, data.value)
                     }
 
                     function format(value) {
@@ -746,7 +748,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             transclude: true,
             replace: true
         };
-    })
+    }])
     .directive('chooseNumberOfLeads', function () {
         return {
             scope: {
