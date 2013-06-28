@@ -71,7 +71,7 @@ class Buy < Grape::API
 
       response = {
           success: true,
-          amount: result[:amount]
+          amount: amount
       }
     else
       response = {
