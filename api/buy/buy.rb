@@ -70,7 +70,8 @@ class Buy < Grape::API
       Backburner.enqueue CreateCsvForCustomer, params[:email], number_of_leads_requested, facets, {name: hash[:first_name] + ' ' + hash[:last_name], order_id: hash[:order_id]}
 
       response = {
-          success: true
+          success: true,
+          amount: result[:amount]
       }
     else
       response = {
