@@ -112,6 +112,11 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
     .factory('Analytics', function () {
         return {
             reportFacet: function (facetLabel, value) {
+
+                if (_.isArray(value)) {
+                    value = [value[0] + " - " + value[1]]
+                }
+
                 ga('send', 'event', 'Facets', 'Selection', facetLabel, value);
             },
             reportNavigation: function (page) {
