@@ -117,7 +117,7 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                     value = [value[0] + " - " + value[1]]
                 }
 
-                ga('send', 'event', 'Facets', 'Selection', facetLabel, value);
+                ga('send', 'event', 'Facets', facetLabel, value);
             },
             reportNavigation: function (page) {
                 ga('send', 'event', 'Navigation', 'Page', page);
