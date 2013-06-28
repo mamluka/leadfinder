@@ -190,7 +190,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
                             iframe.attr('src', 'http://www.marketing-data.net/test?total=' + data.amount);
                             iframe.css('width', '0px').css('height', '0px');
 
-                            $('body').insert(iframe)
+                            $('body').append(iframe)
                         }
                     });
                 } else {
