@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('leadFinder.controllers', ['leadFinder.services']).
-    controller('WizardController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+angular.module('leadFinder.controllers', ['leadFinder.services'])
+    .controller('WizardController', ['$scope', '$rootScope', function ($scope, $rootScope) {
         $scope.showPage = true;
         $scope.displayAllTabs = true;
         $rootScope.$on('change-page', function (e, data) {
@@ -37,6 +37,18 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
     }])
     .controller('StateSelectController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
         $scope.selectedStates = [];
+    }])
+    .controller('DemographicsController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
+
+    }])
+    .controller('MortgageController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
+
+    }])
+    .controller('EconomicsController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
+
+    }])
+    .controller('LifestyleController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
+
     }])
     .controller('NavigationController', ['$scope', '$rootScope', function ($scope, $rootScope) {
 
@@ -113,11 +125,13 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
                         $scope.total = $.formatNumber(data.total, {format: "#,###", locale: "us"});
                         $scope.pricePerLead = data.pricePerLead;
 
-                        $rootScope.$broadcast('buy-committed', {total: $scope.total, pricePerLead: $scope.pricePerLead});
+                        window.sessionStorage.setItem('total-leads', JSON.stringify({total: data.total, pricePerLead: data.pricePerLead}));
                     }
                 })
             })
         });
+
+        $scope.$broadcast('facets-recalculate-total');
 
         $scope.prepareToBuy = function () {
 
@@ -134,19 +148,15 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
         });
 
     }])
-    .controller('BuyController', ['$scope', '$rootScope', 'BuyingLeads', function ($scope, $rootScope, buyingLeads) {
+    .controller('OrderFormController', ['$scope', '$rootScope', 'BuyingLeads', function ($scope, $rootScope, buyingLeads) {
 
         $scope.inProgress = false;
         $scope.buyButtonText = 'Purchase Records';
 
-        $rootScope.$on('change-page', function (e, data) {
-            $scope.showPage = data.page == "buy";
-        });
+        var data = JSON.parse(window.sessionStorage.getItem('total-leads'));
 
-        $rootScope.$on('buy-committed', function (e, data) {
-            $scope.total = data.total;
-            $scope.pricePerLead = data.pricePerLead;
-        });
+        $scope.total = $.formatNumber(data.total, {format: "#,###", locale: "us"});
+        $scope.pricePerLead = data.pricePerLead;
 
         $scope.isBuyButtonDisabled = function () {
             return $scope.inProgress || $scope.buyForm.$invalid
@@ -187,7 +197,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
                             })
 
                             var iframe = $('<iframe></iframe>');
-                            iframe.attr('src', 'http://www.marketing-data.net/test?total=' + data.amount);
+                            iframe.attr('src', 'http://www.marketing-data.net/report-affiliate?total=' + data.amount);
                             iframe.css('width', '0px').css('height', '0px');
 
                             $('body').append(iframe)

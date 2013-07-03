@@ -104,7 +104,8 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     var savedFacet = wizard.getSavedFacetFor(facetId);
                     if (savedFacet) {
                         elm.val(savedFacet);
-                        $scope.updateLabel(savedFacet);
+                        elm.trigger('liszt:updated');
+                        $scope.updateLabel();
                     }
                 });
 
@@ -115,66 +116,9 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             }
         }
     }])
-    .directive('displayListFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
-        return {
-            scope: { selectedData: '='},
-            link: function ($scope, element) {
-
-                var elm = $(element);
-                var facetId = elm.data('facet-id')
-                var facetLabel = elm.data('facet-label')
-
-                $scope.createOption = function (text, val) {
-                    var option = $('<option></option>');
-                    option.val(val);
-                    option.text(text);
-                    return option;
-                };
-
-                $scope.getValue = function () {
-                    return $('option:selected', elm).val();
-                };
-
-                $scope.getText = function () {
-                    return $('option:selected', elm).html();
-                };
-
-                $scope.updateLabel = function (set_value) {
-                    var value = set_value || $scope.getText();
-                    facetEvents.facetsSelected(facetLabel, value, facetId);
-                };
-
-                facets.get(facetId).success(function (facets) {
-
-                    _.each(facets[facetId], function (facet) {
-
-                        var text = facet.text;
-                        var option = $scope.createOption(text, facet.value);
-
-                        elm.append(option)
-                    });
-
-                    elm.prepend($scope.createOption('Select', 'none'));
-                });
-
-                elm.change(function () {
-                    $scope.$apply(function () {
-                        $scope.selectedData = {
-                            text: $('option:selected', elm).html(),
-                            value: $('option:selected', elm).val(),
-                            facetId: facetId,
-                            facetLabel: facetLabel
-                        }
-                    });
-                });
-
-
-            }
-        }
-    }])
     .directive('checkboxListFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
         return {
-            scope: {selectedStates: "="},
+            scope: {},
             controller: function ($scope, $element) {
 
             },
@@ -189,13 +133,10 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     checkbox.attr('value', val);
                     checkbox.data('text', text);
 
-                    var label = $('<label></label>')
+                    return $('<label></label>')
                         .append(checkbox)
                         .append(text)
                         .addClass('state-checkbox checkbox');
-
-
-                    return label;
                 };
 
                 $scope.getRawValue = function () {
@@ -263,21 +204,18 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     var all_states_checkbox = $('input[type=checkbox]', all_states);
 
                     elm.append(all_states);
+                    all_states_checkbox.attr('all-states', true);
+
                     all_states_checkbox.click(function () {
                         var states = _.without($('input[type=checkbox]', elm), this);
 
                         if ($(this).is(':checked'))
                             _.each(states, function (x) {
                                 $(x).prop('checked', false)
-                                $(x).prop('disabled', true)
-                            });
-                        else
-                            _.each(states, function (x) {
-                                $(x).prop('disabled', false)
                             });
                     });
 
-                    elm.append($('<div></div>').css('clear', 'both'));
+                    elm.append($('<div></div>').css({clear: 'both', height: '15px'}));
 
                     _.each(facets[facetId], function (facet) {
 
@@ -288,32 +226,35 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     });
 
                     $('input[type=checkbox]', elm).on('click', function () {
-                        $scope.selectedStates = $scope.getRawValue();
+                        if (!$(this).attr('all-states'))
+                            all_states_checkbox.prop('checked', false);
+
                         $scope.updateValue();
+                    });
 
-                    })
+                    var savedFacet = wizard.getSavedFacetFor(facetId);
+                    if (savedFacet) {
+                        if (savedFacet.length == 51) {
+                            all_states_checkbox.prop('checked', true);
+                            toggleStates(all_states_checkbox);
+                        } else {
+                            _.each(savedFacet, function (x) {
+                                $('[value=' + x + ']', elm).prop('checked', true);
+                            })
 
-                    all_states_checkbox.trigger('click');
-                });
+                            $('[value=' + savedFacet + ']', elm).prop('checked', true);
+                        }
 
-                $scope.$watch('selectedStates', function () {
-                    if ($scope.selectedStates.length != $scope.getRawValue().length) {
-
-                        _.each($scope.selectedStates, function (x) {
-                            $('input[value=' + x + ']', elm).prop('checked', true);
-                        })
-
-                        _.each(_.difference($scope.getRawValue(), $scope.selectedStates), function (x) {
-                            $('input[value=' + x + ']', elm).prop('checked', false);
-                        })
+                    } else {
+                        all_states_checkbox.trigger('click');
                     }
-                })
+                });
             }
         }
     }])
     .directive('usMapFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', 'States', function (facets, wizard, facetEvents, $rootScope, states) {
         return {
-            scope: {selectedStates: "="},
+            scope: {},
             controller: function ($scope, $element) {
 
             },
@@ -422,21 +363,6 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
                     }
                 });
-
-                $scope.$watch('selectedStates', function () {
-                    if ($scope.selectedStates.length != $scope.getRawValue().length) {
-
-                        _.each($scope.selectedStates, function (x) {
-                            elm.usmap('selectState', x.toUpperCase(), 'red');
-                        })
-
-                        _.each(_.difference($scope.getRawValue(), $scope.selectedStates), function (x) {
-                            elm.usmap('unselectState', x.toUpperCase(), 'red');
-                        })
-                    }
-                })
-
-
             }
         }
     }])
@@ -518,7 +444,21 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         }
                     });
 
-                    elm.slider("value", 0, numberOfPoints);
+                    var savedFacet = wizard.getSavedFacetFor(facetId);
+                    if (savedFacet) {
+                        var values = _.map(sortedFacetValues, function (x) {
+                            return x.value.toString();
+                        });
+                        var min = _.indexOf(values, savedFacet[0]);
+                        var max = _.indexOf(values, savedFacet[1]);
+
+                        elm.slider("value", min, max);
+
+                    } else {
+                        elm.slider("value", 0, numberOfPoints);
+                    }
+
+
                     elm.data('loaded', 'true');
                 });
 
@@ -541,7 +481,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             var savedFacet = wizard.getSavedFacetFor(facetId)
             if (savedFacet && savedFacet != "none" && !unchecked_value) {
                 elm.prop('checked', true);
-                facetEvents.facetsSelected(facetLabel, savedFacet, facetId)
+                facetEvents.facetsSelected(facetLabel, 'Yes', facetId)
             }
 
             elm.change(function () {
@@ -696,12 +636,14 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             replace: true
         };
     })
-    .directive('facets', ['Analytics', function (analytics) {
+    .directive('facets', ['Analytics', 'Facets', function (analytics, facets) {
         return {
             restrict: 'E',
             controller: function ($scope, $element) {
 
-                $scope.selectedFacetsIndicators = [];
+                var saved_facets = facets.load();
+                $scope.selectedFacetsIndicators = saved_facets || [];
+
 
                 $scope.$on('facets-selected', function (e, data) {
 
@@ -731,6 +673,10 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         analytics.reportFacet(data.label, data.value)
                     }
 
+                    facets.save(_.map($scope.selectedFacetsIndicators, function (x) {
+                        return { label: x.label, values: x.values }
+                    }));
+
                     function format(value) {
                         if (_.isArray(value)) {
                             return [value[0] + " - " + value[1]]
@@ -742,7 +688,6 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         return [value];
                     }
                 });
-
             },
             templateUrl: 'partials/components/facets.html',
             transclude: true,

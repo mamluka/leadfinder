@@ -2,12 +2,13 @@
     <dl class="dl-horizontal">
         <div ng-repeat="facetIndicator in selectedFacetsIndicators">
 
-            <dt>{{facetIndicator.label}}</dt>
-            <dd>
+            <dt class="facet">{{facetIndicator.label}}:</dt>
+            <dd class="facet">
                 <span class="inline" ng-repeat="value in facetIndicator.values">
-                    <span class="label label-info">{{value}}</span>
+                    <span class="facet-label">{{value}}</span>
                 </span>
             </dd>
+            <div style="clear:both"></div>
         </div>
     </dl>
 </div>

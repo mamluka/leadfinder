@@ -6,7 +6,31 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
     .factory('Facets', ['$http', 'apiUrl' , function ($http, apiUrl) {
         return {
             get: function () {
+                var item = sessionStorage.getItem('facets-cache');
+                if (item)
+                    return {
+                        success: function (successFunction) {
+                            successFunction(JSON.parse(item));
+                        }
+                    };
+
                 return $http.get(apiUrl + '/facets/all-cached')
+                    .then(function (request) {
+                        var data = request.data;
+                        sessionStorage.setItem('facets-cache', JSON.stringify(data));
+
+                        return {
+                            success: function (successFunction) {
+                                successFunction(data)
+                            }
+                        }
+                    });
+            },
+            save: function (facets) {
+                sessionStorage.setItem('facets-labels', JSON.stringify(facets));
+            },
+            load: function () {
+                return JSON.parse(sessionStorage.getItem('facets-labels'));
             }
         }
     }])
@@ -46,10 +70,21 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
             },
             getSavedFacetFor: function (facetId) {
                 var state = JSON.parse(window.sessionStorage.getItem('leadFinder.wizard.state')) || {};
-                var value = state[facetId];
+                var value = state[facetId]
+
+                if (typeof(value) == "undefined")
+                    return false;
+
+                value = value.toString();
 
                 if (value && value.indexOf('-') !== -1)
-                    return value.split('-')
+                    return value.split('-');
+
+                if (value && value.indexOf(',') > -1)
+                    return value.split(',');
+
+                if (value == "none")
+                    return false;
 
                 return value
             },
@@ -102,10 +137,10 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
             }
         }
     }])
-    .factory('DefaultSearchConfigurations', ['Wizard', function (wizard) {
+    .factory('DefaultSearchConfigurations', ['Wizard', 'Facets', function (wizard, facets) {
         return {
             apply: function () {
-                wizard.update('has_telephone_number', 'true')
+                wizard.update('has_telephone_number', 'true');
             }
         }
     }])
