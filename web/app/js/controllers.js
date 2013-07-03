@@ -14,8 +14,6 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
 
         $scope.showPage = true;
 
-        defaultSearchConfigurations.apply();
-
         $scope.next = function () {
 
             var facets = wizard.getSelectedFacets();

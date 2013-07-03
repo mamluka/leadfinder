@@ -35,9 +35,13 @@ angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'l
     $routeProvider.otherwise({redirectTo: '/geographics'});
 
 
-}).run(['Analytics', '$rootScope', function (analytics, $rootScope) {
+}).run(['Analytics', 'DefaultSearchConfigurations', '$rootScope', function (analytics, defaults, $rootScope) {
 
         $rootScope.$on('change-page', function (e, data) {
             analytics.reportNavigation(data.page)
         });
+
+        defaults.apply();
+
+
     }]);

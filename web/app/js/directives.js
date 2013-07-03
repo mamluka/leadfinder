@@ -236,7 +236,6 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     if (savedFacet) {
                         if (savedFacet.length == 51) {
                             all_states_checkbox.prop('checked', true);
-                            toggleStates(all_states_checkbox);
                         } else {
                             _.each(savedFacet, function (x) {
                                 $('[value=' + x + ']', elm).prop('checked', true);
@@ -487,14 +486,14 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             var facetLabel = elm.data('facet-label')
             var unchecked_value = elm.data('unchecked-value');
 
-            var savedFacet = wizard.getSavedFacetFor(facetId)
+            var savedFacet = wizard.getSavedFacetFor(facetId);
             if (savedFacet && savedFacet != "none" && !unchecked_value) {
                 elm.prop('checked', true);
-                facetEvents.facetsSelected(facetLabel, 'Yes', facetId)
+                facetEvents.facetsSelected(facetLabel, 'Yes', facetId);
             }
 
             elm.change(function () {
-                var self = $(this)
+                var self = $(this);
                 var label = self.is(':checked') ? "Yes" : 'none';
                 var value = self.is(':checked') ? self.data('checked-value') : unchecked_value || 'none';
 
