@@ -87,7 +87,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 var facetId = elm.data('facet-id')
                 var facetLabel = elm.data('facet-label')
 
-                facets.get(facetId).success(function (facets) {
+                facets.get(facetId).then(function (facets) {
 
                     _.each(facets[facetId], function (facet) {
 
@@ -198,7 +198,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
                 };
 
-                facets.get(facetId).success(function (facets) {
+                facets.get(facetId).then(function (facets) {
 
                     var all_states = $scope.createCheckbox('All States', 'al,ak,az,ar,ca,co,ct,de,dc,fl,ga,hi,id,il,in,ia,ks,ky,la,me,mt,ne,nv,nh,nj,nm,ny,nc,nd,oh,ok,or,md,ma,mi,mn,ms,mo,pa,ri,sc,sd,tn,tx,ut,vt,va,wa,wv,wi,wy')
                     var all_states_checkbox = $('input[type=checkbox]', all_states);
@@ -240,9 +240,10 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         } else {
                             _.each(savedFacet, function (x) {
                                 $('[value=' + x + ']', elm).prop('checked', true);
-                            })
+                            });
 
-                            $('[value=' + savedFacet + ']', elm).prop('checked', true);
+                            if (!_.isArray(savedFacet))
+                                $('[value=' + savedFacet + ']', elm).prop('checked', true);
                         }
 
                     } else {
@@ -374,10 +375,11 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 var facetLabel = elm.data('facet-label');
                 var lastValue = elm.data('facet-last-value');
                 var handleLabel = elm.data('facet-handle-label')
-                var smooth = elm.data('smooth')
+                var smooth = elm.data('smooth');
+                var facetLabelAddon = elm.data('facet-label-addon');
 
 
-                facets.get(facetId).success(function (facets) {
+                facets.get(facetId).then(function (facets) {
 
                     var sortedFacetValues = _.sortBy(facets[facetId], function (x) {
                         return parseInt(x.value)
@@ -423,11 +425,11 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                             else {
                                 if (sortedFacetValues[min].value == sortedFacetValues[max].value) {
                                     minmax = sortedFacetValues[min].value
-                                    minmax_text = sortedFacetValues[min].text
+                                    minmax_text = formatFacetLabel(sortedFacetValues[min].text)
                                 }
                                 else {
                                     minmax = [sortedFacetValues[min].value, sortedFacetValues[max].value];
-                                    minmax_text = [sortedFacetValues[min].text, sortedFacetValues[max].text];
+                                    minmax_text = [formatFacetLabel(sortedFacetValues[min].text), formatFacetLabel(sortedFacetValues[max].text)];
                                 }
                             }
 
@@ -467,6 +469,13 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         return parseInt(value) / 1000 + 'K';
 
                     return  value;
+                }
+
+                function formatFacetLabel(text) {
+                    if (facetLabelAddon)
+                        return formatValue(text) + facetLabelAddon;
+
+                    return formatValue(text);
                 }
             }
         }

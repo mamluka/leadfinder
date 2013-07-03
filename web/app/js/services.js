@@ -9,7 +9,7 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                 var item = sessionStorage.getItem('facets-cache');
                 if (item)
                     return {
-                        success: function (successFunction) {
+                        then: function (successFunction) {
                             successFunction(JSON.parse(item));
                         }
                     };
@@ -19,12 +19,9 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                         var data = request.data;
                         sessionStorage.setItem('facets-cache', JSON.stringify(data));
 
-                        return {
-                            success: function (successFunction) {
-                                successFunction(data)
-                            }
-                        }
+                        return data;
                     });
+
             },
             save: function (facets) {
                 sessionStorage.setItem('facets-labels', JSON.stringify(facets));
