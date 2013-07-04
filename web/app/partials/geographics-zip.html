@@ -1,0 +1,31 @@
+<div class="control-group">
+    <ul class="nav nav-pills">
+        <li>
+            <a href="#/geographics/states">States</a>
+        </li>
+        <li class="active"><a href="#/geographics/zip">Zip Codes</a></li>
+    </ul>
+
+    <div class="row-fluid zip-list">
+        <div class="span5">
+            <p>Enter zip codes:</p>
+
+            <div class="controls wide">
+                <textarea rows="15" class="pull-left" ng-model="zipList"></textarea>
+                <button class="btn-primary btn" style="width: 225px" ng-click="loadFromForm()">Use zip codes</button>
+
+            </div>
+        </div>
+        <div class="span2"><span class="middle">Or</span></div>
+        <div class="span4">
+            <div class="middle-button">
+                <p>
+                    You can upload a <strong>text</strong> or <strong>CSV</strong> file where the first column is the zip code
+                </p>
+                <button class="btn btn-primary" ng-click="loadFromFile()">Load from file</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>

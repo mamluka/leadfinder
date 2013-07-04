@@ -229,6 +229,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         if (!$(this).attr('all-states'))
                             all_states_checkbox.prop('checked', false);
 
+                        wizard.update('zip', 'none');
                         $scope.updateValue();
                     });
 
@@ -464,8 +465,10 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 });
 
                 function formatValue(value) {
-                    if (elm.data('use-thousands'))
-                        return parseInt(value) / 1000 + 'K';
+                    if (elm.data('use-thousands')) {
+                        var thousand = parseInt(value) / 1000;
+                        return thousand > 999 ? (thousand / 1000) + 'M' : thousand + 'K';
+                    }
 
                     return  value;
                 }
@@ -706,7 +709,8 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
         return {
             scope: {
                 howManyLeads: '=',
-                pricePerLead: '='
+                pricePerLead: '=',
+                total: '='
 
             },
             transclude: true,

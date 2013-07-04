@@ -80,6 +80,7 @@
 dl.dl-horizontal dt.facet {
     width:130px;
     white-space:normal;
+    font-size: 11px;
 }
 
 dl.dl-horizontal dd {
@@ -96,4 +97,24 @@ dl.dl-horizontal dd {
     white-space: nowrap;
     vertical-align: baseline;
     background-color: #999999;
+}
+.zip-list .span5 {
+    height: 330px;
+}
+.zip-list .span4 {
+    height: 330px;
+}
+.zip-list .span2 {
+    height: 330px;
+}
+.middle {
+    display: block;
+    position: relative;
+    top: 50%;
+    font-size: 2em;
+}
+.middle-button {
+    position: relative;
+    top: 40%;
+    font-size: 16px;
 }

@@ -86,15 +86,8 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                 return value
             },
             getSelectedFacets: _getSelectedFacets,
-            download: function () {
-                window.location.href = apiUrl + '/download/all.csv?' + jQuery.param(_getSelectedFacets());
-            },
             setExclude: function (value) {
                 window.sessionStorage.setItem('leadFinder.wizard.exclude', value)
-            },
-            getExclude: _getExclude,
-            clear: function () {
-                window.sessionStorage.removeItem('leadFinder.wizard.state')
             }
         }
     }])
