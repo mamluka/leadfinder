@@ -2,9 +2,14 @@
 
 angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'leadFinder.controllers', '$strap.directives'],function ($routeProvider, $locationProvider) {
 
-    $routeProvider.when('/geographics', {
-        templateUrl: '/partials/geographics.html',
-        controller: 'GeographicsController'
+    $routeProvider.when('/geographics/states', {
+        templateUrl: '/partials/geographics-states.html',
+        controller: 'GeoStateController'
+    });
+
+    $routeProvider.when('/geographics/zip', {
+        templateUrl: '/partials/geographics-zip.html',
+        controller: 'GeoZipCodeController'
     });
 
     $routeProvider.when('/demographics', {
@@ -43,5 +48,6 @@ angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'l
 
         defaults.apply();
 
+        $.unblockUI();
 
     }]);

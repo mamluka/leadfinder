@@ -24,6 +24,8 @@ class Buy < Grape::API
 
   helpers do
     def save_order(order)
+      hash.delete(:ccNumber);
+
       json_order = JSON.generate(order)
       filename = File.dirname(__FILE__) + "/orders/#{order[:first_name]}-#{order[:last_name]}-#{Time.now} + #{order[:id]}.json"
       File.open(filename, 'w') { |file| file.write(json_order) }

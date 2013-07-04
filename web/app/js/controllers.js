@@ -10,31 +10,30 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
 
 
     }])
-    .controller('GeographicsController', ['$scope', '$rootScope', 'Wizard', 'DefaultSearchConfigurations', function ($scope, $rootScope, wizard, defaultSearchConfigurations) {
-
-        $scope.showPage = true;
-
-        $scope.next = function () {
-
-            var facets = wizard.getSelectedFacets();
-
-            if (facets.hasOwnProperty('state') || facets.hasOwnProperty('zip')) {
-                $rootScope.$broadcast('change-page', {page: 'wizard'});
-            } else {
-                alert('Please select a state or a zip list')
-            }
-        };
+    .controller('GeoStateController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
 
         $rootScope.$on('change-page', function (e, data) {
             $scope.showPage = data.page == "geo";
         });
 
-        $scope.$watch('selectedPaneId', function () {
-            $rootScope.$broadcast('geo-include', {paneId: $scope.selectedPaneId});
-        })
     }])
-    .controller('StateSelectController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
-        $scope.selectedStates = [];
+    .controller('GeoZipCodeController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
+
+        $rootScope.$on('change-page', function (e, data) {
+            $scope.showPage = data.page == "geo";
+        });
+
+        $scope.loadFromForm = function () {
+            var data = $scope.zipList;
+
+            var zipCodes = data.split('\n').join(',');
+
+            wizard.update('zip', zipCodes);
+
+            facetEvents.facetsSelected('Zip codes', zipCodes.length + ' Zips')
+            facetEvents.recalculateTotal();
+        };
+
     }])
     .controller('DemographicsController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
 
@@ -107,6 +106,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
 
             leads.getTotalLeadsByFacets(selectedFacets).done(function (data) {
 
+
                 if ($scope.currentCallTimestamp > data.timestamp)
                     return;
 
@@ -117,6 +117,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
 
                     if (data.total == 0) {
                         $scope.showLeadCountChooser = false;
+                        window.sessionStorage.removeItem('total-leads');
 
                     } else {
                         $scope.showLeadCountChooser = true;
@@ -152,9 +153,14 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
         $scope.buyButtonText = 'Purchase Records';
 
         var data = JSON.parse(window.sessionStorage.getItem('total-leads'));
-
-        $scope.total = $.formatNumber(data.total, {format: "#,###", locale: "us"});
-        $scope.pricePerLead = data.pricePerLead;
+        if (data) {
+            $scope.totalFormatted = $.formatNumber(data.total, {format: "#,###", locale: "us"});
+            $scope.total = data.total;
+            $scope.pricePerLead = data.pricePerLead;
+        } else {
+            $scope.total = 0
+            $scope.pricePerLead = 1.5;
+        }
 
         $scope.isBuyButtonDisabled = function () {
             return $scope.inProgress || $scope.buyForm.$invalid
@@ -182,7 +188,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
                 if (data.success) {
                     $.msgBox({
                         title: "Your order was processed",
-                        content: "Your order was processed successfully, a download link will be send to:" + email,
+                        content: "Your order was processed successfully, a download link will be send to: " + email,
                         type: "Info",
                         buttons: [
                             { value: "Great!" }
@@ -192,15 +198,13 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
                             $scope.$apply(function () {
                                 $scope.inProgress = false;
                                 $scope.buyButtonText = 'Purchase Records';
-                            })
-
-                            var iframe = $('<iframe></iframe>');
-                            iframe.attr('src', 'http://www.marketing-data.net/report-affiliate?total=' + data.amount);
-                            iframe.css('width', '0px').css('height', '0px');
-
-                            $('body').append(iframe)
+                            });
                         }
                     });
+
+                    window.sessionStorage.removeItem('facets-labels');
+                    window.sessionStorage.removeItem('leadFinder.wizard.state');
+                    window.sessionStorage.removeItem('total-leads');
                 } else {
                     $.msgBox({
                         title: "Something went wrong",
