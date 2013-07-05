@@ -40,7 +40,7 @@ angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'l
     $routeProvider.otherwise({redirectTo: '/geographics'});
 
 
-}).run(['Analytics', 'DefaultSearchConfigurations', '$rootScope', function (analytics, defaults, $rootScope) {
+}).run(['Analytics', 'DefaultSearchConfigurations', '$rootScope', 'domain', function (analytics, defaults, $rootScope, domain) {
 
         $rootScope.$on('change-page', function (e, data) {
             analytics.reportNavigation(data.page)
@@ -48,7 +48,7 @@ angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'l
 
         defaults.apply();
 
-        document.domain ='leadfinder';
+        document.domain = domain;
 
         $.unblockUI();
 
