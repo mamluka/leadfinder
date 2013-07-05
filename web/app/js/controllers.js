@@ -1,15 +1,6 @@
 'use strict';
 
 angular.module('leadFinder.controllers', ['leadFinder.services'])
-    .controller('WizardController', ['$scope', '$rootScope', function ($scope, $rootScope) {
-        $scope.showPage = true;
-        $scope.displayAllTabs = true;
-        $rootScope.$on('change-page', function (e, data) {
-            $scope.showPage = data.page == "wizard";
-        });
-
-
-    }])
     .controller('GeoStateController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
 
         $rootScope.$on('change-page', function (e, data) {
@@ -17,11 +8,16 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
         });
 
     }])
-    .controller('GeoZipCodeController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
+    .controller('GeoZipCodeController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', 'apiUrl', function ($scope, $rootScope, wizard, facetEvents, apiUrl) {
 
         $rootScope.$on('change-page', function (e, data) {
             $scope.showPage = data.page == "geo";
         });
+
+        var savedFacet = wizard.getSavedFacetFor('zip');
+        if (savedFacet) {
+            $scope.zipList = savedFacet.join('\n');
+        }
 
         $scope.loadFromForm = function () {
             var data = $scope.zipList;
@@ -30,9 +26,26 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
 
             wizard.update('zip', zipCodes);
 
-            facetEvents.facetsSelected('Zip codes', zipCodes.length + ' Zips')
+            facetEvents.facetsSelected('Zip codes', zipCodes.length + ' Zips', 'geo');
             facetEvents.recalculateTotal();
         };
+
+        $('.zip-file-uploader').upload({
+            name: 'file',
+            action: apiUrl + "/upload/zip-list",
+            autoSubmit: true,
+            onSubmit: function () {
+                $('.zip-file-loader-progress').show();
+            },
+            onComplete: function (data) {
+                $scope.$apply(function() {
+                    $scope.zipList = data.join('\n')
+                    $scope.loadFromForm();
+                });
+                $('.zip-file-loader-progress').hide();
+            }
+
+        });
 
     }])
     .controller('DemographicsController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
@@ -45,43 +58,6 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
 
     }])
     .controller('LifestyleController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
-
-    }])
-    .controller('NavigationController', ['$scope', '$rootScope', function ($scope, $rootScope) {
-
-        $scope.currentPage = 'geo';
-        $scope.disableOrderForm = true;
-
-        $scope.isActive = function (page) {
-            if (page == $scope.currentPage)
-                return 'active'
-        };
-
-        $rootScope.$on('buy-committed', function () {
-            $scope.disableOrderForm = false;
-        });
-
-        $scope.goTo = function (page) {
-            if ($scope.disableOrderForm && page == 'buy') {
-                $.msgBox({
-                    title: "Error",
-                    content: "You must select a filter before you can order",
-                    type: "error",
-                    showButtons: false,
-                    autoClose: true
-                });
-                return;
-            }
-
-            $rootScope.$broadcast('change-page', {page: page});
-        };
-
-        $rootScope.$on('change-page', function (e, data) {
-            $scope.currentPage = data.page
-        });
-
-    }])
-    .controller('ZipSelectController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
 
     }])
     .controller('SummeryController', ['$scope', 'Wizard', 'Leads', '$rootScope', function ($scope, wizard, leads, $rootScope) {

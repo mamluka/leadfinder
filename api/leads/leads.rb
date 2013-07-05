@@ -36,4 +36,9 @@ class Leads < Grape::API
 
     {total: total, pricePerLead: pricing.get_price_for_count(total, params), timestamp: Time.now.to_i}
   end
+
+  post 'upload-zip-list' do
+
+  end
+
 end

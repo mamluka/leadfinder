@@ -50,7 +50,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
                 $scope.updateLabel = function (set_value) {
                     var value = set_value || $scope.getText();
-                    facetEvents.facetsSelected(facetLabel, value, facetId);
+                    facetEvents.facetsSelected(facetLabel, value);
                 };
 
                 $scope.updateState = function () {
@@ -169,7 +169,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
                 $scope.updateLabel = function (set_value) {
                     var value = set_value || $scope.getText();
-                    facetEvents.facetsSelected(facetLabel, value, facetId);
+                    facetEvents.facetsSelected(facetLabel, value, 'geo');
                 };
 
                 $scope.updateState = function () {
@@ -229,7 +229,6 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         if (!$(this).attr('all-states'))
                             all_states_checkbox.prop('checked', false);
 
-                        wizard.update('zip', 'none');
                         $scope.updateValue();
                     });
 
@@ -246,8 +245,6 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                                 $('[value=' + savedFacet + ']', elm).prop('checked', true);
                         }
 
-                    } else {
-                        all_states_checkbox.trigger('click');
                     }
                 });
             }
@@ -294,7 +291,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
                 $scope.updateLabel = function (set_value) {
                     var value = set_value || $scope.getText();
-                    facetEvents.facetsSelected(facetLabel, value, facetId);
+                    facetEvents.facetsSelected(facetLabel, value);
                 };
 
                 $scope.updateState = function () {
@@ -436,7 +433,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                             wizard.update(facetId, minmax)
 
                             $rootScope.$apply(function () {
-                                facetEvents.facetsSelected(facetLabel, minmax_text, facetId)
+                                facetEvents.facetsSelected(facetLabel, minmax_text)
                                 facetEvents.recalculateTotal();
                             })
                         },
@@ -492,7 +489,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             var savedFacet = wizard.getSavedFacetFor(facetId);
             if (savedFacet && savedFacet != "none" && !unchecked_value) {
                 elm.prop('checked', true);
-                facetEvents.facetsSelected(facetLabel, 'Yes', facetId);
+                facetEvents.facetsSelected(facetLabel, 'Yes');
             }
 
             elm.change(function () {
@@ -502,7 +499,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
                 wizard.update(facetId, value);
                 $rootScope.$apply(function () {
-                    facetEvents.facetsSelected(facetLabel, label, facetId);
+                    facetEvents.facetsSelected(facetLabel, label);
                     facetEvents.recalculateTotal();
                 })
             });
@@ -527,7 +524,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
 
                 $scope.updateLabel = function (set_value) {
                     var value = set_value || $scope.getValue();
-                    facetEvents.facetsSelected(facetLabel, value, facetId)
+                    facetEvents.facetsSelected(facetLabel, value)
                 };
 
                 $scope.updateState = function () {
@@ -665,6 +662,13 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         return;
                     }
 
+                    $scope.selectedFacetsIndicators = _.filter($scope.selectedFacetsIndicators, function (facet) {
+                        if (facet.group && data.group === facet.group)
+                            return false;
+
+                        return true;
+                    });
+
                     var alreadyUsed = _.some($scope.selectedFacetsIndicators, function (x) {
                         return x.label == data.label
                     });
@@ -680,12 +684,12 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         })
                     }
                     else {
-                        $scope.selectedFacetsIndicators.push({label: data.label, values: format(data.value)});
+                        $scope.selectedFacetsIndicators.push({label: data.label, values: format(data.value), group: data.group});
                         analytics.reportFacet(data.label, data.value)
                     }
 
                     facets.save(_.map($scope.selectedFacetsIndicators, function (x) {
-                        return { label: x.label, values: x.values }
+                        return { label: x.label, values: x.values, group: x.group }
                     }));
 
                     function format(value) {

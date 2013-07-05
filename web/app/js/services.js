@@ -33,6 +33,8 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
     }])
     .factory('Wizard', ['$http', 'apiUrl', function ($http, apiUrl) {
 
+        var geoExclude = ['zip', 'state'];
+
         function _getExclude() {
             return window.sessionStorage.getItem('leadFinder.wizard.exclude')
         }
@@ -43,12 +45,17 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
             var selected_facets = {};
 
             for (var key in state) {
-                if (state.hasOwnProperty(key) && state[key] != "none" && key != _getExclude())
+                if (state.hasOwnProperty(key) && state[key] != "none")
                     selected_facets[key] = state[key]
             }
 
-            return selected_facets;
+            var active = window.sessionStorage.getItem('leadFinder.wizard.active');
+            if (active) {
+                var facet_to_remove = _.without(geoExclude, active);
+                selected_facets = _.omit(selected_facets, facet_to_remove);
+            }
 
+            return selected_facets;
         }
 
         return {
@@ -63,7 +70,8 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
 
                 window.sessionStorage.setItem('leadFinder.wizard.state', JSON.stringify(state))
 
-
+                if (_.indexOf(geoExclude, key) > -1)
+                    window.sessionStorage.setItem('leadFinder.wizard.active', key);
             },
             getSavedFacetFor: function (facetId) {
                 var state = JSON.parse(window.sessionStorage.getItem('leadFinder.wizard.state')) || {};
@@ -86,9 +94,6 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                 return value
             },
             getSelectedFacets: _getSelectedFacets,
-            setExclude: function (value) {
-                window.sessionStorage.setItem('leadFinder.wizard.exclude', value)
-            }
         }
     }])
     .factory('Leads', ['$http', 'apiUrl', function ($http, apiUrl) {
@@ -115,11 +120,11 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
     }])
     .factory('facetEvents', ['$rootScope', function ($rootScope) {
         return {
-            facetsSelected: function (label, value, id) {
+            facetsSelected: function (label, value, group) {
                 $rootScope.$broadcast('facets-selected', {
                     label: label,
                     value: value,
-                    id: id
+                    group: group
                 });
             },
             recalculateTotal: function () {
