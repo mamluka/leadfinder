@@ -69,6 +69,10 @@ class Buy < Grape::API
 
       require_relative '../core/queue'
 
+      Backburner.configure do |config|
+        config.respond_timeout = 3600
+      end
+
       Backburner.enqueue CreateCsvForCustomer, params[:email], number_of_leads_requested, facets, {name: hash[:first_name] + ' ' + hash[:last_name], order_id: hash[:order_id]}
 
       response = {
