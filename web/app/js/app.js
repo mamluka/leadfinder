@@ -37,6 +37,11 @@ angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'l
         controller: 'OrderFormController'
     });
 
+    $routeProvider.when('/order-form/order-ready', {
+        templateUrl: '/partials/order-ready.html',
+        controller: 'OrderReadyController'
+    });
+
     $routeProvider.otherwise({redirectTo: '/geographics/states'});
 
 
