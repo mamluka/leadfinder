@@ -8,11 +8,6 @@
         "id": "gender",
         "value": "f",
         "text": "Female"
-    },
-    {
-        "id": "gender",
-        "value": "u,m,f",
-        "text": "Both"
     }
 ],
     "state": [
@@ -553,11 +548,6 @@
         "text": 800
     }
 ], "exact_age": [
-    {
-        "id": "exact_age",
-        "value": 0,
-        "text": 0
-    },
     {
         "id": "exact_age",
         "value": 20,

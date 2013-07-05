@@ -24,6 +24,8 @@ class Buy < Grape::API
 
   helpers do
     def save_order(order)
+      order.delete(:ccNumber)
+
       json_order = JSON.generate(order)
       filename = File.dirname(__FILE__) + "/orders/#{order[:first_name]}-#{order[:last_name]}-#{Time.now} + #{order[:id]}.json"
       File.open(filename, 'w') { |file| file.write(json_order) }
@@ -66,6 +68,10 @@ class Buy < Grape::API
     if result[:success] || params[:ccNumber] == "sampleme"
 
       require_relative '../core/queue'
+
+      Backburner.configure do |config|
+        config.respond_timeout = 3600
+      end
 
       Backburner.enqueue CreateCsvForCustomer, params[:email], number_of_leads_requested, facets, {name: hash[:first_name] + ' ' + hash[:last_name], order_id: hash[:order_id]}
 

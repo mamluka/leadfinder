@@ -1,0 +1,113 @@
+<h4>Here is a list of the attributes you selected:</h4>
+
+<facets></facets>
+
+<hr/>
+
+<form class="form-horizontal" name="buyForm">
+
+
+    <div class="control-group">
+        <label class="control-label">Available:</label>
+
+        <div class="controls" style="padding-top:5px;font-size: 22px;">
+            {{totalFormatted}} households
+        </div>
+    </div>
+
+
+    <div class="control-group">
+        <label class="control-label">Your Order of:</label>
+
+        <div class="controls">
+            <div choose-number-of-leads how-many-leads="howManyLeads" price-per-lead="pricePerLead" total="total"></div>
+        </div>
+    </div>
+
+
+    <!--<div class="control-group">-->
+    <!--<div class="controls">-->
+    <!--<label class="checkbox">-->
+    <!--<input type="checkbox" checkbox-facet data-facet-id="has_telephone_number" data-facet-label="Include leads without telephone number" data-checked-value="true,false" data-unchecked-value='true'/>Include-->
+    <!--leads without telephone number-->
+    <!--</label>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <hr/>
+
+    <div class="control-group">
+        <label class="control-label">Email:</label>
+
+        <div class="controls">
+            <input type="email" class="input-xlarge" placeholder="Email" ng-model="email" required/>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">First name:</label>
+
+        <div class="controls">
+            <input type="text" class="input-large" placeholder="First name" ng-model="firstName" required/>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Last name:</label>
+
+        <div class="controls">
+            <input type="text" class="input-large" placeholder="Last name" ng-model="lastName" required/>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Credit card number:</label>
+
+        <div class="controls">
+            <input type="text" class="input-xlarge" placeholder="Credit card number" ng-model="ccNumber" required/>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Expiration date:</label>
+
+        <div class="controls">
+            <select class="input-small inline" ng-model="ccMonth">
+                <option value="1">01</option>
+                <option value="2">02</option>
+                <option value="3">03</option>
+                <option value="4">04</option>
+                <option value="5">05</option>
+                <option value="6">06</option>
+                <option value="7">07</option>
+                <option value="8">08</option>
+                <option value="9">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+
+            <select class="input-small inline" ng-model="ccYear">
+                <option value="13">2013</option>
+                <option value="14">2014</option>
+                <option value="15">2015</option>
+                <option value="16">2016</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group" style="display:none">
+        <label class="control-label">CCV:</label>
+
+        <div class="controls">
+            <input type="text" class="input-small" placeholder="CCV" ng-model="ccCCV" value="000"/>
+        </div>
+    </div>
+
+
+    <div class="control-group">
+        <div class="controls">
+            <button class="btn" ng-click="buy()" ng-disabled="isBuyButtonDisabled()">{{buyButtonText}}</button>
+        </div>
+    </div>
+</form>

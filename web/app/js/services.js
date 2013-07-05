@@ -6,11 +6,34 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
     .factory('Facets', ['$http', 'apiUrl' , function ($http, apiUrl) {
         return {
             get: function () {
+                var item = sessionStorage.getItem('facets-cache');
+                if (item)
+                    return {
+                        then: function (successFunction) {
+                            successFunction(JSON.parse(item));
+                        }
+                    };
+
                 return $http.get(apiUrl + '/facets/all-cached')
+                    .then(function (request) {
+                        var data = request.data;
+                        sessionStorage.setItem('facets-cache', JSON.stringify(data));
+
+                        return data;
+                    });
+
+            },
+            save: function (facets) {
+                sessionStorage.setItem('facets-labels', JSON.stringify(facets));
+            },
+            load: function () {
+                return JSON.parse(sessionStorage.getItem('facets-labels'));
             }
         }
     }])
     .factory('Wizard', ['$http', 'apiUrl', function ($http, apiUrl) {
+
+        var geoExclude = ['zip', 'state'];
 
         function _getExclude() {
             return window.sessionStorage.getItem('leadFinder.wizard.exclude')
@@ -22,12 +45,17 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
             var selected_facets = {};
 
             for (var key in state) {
-                if (state.hasOwnProperty(key) && state[key] != "none" && key != _getExclude())
+                if (state.hasOwnProperty(key) && state[key] != "none")
                     selected_facets[key] = state[key]
             }
 
-            return selected_facets;
+            var active = window.sessionStorage.getItem('leadFinder.wizard.active');
+            if (active) {
+                var facet_to_remove = _.without(geoExclude, active);
+                selected_facets = _.omit(selected_facets, facet_to_remove);
+            }
 
+            return selected_facets;
         }
 
         return {
@@ -42,28 +70,30 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
 
                 window.sessionStorage.setItem('leadFinder.wizard.state', JSON.stringify(state))
 
-
+                if (_.indexOf(geoExclude, key) > -1)
+                    window.sessionStorage.setItem('leadFinder.wizard.active', key);
             },
             getSavedFacetFor: function (facetId) {
                 var state = JSON.parse(window.sessionStorage.getItem('leadFinder.wizard.state')) || {};
-                var value = state[facetId];
+                var value = state[facetId]
+
+                if (typeof(value) == "undefined")
+                    return false;
+
+                value = value.toString();
 
                 if (value && value.indexOf('-') !== -1)
-                    return value.split('-')
+                    return value.split('-');
+
+                if (value && value.indexOf(',') > -1)
+                    return value.split(',');
+
+                if (value == "none")
+                    return false;
 
                 return value
             },
             getSelectedFacets: _getSelectedFacets,
-            download: function () {
-                window.location.href = apiUrl + '/download/all.csv?' + jQuery.param(_getSelectedFacets());
-            },
-            setExclude: function (value) {
-                window.sessionStorage.setItem('leadFinder.wizard.exclude', value)
-            },
-            getExclude: _getExclude,
-            clear: function () {
-                window.sessionStorage.removeItem('leadFinder.wizard.state')
-            }
         }
     }])
     .factory('Leads', ['$http', 'apiUrl', function ($http, apiUrl) {
@@ -90,11 +120,11 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
     }])
     .factory('facetEvents', ['$rootScope', function ($rootScope) {
         return {
-            facetsSelected: function (label, value, id) {
+            facetsSelected: function (label, value, group) {
                 $rootScope.$broadcast('facets-selected', {
                     label: label,
                     value: value,
-                    id: id
+                    group: group
                 });
             },
             recalculateTotal: function () {
@@ -102,10 +132,10 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
             }
         }
     }])
-    .factory('DefaultSearchConfigurations', ['Wizard', function (wizard) {
+    .factory('DefaultSearchConfigurations', ['Wizard', 'Facets', function (wizard, facets) {
         return {
             apply: function () {
-                wizard.update('has_telephone_number', 'true')
+                wizard.update('has_telephone_number', 'true');
             }
         }
     }])
