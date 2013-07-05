@@ -37,7 +37,7 @@ angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'l
         controller: 'OrderFormController'
     });
 
-    $routeProvider.otherwise({redirectTo: '/geographics'});
+    $routeProvider.otherwise({redirectTo: '/geographics/states'});
 
 
 }).run(['Analytics', 'DefaultSearchConfigurations', '$rootScope', 'domain', function (analytics, defaults, $rootScope, domain) {

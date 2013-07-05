@@ -8,11 +8,11 @@
 
     <div class="row-fluid zip-list">
         <div class="span5">
-            <p>Enter zip codes:</p>
+            <p>Enter zip codes line by line:</p>
 
             <div class="controls wide">
-                <textarea rows="15" class="pull-left" ng-model="zipList"></textarea>
-                <button class="btn-primary btn" style="width: 225px" ng-click="loadFromForm()">Use zip codes</button>
+                <textarea rows="15" class="pull-left" ng-model="zipList" ng-disabled="loadingInProgress"></textarea>
+                <button class="btn-primary btn" style="width: 225px" ng-click="loadFromForm()" ng-disabled="loadingInProgress">Use zip codes</button>
 
             </div>
         </div>

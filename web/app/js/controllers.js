@@ -20,29 +20,50 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
         }
 
         $scope.loadFromForm = function () {
+
+            $scope.loadingInProgress = true;
+
             var data = $scope.zipList;
 
-            var zipCodes = data.split('\n').join(',');
+            var zipLines = data.split('\n');
+            var zipCodes = zipLines.join(',');
 
             wizard.update('zip', zipCodes);
 
-            facetEvents.facetsSelected('Zip codes', zipCodes.length + ' Zips', 'geo');
+            facetEvents.facetsSelected('Zip codes', zipLines.length + ' Zips', 'geo');
             facetEvents.recalculateTotal();
+
+            $rootScope.$on('facets-recalculate-total-finished', function () {
+                $scope.$apply(function() {
+                    $scope.loadingInProgress = false;
+                });
+            });
         };
+
+        $scope.loadingInProgress = false;
 
         $('.zip-file-uploader').upload({
             name: 'file',
             action: apiUrl + "/upload/zip-list",
             autoSubmit: true,
             onSubmit: function () {
+                $scope.$apply(function () {
+                    $scope.loadingInProgress = true;
+                });
+
+
                 $('.zip-file-loader-progress').show();
+                $('zip-file-uploader').prop('disabled', true);
             },
             onComplete: function (data) {
-                $scope.$apply(function() {
+                $scope.$apply(function () {
+                    $scope.loadingInProgress = false;
                     $scope.zipList = data.join('\n')
                     $scope.loadFromForm();
                 });
+
                 $('.zip-file-loader-progress').hide();
+                $('zip-file-uploader').prop('disabled', false);
             }
 
         });
@@ -102,7 +123,9 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
 
                         window.sessionStorage.setItem('total-leads', JSON.stringify({total: data.total, pricePerLead: data.pricePerLead}));
                     }
-                })
+                });
+
+                $rootScope.$broadcast('facets-recalculate-total-finished');
             })
         });
 

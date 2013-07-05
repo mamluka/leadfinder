@@ -388,7 +388,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                         sortedFacetValues[numberOfPoints].text = lastValue
                     }
 
-                    var modForScale = numberOfPoints > 20 ? Math.round(numberOfPoints / 20) : 4;
+                    var modForScale = numberOfPoints > 20 ? Math.round(numberOfPoints / 15) : 5;
 
                     var scale = _.map(sortedFacetValues, function (x, i) {
                         if (i % modForScale == 0) {
