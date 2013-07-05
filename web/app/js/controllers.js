@@ -34,7 +34,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
             facetEvents.recalculateTotal();
 
             $rootScope.$on('facets-recalculate-total-finished', function () {
-                $scope.$apply(function() {
+                $scope.$apply(function () {
                     $scope.loadingInProgress = false;
                 });
             });
@@ -136,7 +136,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
 
             $rootScope.$broadcast('buy-committed', {total: $scope.total, pricePerLead: $scope.pricePerLead});
             $rootScope.$broadcast('change-page', {page: 'buy'});
-        }
+        };
 
         $rootScope.$on('change-page', function (e, data) {
             if (data.page == 'buy')
@@ -146,7 +146,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
         });
 
     }])
-    .controller('OrderFormController', ['$scope', '$rootScope', 'BuyingLeads', function ($scope, $rootScope, buyingLeads) {
+    .controller('OrderFormController', ['$scope', '$rootScope', 'BuyingLeads', '$location', function ($scope, $rootScope, buyingLeads, $location) {
 
         $scope.inProgress = false;
         $scope.buyButtonText = 'Purchase Records';
@@ -157,7 +157,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
             $scope.total = data.total;
             $scope.pricePerLead = data.pricePerLead;
         } else {
-            $scope.total = 0
+            $scope.total = 0;
             $scope.pricePerLead = 1.5;
         }
 
@@ -185,41 +185,19 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
 
             buyCall.done(function (data) {
                 if (data.success) {
-                    $.msgBox({
-                        title: "Your order was processed",
-                        content: "Your order was processed successfully, a download link will be send to: " + email,
-                        type: "Info",
-                        buttons: [
-                            { value: "Great!" }
-                        ],
-                        beforeClose: function (result) {
-
-                            $scope.$apply(function () {
-                                $scope.inProgress = false;
-                                $scope.buyButtonText = 'Purchase Records';
-                            });
-                        }
+                    $scope.$apply(function () {
+                        $location.path('/order-form/order-ready').search({email: email}).replace();
                     });
-
-                    window.sessionStorage.removeItem('facets-labels');
-                    window.sessionStorage.removeItem('leadFinder.wizard.state');
-                    window.sessionStorage.removeItem('total-leads');
                 } else {
-                    $.msgBox({
-                        title: "Something went wrong",
-                        content: "There is a problem with your order: " + data.error_message,
-                        type: "error",
-                        buttons: [
-                            { value: "Confirm" }
-                        ],
-                        beforeClose: function (result) {
-                            $scope.$apply(function () {
-                                $scope.inProgress = false;
-                                $scope.buyButtonText = 'Purchase Records';
-                            })
-                        }
+                    $scope.$apply(function () {
+                        $scope.error_message = data.error_message;
+                        $scope.error = true;
+                        $scope.inProgress = false;
                     });
                 }
             })
         }
+    }])
+    .controller('OrderReadyController', ['$scope', '$routeParams', function ($scope, $routeParams) {
+        $scope.email = $routeParams['email'];
     }]);
