@@ -40,7 +40,7 @@ class PayJunction
         'M4' => 'Declined.',
         'DT' => 'Duplicate Transaction.',
     }
-	@config = JSON.parse(File.read(File.dirname(__FILE__)+'/config.json'))
+    @config = JSON.parse(File.read(File.dirname(__FILE__)+'/config.json'))
   end
 
   def charge(details)

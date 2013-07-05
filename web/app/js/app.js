@@ -48,6 +48,8 @@ angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'l
 
         defaults.apply();
 
+        document.domain ='leadfinder';
+
         $.unblockUI();
 
     }]);
