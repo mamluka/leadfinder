@@ -11,6 +11,7 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                     return {
                         then: function (successFunction) {
                             successFunction(JSON.parse(item));
+                            $.unblockUI();
                         }
                     };
 
@@ -18,7 +19,7 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                     .then(function (request) {
                         var data = request.data;
                         sessionStorage.setItem('facets-cache', JSON.stringify(data));
-
+                        $.unblockUI();
                         return data;
                     });
 
@@ -146,6 +147,15 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                 if (_.isArray(value)) {
                     value = [value[0] + " - " + value[1]]
                 }
+
+                mixpanel.track(
+                    'Facet Selected',
+                    {
+                        facet: facetLabel,
+                        value: value
+
+                    }
+                );
 
                 ga('send', 'event', 'Facets', facetLabel, value);
             },
