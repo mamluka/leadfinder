@@ -45,14 +45,15 @@ angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'l
     $routeProvider.otherwise({redirectTo: '/geographics/states'});
 
 
-}).run(['Analytics', 'DefaultSearchConfigurations', '$rootScope', 'domain', function (analytics, defaults, $rootScope, domain) {
+}).run(['Analytics', 'DefaultSearchConfigurations', '$rootScope', 'domain', '$location', function (analytics, defaults, $rootScope, domain, $location) {
 
-        $rootScope.$on('routeChangeSuccess', function (e, current) {
-            analytics.reportNavigation(current)
+        $rootScope.$on('$routeChangeSuccess', function () {
+            var path = $location.path();
+            analytics.reportNavigation(path)
 
             mixpanel.track(
                 'Page changed',
-                { page: current }
+                { page: path }
             );
         });
 
