@@ -1,0 +1,49 @@
+<form class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label">Age:</label>
+
+        <div class="controls">
+            <div class="cool-slider">
+                <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="exact_age" data-facet-label="Age" data-facet-handle-label="Years"/>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form class="form-inline no-label">
+
+    <label class="checkbox">
+        <input type="checkbox" checkbox-facet data-facet-id="has_children" data-facet-label="Children" data-checked-value="true"/>Children
+    </label>
+
+    <label class="checkbox">
+        <input type="checkbox" checkbox-facet data-facet-id="business_owner" data-facet-label="Business owner" data-checked-value="8"/>Business owner
+    </label>
+
+    <label class="checkbox">
+        <input type="checkbox" checkbox-facet data-facet-id="marital_status_in_the_hhld" data-facet-label="Married" data-checked-value="m,a"/>Married
+    </label>
+
+</form>
+
+
+<form class="form-horizontal">
+
+
+    <div class="control-group">
+        <label class="control-label">Language:</label>
+
+        <div class="controls">
+            <select list-facet data-facet-id="language" data-facet-label="Language" multiple></select>
+        </div>
+    </div>
+
+
+    <div class="control-group">
+        <label class="control-label">Gender:</label>
+
+        <div class="controls">
+            <select list-facet data-facet-id="gender" data-facet-label="Gender"></select>
+        </div>
+    </div>
+</form>

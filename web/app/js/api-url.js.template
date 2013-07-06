@@ -1,4 +1,5 @@
 'use strict';
 
 angular.module('leadFinder.apiUrl', [])
-    .value('apiUrl', 'http://localhost:5555')
+    .value('apiUrl', 'apiUrlTemplate')
+    .value('apiUrl', 'domainTemplate');

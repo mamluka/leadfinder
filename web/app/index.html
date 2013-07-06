@@ -3,678 +3,75 @@
 <head>
     <meta charset="utf-8">
     <title>Lead Finder</title>
-    <!--<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">-->
     <link href="css/jslider.css" rel="stylesheet">
     <link rel="stylesheet" href="css/app.css"/>
     <link rel="stylesheet" href="css/bootstrap.css"/>
     <link rel="stylesheet" href="css/msgBoxLight.css"/>
     <link rel="stylesheet" href="css/chosen.css"/>
+    <link rel="stylesheet" href="css/bootstrap-fileupload.css"/>
+
+    <link href='https://fonts.googleapis.com/css?family=Sintony' rel='stylesheet' type='text/css'>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js"></script>
+    <script src="js/plugins/blockui/jquery.blockUI.js"></script>
 </head>
 <body>
-
-<div id="loader"><h3>Please wait...</h3><img src="img/ajax-loader.gif"/></div>
 <script>
-
-    var loader = $('#loader');
-    var windowH = $(window).height();
-    var windowW = $(window).width();
-
-    loader.css({
-        position: "fixed",
-        left: ((windowW - loader.outerWidth()) / 2 + $(document).scrollLeft()),
-        top: ((windowH - loader.outerHeight()) / 2 + $(document).scrollTop())
-    });
-
-    var interval = window.setInterval(function () {
-        var allLoaded = _.filter($('input[cool-slider-facet]'), function (x) {
-            return $(x).data('loaded') == "true"
-        });
-
-        if (allLoaded.length == 13) {
-
-            loader.remove();
-
-            var wizard = $('[ng-controller="WizardController"]');
-            angular.element(wizard).scope().displayAllTabs = false;
-            angular.element(wizard).scope().showPage = false;
-            angular.element(wizard).scope().$apply();
-
-            $('#app').css('overflow', 'visible').height('100%');
-
-            window.clearInterval(interval);
-        }
-    }, 500);
-
+    $.blockUI(
+            {
+                fadeIn: 0,
+                message: '<h3>Loading...</h3><img src="/img/ajax-loader.gif"/>',
+                css: { border: 'none', backgroundColor: 'none', color: '#000', opacity: 1},
+                overlayCSS: { opacity: 1, backgroundColor: '#fff'}
+            }
+    );
 </script>
-<div class="container-fluid" id="app" style="height: 0px;overflow: hidden">
-<div style="height: 30px;"></div>
-<div class="row-fluid">
-    <div class="navbar" ng-controller="NavigationController">
-        <div class="navbar-inner">
-            <ul class="nav">
-                <li ng-class="isActive('geo')" ng-click="goTo('geo')"><a href="#">Geographics</a></li>
-                <li ng-class="isActive('wizard')" ng-click="goTo('wizard')"><a href="#">Demographics</a></li>
-                <li ng-class="isActive('buy')" ng-click="goTo('buy')"><a href="#">Order Form</a></li>
-            </ul>
+<div class="main">
+    <!--<div class="header cool-font nav">-->
+    <!--<ul>-->
+    <!--<li>Home</li>-->
+    <!--<li>About us</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--<div class="logo-strip"></div>-->
+    <div class="tabs cool-font nav">
+        <ul>
+            <li><a href="#/geographics/states">Geographics</a></li>
+            <li><a href="#/demographics">Demographics</a></li>
+            <li><a href="#/economics">Economics</a></li>
+            <li><a href="#/mortgage">Mortgage</a></li>
+            <li><a href="#/lifestyle">Lifestyle</a></li>
+            <li><a href="#/order-form">Order form</a></li>
+        </ul>
+    </div>
+    <div class="app">
+        <div class="wizard" ng-view></div>
+        <div class="summery" ng-controller="SummeryController">
+            <div ng-show="showLeadCountChooser">
+                <h4 class="pull-left">{{total}} households</h4><h6 ng-show="countingLeads" class="pull-right lead-count-loading"><img src="img/lead-count-loading.gif" style="margin-left: 5px"/></h6>
+                <hr style="clear:both"/>
+                <div style="clear:both"></div>
+
+                <div>
+                    <facets></facets>
+                </div>
+
+                <label class="checkbox">
+                    <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number" data-facet-label="Telephone number" data-checked-value="true"/>Has phone number
+                </label>
+
+            </div>
+            <div ng-hide="showLeadCountChooser">
+                <h5>No leads matched your filter</h5>
+
+                If you have no selected any filter, select some.
+                If you selected filters that are too specific
+                ease out.
+            </div>
         </div>
     </div>
-</div>
-<div class="row-fluid">
-<span class="span8">
-            <div ng-controller="GeographicsController">
-                <form class="form-horizontal" ng-show="showPage">
-                    <tabs display-tabs="true" selected-pane-id="selectedPaneId">
-                        <pane title="States" id="state">
-                            <div ng-controller="StateSelectController">
-                                <div class="control-group">
-                                    <label class="control-label wide">Choose a state from checkbox list</label>
-
-                                    <div class="controls wide">
-                                        <div class="form-inline" style="width:750px;" checkbox-list-facet data-facet-id="state" data-facet-label="State" selected-states="selectedStates"></div>
-                                    </div>
-                                </div>
-
-                                <!--<div class="control-group">-->
-                                <!--<label class="control-label wide">Use a map</label>-->
-
-                                <!--<div class="controls wide">-->
-                                <!--<div us-map-facet style="width: 500px; height: 300px;" data-facet-id="state" data-facet-label="State" selected-states="selectedStates"></div>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                            </div>
-                        </pane>
-                        <pane title="Zip Code List" id="zip">
-                            <div ng-controller="ZipSelectController">
-                                <div class="control-group">
-                                    <label class="control-label wide">Fill in a list of zip codes</label>
-
-                                    <div class="controls wide">
-                                        <textarea multiline-facet data-facet-id="zip" data-facet-label="Zip" class="input-xlarge" rows="10"></textarea>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </pane>
-                    </tabs>
-
-                    <div class="control-group">
-                        <div class="controls wide">
-                            <button class="btn" ng-click="next()">Next step (demographics)</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div ng-controller="WizardController" class="wizard-tabs">
-            <tabs display-tabs="showPage" display-all-tabs="displayAllTabs">
-            <pane title="Demographics">
-                <div>
-                    <form class="form-horizontal">
-                        <div class="control-group">
-                            <label class="control-label">Age:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="exact_age" data-facet-label="Age" data-facet-handle-label="Years"/>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                    <form class="form-inline no-label">
-
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="has_children" data-facet-label="Has children" data-checked-value="true"/>Has children
-                        </label>
-
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="business_owner" data-facet-label="Business owner" data-checked-value="8"/>Business owner
-                        </label>
-
-                    </form>
-
-
-                    <form class="form-horizontal">
-
-
-                        <div class="control-group">
-                            <label class="control-label">Language:</label>
-
-                            <div class="controls">
-                                <select list-facet data-facet-id="language" data-facet-label="Language" multiple></select>
-                            </div>
-                        </div>
-
-
-                        <div class="control-group">
-                            <label class="control-label">Gender:</label>
-
-                            <div class="controls">
-                                <select list-facet data-facet-id="gender" data-facet-label="Gender"></select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </pane>
-            <pane title="Economics">
-                <div>
-                    <form class="form-horizontal">
-                        <div class="control-group">
-                            <label class="control-label">Income:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="income_estimated_household" data-facet-label="Income" data-facet-last-value="+250000" data-facet-handle-label="$"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Net Worth:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="net_worth" data-facet-label="Net worth" data-facet-last-value="+750000" data-facet-handle-label="$"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Credit rating:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="credit_rating" data-facet-label="Credit rating" data-facet-handle-label="Points"/>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                    <form class="form-inline no-label">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="credit_card_user" data-facet-label="Credit card user" data-checked-value="true"/>Credit card holder
-                        </label>
-
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="premium_card_holder" data-facet-label="Premium card holder" data-checked-value="true"/>Premium card holder
-                        </label>
-
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="bank_card_holder" data-facet-label="Debit card holder" data-checked-value="true"/>Debit card holder
-                        </label>
-                    </form>
-
-                    <form class="form-horizontal">
-                        <div class="control-group">
-                            <label class="control-label">Available credit range:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="credit_range_of_new_credit" data-facet-label="Available credit range" data-facet-handle-label="$"/>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <form class="form-inline no-label" style="width:500px;">
-
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="investments_personal" data-facet-label="Personal investor" data-checked-value="true"/>Personal investor
-                        </label>
-
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="investments_real_estate" data-facet-label="Read estate investor" data-checked-value="true"/>Real estate investor
-                        </label>
-
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="investments_stocks_bonds" data-facet-label="Stocks investor" data-checked-value="true"/>Stocks investor
-                        </label>
-
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="money_seekers" data-facet-label="Money seeker" data-checked-value="true"/>Money seeker
-                        </label>
-
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="investments_foreign" data-facet-label="Foreign investor" data-checked-value="true"/>Foreign investor
-                        </label>
-                    </form>
-
-                </div>
-            </pane>
-
-            <pane title="Mortgage">
-                <div>
-                    <form class="form-horizontal">
-
-                        <div class="control-group">
-
-                            <div class="controls">
-                                <label class="checkbox">
-                                    <input type="checkbox" checkbox-facet data-facet-id="home_owner" data-facet-label="Home owner" data-checked-value="o"/>Home Owner
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Home market value:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="home_market_value" data-facet-label="Home market value" data-facet-last-value="+2000000" data-facet-handle-label="$"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">More recent mortgage amount:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="most_recent_mortgage_amount" data-facet-label="More recent mortgage amount" data-facet-handle-label="$" data-use-thousands="true"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Most recent mortgage interest rate:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="most_recent_mortgage_interest_rate" data-facet-label="Most recent mortgage interest rate" data-facet-handle-label="%"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Most recent mortgage date:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="most_recent_mortgage_date" data-facet-label="Most recent mortgage date" data-facet-handle-label="Year"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Most recent mortgage load type:</label>
-
-                            <div class="controls">
-                                <select list-facet data-facet-id="most_recent_mortgage_loan_type" data-facet-label="Most recent mortgage load type" multiple></select>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Most recent mortgage interest rate type:</label>
-
-                            <div class="controls">
-                                <select list-facet data-facet-id="most_recent_mortgage_interest_rate_type" data-facet-label="Most recent mortgage interest rate type" multiple></select>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Most recent lender name:</label>
-
-                            <div class="controls">
-                                <select list-facet data-facet-id="most_recent_lender" data-facet-label="Most recent lender name" multiple class="input-xxlarge"></select>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">2nd More recent mortgage amount:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="second_most_recent_mortgage_amount" data-facet-label="2nd More recent mortgage amount" data-facet-handle-label="$"
-                                           data-use-thousands="true"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">2nd Most recent mortgage interest rate:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="second_most_recent_mortgage_interest_rate" data-facet-label="2nd Most recent mortgage interest rate" data-facet-handle-label="%"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">2nd Most recent mortgage date:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="second_most_recent_mortgage_date" data-facet-label="2nd Most recent mortgage date" data-facet-handle-label="Year"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">2nd Most recent mortgage load type:</label>
-
-                            <div class="controls">
-                                <select list-facet data-facet-id="second_most_recent_mortgage_loan_type" data-facet-label="2nd Most recent mortgage load type" multiple></select>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">2nd Most recent mortgage interest rate type:</label>
-
-                            <div class="controls">
-                                <select list-facet data-facet-id="second_most_recent_mortgage_interest_rate_type" data-facet-label="2nd Most recent mortgage interest rate type" multiple></select>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">2nd Most recent lender name:</label>
-
-                            <div class="controls">
-                                <select list-facet data-facet-id="second_most_recent_lender" data-facet-label="2nd Most recent lender name" multiple class="input-xxlarge"></select>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Year built:</label>
-
-                            <div class="controls">
-                                <div class="cool-slider">
-                                    <input cool-slider-facet type="slider" value="0;10000000" data-facet-id="year_built" data-facet-label="Year built" data-facet-handle-label="Year"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-
-                            <div class="controls">
-                                <label class="checkbox">
-                                    <input type="checkbox" checkbox-facet data-facet-id="pool" data-facet-label="Has pool" data-checked-value="true"/>Has pool
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-
-                            <div class="controls">
-                                <label class="checkbox">
-                                    <input type="checkbox" checkbox-facet data-facet-id="air_conditioning" data-facet-label="Home owner" data-checked-value="a,b,c,d,e,f,g,h,i,j,k,l"/>Air conditioning
-                                </label>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </pane>
-
-            <pane title="Lifestyle">
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="mail_order_buyer" data-facet-label="Mail order buyer" data-checked-value="true"/>Mail order buyer
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="mail_order_responder" data-facet-label="MAil order responder" data-checked-value="true"/>Mail order responder
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="membership_clubs" data-facet-label="Membership clubs" data-checked-value="true"/>Membership clubs
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="value_priced_general_merchandise" data-facet-label="Value priced general merchandise" data-checked-value="true"/>Value priced general merchandise
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="apparel_womens" data-facet-label="Women's Apparel" data-checked-value="true"/>Women's Apparel
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="apparel_womens_petite" data-facet-label="Petite women's apparel" data-checked-value="true"/>Petite women's apparel
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="apparel_womens_plus_sizes" data-facet-label="Plus sizes women's apparel" data-checked-value="true"/>Plus sizes women's apparel
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="young_womens_apparel" data-facet-label="Young women's apparel" data-checked-value="true"/>Young women's apparel
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="apparel_mens" data-facet-label="Men's apparel" data-checked-value="true"/>Men's apparel
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="apparel_mens_big_and_tall" data-facet-label="Big and tall men's apparel" data-checked-value="true"/>Big and tall men's apparel
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="young_mens_apparel" data-facet-label="Young men's apparel" data-checked-value="true"/>Young men's apparel
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="apparel_hildrens" data-facet-label="Children apparel" data-checked-value="true"/>Children apparel
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="health_and_beauty" data-facet-label="Health and beauty" data-checked-value="true"/>Health and beauty
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="beauty_cosmetics" data-facet-label="Beauty cosmetics" data-checked-value="true"/>Beauty cosmetics
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" checkbox-facet data-facet-id="jewelry" data-facet-label="Jewelry" data-checked-value="true"/>Jewelry
-                        </label>
-                    </div>
-                </div>
-
-
-            </pane>
-
-            </tabs>
-            </div>
-
-            <div ng-controller="BuyController">
-                <div ng-show="showPage">
-                    <h4>Here is a list of the attributes you selected:</h4>
-
-                    <facets></facets>
-
-                    <hr/>
-
-                    <form class="form-horizontal" name="buyForm">
-
-
-                        <div class="control-group">
-                            <label class="control-label">Available:</label>
-
-                            <div class="controls" style="padding-top:5px;font-size: 22px;">
-                                {{total}} leads
-                            </div>
-                        </div>
-
-
-                        <div class="control-group">
-                            <label class="control-label">Your Order of:</label>
-
-                            <div class="controls">
-                                <div choose-number-of-leads how-many-leads="howManyLeads" price-per-lead="pricePerLead"></div>
-                            </div>
-                        </div>
-
-
-                        <div class="control-group">
-                            <div class="controls">
-                                <label class="checkbox">
-                                    <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number" data-facet-label="Include leads without telephone number" data-checked-value="true,false" data-unchecked-value='true'/>Include
-                                    leads without telephone number
-                                </label>
-                            </div>
-                        </div>
-
-                        <hr/>
-
-                        <div class="control-group">
-                            <label class="control-label">Email:</label>
-
-                            <div class="controls">
-                                <input type="email" class="input-xxlarge" placeholder="Email" ng-model="email" required/>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">First name:</label>
-
-                            <div class="controls">
-                                <input type="text" class="input-xlarge" placeholder="First name" ng-model="firstName" required/>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Last name:</label>
-
-                            <div class="controls">
-                                <input type="text" class="input-xlarge" placeholder="Last name" ng-model="lastName" required/>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Credit card number:</label>
-
-                            <div class="controls">
-                                <input type="text" class="input-xlarge" placeholder="Credit card number" ng-model="ccNumber" required/>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Expiration date:</label>
-
-                            <div class="controls">
-                                <select class="input-small inline" ng-model="ccMonth">
-                                    <option value="1">01</option>
-                                    <option value="2">02</option>
-                                    <option value="3">03</option>
-                                    <option value="4">04</option>
-                                    <option value="5">05</option>
-                                    <option value="6">06</option>
-                                    <option value="7">07</option>
-                                    <option value="8">08</option>
-                                    <option value="9">09</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
-
-                                <select class="input-small inline" ng-model="ccYear">
-                                    <option value="13">2013</option>
-                                    <option value="14">2014</option>
-                                    <option value="15">2015</option>
-                                    <option value="16">2016</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="control-group" style="display:none">
-                            <label class="control-label">CCV:</label>
-
-                            <div class="controls">
-                                <input type="text" class="input-small" placeholder="CCV" ng-model="ccCCV" value="000"/>
-                            </div>
-                        </div>
-
-
-                        <div class="control-group">
-                            <div class="controls">
-                                <button class="btn" ng-click="buy()" ng-disabled="isBuyButtonDisabled()">{{buyButtonText}}</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </span>
-        <span class="span4">
-            <div ng-controller="SummeryController">
-
-                <div ng-show="showLeadCountChooser">
-                    <h4 class="pull-left">You have {{total}} leads to purchase</h4><h6 ng-show="countingLeads" class="pull-right lead-count-loading">counting<img src="img/lead-count-loading.gif" style="margin-left: 5px"/></h6>
-
-                    <div style="clear:both"></div>
-
-                    <div class="well well-small">
-                        <facets></facets>
-                    </div>
-                    <hr/>
-                    <div style="margin-top: 15px;">
-                        <button class="btn btn-primary" ng-click="prepareToBuy()" ng-disabled="orderFormLoaded">Place order</button>
-                    </div>
-                </div>
-            </div>
-        </span>
-</div>
-
 </div>
 
 
@@ -699,6 +96,8 @@
 <script src="js/controllers.js"></script>
 <script src="js/directives.js"></script>
 <script src="js/api-url.js"></script>
+<script src="js/plugins/upload/jquery.ocupload-1.1.2.js"></script>
+
 
 <script>
     (function (i, s, o, g, r, a, m) {
@@ -713,9 +112,10 @@
         m.parentNode.insertBefore(a, m)
     })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', 'UA-42081581-1', 'flowmediacorp.com');
+    ga('create', 'UA-42081581-1', 'marketing-data.net');
     ga('send', 'pageview');
 
 </script>
+
 </body>
 </html>

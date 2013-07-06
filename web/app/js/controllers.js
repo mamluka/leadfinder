@@ -1,78 +1,84 @@
 'use strict';
 
-angular.module('leadFinder.controllers', ['leadFinder.services']).
-    controller('WizardController', ['$scope', '$rootScope', function ($scope, $rootScope) {
-        $scope.showPage = true;
-        $scope.displayAllTabs = true;
-        $rootScope.$on('change-page', function (e, data) {
-            $scope.showPage = data.page == "wizard";
-        });
-
-
-    }])
-    .controller('GeographicsController', ['$scope', '$rootScope', 'Wizard', 'DefaultSearchConfigurations', function ($scope, $rootScope, wizard, defaultSearchConfigurations) {
-
-        $scope.showPage = true;
-
-        defaultSearchConfigurations.apply();
-
-        $scope.next = function () {
-
-            var facets = wizard.getSelectedFacets();
-
-            if (facets.hasOwnProperty('state') || facets.hasOwnProperty('zip')) {
-                $rootScope.$broadcast('change-page', {page: 'wizard'});
-            } else {
-                alert('Please select a state or a zip list')
-            }
-        };
+angular.module('leadFinder.controllers', ['leadFinder.services'])
+    .controller('GeoStateController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
 
         $rootScope.$on('change-page', function (e, data) {
             $scope.showPage = data.page == "geo";
         });
 
-        $scope.$watch('selectedPaneId', function () {
-            $rootScope.$broadcast('geo-include', {paneId: $scope.selectedPaneId});
-        })
     }])
-    .controller('StateSelectController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
-        $scope.selectedStates = [];
-    }])
-    .controller('NavigationController', ['$scope', '$rootScope', function ($scope, $rootScope) {
-
-        $scope.currentPage = 'geo';
-        $scope.disableOrderForm = true;
-
-        $scope.isActive = function (page) {
-            if (page == $scope.currentPage)
-                return 'active'
-        };
-
-        $rootScope.$on('buy-committed', function () {
-            $scope.disableOrderForm = false;
-        });
-
-        $scope.goTo = function (page) {
-            if ($scope.disableOrderForm && page == 'buy') {
-                $.msgBox({
-                    title: "Error",
-                    content: "You must select a filter before you can order",
-                    type: "error",
-                    showButtons: false,
-                    autoClose: true
-                });
-                return;
-            }
-
-            $rootScope.$broadcast('change-page', {page: page});
-        };
+    .controller('GeoZipCodeController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', 'apiUrl', function ($scope, $rootScope, wizard, facetEvents, apiUrl) {
 
         $rootScope.$on('change-page', function (e, data) {
-            $scope.currentPage = data.page
+            $scope.showPage = data.page == "geo";
+        });
+
+        var savedFacet = wizard.getSavedFacetFor('zip');
+        if (savedFacet) {
+            $scope.zipList = savedFacet.join('\n');
+        }
+
+        $scope.loadFromForm = function () {
+
+            $scope.loadingInProgress = true;
+
+            var data = $scope.zipList;
+
+            var zipLines = data.split('\n');
+            var zipCodes = zipLines.join(',');
+
+            wizard.update('zip', zipCodes);
+
+            facetEvents.facetsSelected('Zip codes', zipLines.length + ' Zips', 'geo');
+            facetEvents.recalculateTotal();
+
+            $rootScope.$on('facets-recalculate-total-finished', function () {
+                $scope.$apply(function () {
+                    $scope.loadingInProgress = false;
+                });
+            });
+        };
+
+        $scope.loadingInProgress = false;
+
+        $('.zip-file-uploader').upload({
+            name: 'file',
+            action: apiUrl + "/upload/zip-list",
+            autoSubmit: true,
+            onSubmit: function () {
+                $scope.$apply(function () {
+                    $scope.loadingInProgress = true;
+                });
+
+
+                $('.zip-file-loader-progress').show();
+                $('zip-file-uploader').prop('disabled', true);
+            },
+            onComplete: function (data) {
+                $scope.$apply(function () {
+                    $scope.loadingInProgress = false;
+                    $scope.zipList = data.join('\n')
+                    $scope.loadFromForm();
+                });
+
+                $('.zip-file-loader-progress').hide();
+                $('zip-file-uploader').prop('disabled', false);
+            }
+
         });
 
     }])
-    .controller('ZipSelectController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
+    .controller('DemographicsController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
+
+    }])
+    .controller('MortgageController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
+
+    }])
+    .controller('EconomicsController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
+
+    }])
+    .controller('LifestyleController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
 
     }])
     .controller('SummeryController', ['$scope', 'Wizard', 'Leads', '$rootScope', function ($scope, wizard, leads, $rootScope) {
@@ -97,6 +103,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
 
             leads.getTotalLeadsByFacets(selectedFacets).done(function (data) {
 
+
                 if ($scope.currentCallTimestamp > data.timestamp)
                     return;
 
@@ -107,24 +114,29 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
 
                     if (data.total == 0) {
                         $scope.showLeadCountChooser = false;
+                        window.sessionStorage.removeItem('total-leads');
 
                     } else {
                         $scope.showLeadCountChooser = true;
                         $scope.total = $.formatNumber(data.total, {format: "#,###", locale: "us"});
                         $scope.pricePerLead = data.pricePerLead;
 
-                        $rootScope.$broadcast('buy-committed', {total: $scope.total, pricePerLead: $scope.pricePerLead});
+                        window.sessionStorage.setItem('total-leads', JSON.stringify({total: data.total, pricePerLead: data.pricePerLead}));
                     }
-                })
+                });
+
+                $rootScope.$broadcast('facets-recalculate-total-finished');
             })
         });
+
+        $scope.$broadcast('facets-recalculate-total');
 
         $scope.prepareToBuy = function () {
 
 
             $rootScope.$broadcast('buy-committed', {total: $scope.total, pricePerLead: $scope.pricePerLead});
             $rootScope.$broadcast('change-page', {page: 'buy'});
-        }
+        };
 
         $rootScope.$on('change-page', function (e, data) {
             if (data.page == 'buy')
@@ -134,19 +146,20 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
         });
 
     }])
-    .controller('BuyController', ['$scope', '$rootScope', 'BuyingLeads', function ($scope, $rootScope, buyingLeads) {
+    .controller('OrderFormController', ['$scope', '$rootScope', 'BuyingLeads', '$location', function ($scope, $rootScope, buyingLeads, $location) {
 
         $scope.inProgress = false;
         $scope.buyButtonText = 'Purchase Records';
 
-        $rootScope.$on('change-page', function (e, data) {
-            $scope.showPage = data.page == "buy";
-        });
-
-        $rootScope.$on('buy-committed', function (e, data) {
+        var data = JSON.parse(window.sessionStorage.getItem('total-leads'));
+        if (data) {
+            $scope.totalFormatted = $.formatNumber(data.total, {format: "#,###", locale: "us"});
             $scope.total = data.total;
             $scope.pricePerLead = data.pricePerLead;
-        });
+        } else {
+            $scope.total = 0;
+            $scope.pricePerLead = 1.5;
+        }
 
         $scope.isBuyButtonDisabled = function () {
             return $scope.inProgress || $scope.buyForm.$invalid
@@ -172,43 +185,19 @@ angular.module('leadFinder.controllers', ['leadFinder.services']).
 
             buyCall.done(function (data) {
                 if (data.success) {
-                    $.msgBox({
-                        title: "Your order was processed",
-                        content: "Your order was processed successfully, a download link will be send to:" + email,
-                        type: "Info",
-                        buttons: [
-                            { value: "Great!" }
-                        ],
-                        beforeClose: function (result) {
-
-                            $scope.$apply(function () {
-                                $scope.inProgress = false;
-                                $scope.buyButtonText = 'Purchase Records';
-                            })
-
-                            var iframe = $('<iframe></iframe>');
-                            iframe.attr('src', 'http://www.marketing-data.net/test?total=' + data.amount);
-                            iframe.css('width', '0px').css('height', '0px');
-
-                            $('body').append(iframe)
-                        }
+                    $scope.$apply(function () {
+                        $location.path('/order-form/order-ready').search({email: email}).replace();
                     });
                 } else {
-                    $.msgBox({
-                        title: "Something went wrong",
-                        content: "There is a problem with your order: " + data.error_message,
-                        type: "error",
-                        buttons: [
-                            { value: "Confirm" }
-                        ],
-                        beforeClose: function (result) {
-                            $scope.$apply(function () {
-                                $scope.inProgress = false;
-                                $scope.buyButtonText = 'Purchase Records';
-                            })
-                        }
+                    $scope.$apply(function () {
+                        $scope.error_message = data.error_message;
+                        $scope.error = true;
+                        $scope.inProgress = false;
                     });
                 }
             })
         }
+    }])
+    .controller('OrderReadyController', ['$scope', '$routeParams', function ($scope, $routeParams) {
+        $scope.email = $routeParams['email'];
     }]);
