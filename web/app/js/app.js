@@ -47,14 +47,18 @@ angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'l
 
 }).run(['Analytics', 'DefaultSearchConfigurations', '$rootScope', 'domain', function (analytics, defaults, $rootScope, domain) {
 
-        $rootScope.$on('change-page', function (e, data) {
-            analytics.reportNavigation(data.page)
+        $rootScope.$on('routeChangeSuccess', function (e, current) {
+            analytics.reportNavigation(current)
+
+            mixpanel.track(
+                'Page changed',
+                { page: current }
+            );
         });
 
         defaults.apply();
 
         document.domain = domain;
 
-        $.unblockUI();
 
     }]);
