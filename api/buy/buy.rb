@@ -77,7 +77,8 @@ class Buy < Grape::API
 
       response = {
           success: true,
-          amount: amount
+          amount: amount,
+          orderId: hash[:order_id]
       }
     else
       response = {
