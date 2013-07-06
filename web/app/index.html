@@ -157,7 +157,10 @@
         b.__SV = 1.2
     }
 })(document, window.mixpanel || []);
-mixpanel.init("5a04b074293ce3d5f362398a39f7ade0");</script>
+mixpanel.init("5a04b074293ce3d5f362398a39f7ade0");
+
+mixpanel.identify(new Date().getTime().toString());
+</script>
 <!-- end Mixpanel -->
 
 </body>
