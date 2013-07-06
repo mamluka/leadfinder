@@ -186,6 +186,14 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
             buyCall.done(function (data) {
                 if (data.success) {
                     $scope.$apply(function () {
+
+                        PostAffTracker.setAccountId('default1');
+                        var sale = PostAffTracker.createSale();
+                        sale.setTotalCost(data.amount);
+                        sale.setOrderID(data.orderId);
+
+                        PostAffTracker.register();
+
                         $location.path('/order-form/order-ready').search({email: email}).replace();
                     });
                 } else {
