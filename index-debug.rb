@@ -43,9 +43,12 @@ class IndexLeads
     total_time = Time.now
 
     timer = Time.now
-    CSV.foreach(file, {:headers => true, :header_converters => :symbol, :col_sep => ','}) { |csv|
+    CSV.foreach(file, {:headers => true, :header_converters => :symbol, :col_sep => '|'}) { |csv|
 
       total_counter = total_counter + 1
+
+     @lines_logger.info total_counter
+
       next if csv.header_row?
 
       lead = extract_lead(converter, csv)
@@ -76,7 +79,7 @@ class IndexLeads
           }
         }
 
-        Tire.index 'leads' do
+        Tire.index 'leadsi_debug' do
           import people
         end
 
