@@ -141,6 +141,16 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
         }
     }])
     .factory('Analytics', function () {
+
+        var reportToMixPanel = function (facetLabel, value) {
+            mixpanel.track('Facet Selected', {
+                    facet: facetLabel,
+                    value: value
+
+                }
+            );
+        };
+
         return {
             reportFacet: function (facetLabel, value) {
 
@@ -148,20 +158,24 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                     value = [value[0] + " - " + value[1]]
                 }
 
-                mixpanel.track(
-                    'Facet Selected',
-                    {
-                        facet: facetLabel,
-                        value: value
-
-                    }
-                );
-
+                reportToMixPanel(facetLabel, value)
                 ga('send', 'event', 'Facets', facetLabel, value);
             },
             reportNavigation: function (page) {
                 ga('send', 'event', 'Navigation', 'Page', page);
+            },
+            reportFacetDiff: function (facetLabel, existingValue, value) {
+                if (existingValue.indexOf(',') > -1) {
+                    var diff = _.difference(value, existingValue)[0];
+                    reportToMixPanel(facetLabel, diff)
+                    ga('send', 'event', 'Facets', facetLabel, diff);
+
+                } else {
+                    reportToMixPanel(facetLabel, value)
+                    ga('send', 'event', 'Facets', facetLabel, value);
+                }
             }
+
 
         }
     })
