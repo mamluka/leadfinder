@@ -164,14 +164,14 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
             reportNavigation: function (page) {
                 ga('send', 'event', 'Navigation', 'Page', page);
             },
-            reportFacetDiff: function (facetLabel, existingValue, value) {
+            reportFacetDiff: function (facetLabel, existingValue, val) {
                 if (existingValue.indexOf(',') > -1) {
                     var diff = _.difference(value, existingValue)[0];
-                    reportToMixPanel(facetLabel, diff)
+                    reportToMixPanel(facetLabel, diff);
                     ga('send', 'event', 'Facets', facetLabel, diff);
 
                 } else {
-                    reportToMixPanel(facetLabel, value)
+                    reportToMixPanel(facetLabel, value);
                     ga('send', 'event', 'Facets', facetLabel, value);
                 }
             }

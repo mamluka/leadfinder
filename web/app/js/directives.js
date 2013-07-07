@@ -663,10 +663,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     }
 
                     $scope.selectedFacetsIndicators = _.filter($scope.selectedFacetsIndicators, function (facet) {
-                        if (facet.group && data.group === facet.group)
-                            return false;
-
-                        return true;
+                        return !(facet.group && data.group === facet.group && data.label !== facet.label);
                     });
 
                     var alreadyUsed = _.some($scope.selectedFacetsIndicators, function (x) {
