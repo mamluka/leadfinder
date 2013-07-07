@@ -673,8 +673,10 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                     if (alreadyUsed) {
                         $scope.selectedFacetsIndicators = _.map($scope.selectedFacetsIndicators, function (x) {
                             if (x.label == data.label) {
-                                x.values = format(data.value);
+
                                 analytics.reportFacetDiff(data.label, x.values, data.value);
+                                x.values = format(data.value);
+
                                 return x;
                             }
                             return x;
