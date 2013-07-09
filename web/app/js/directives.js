@@ -759,7 +759,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 elm.bind($attr.eventTrigger, function () {
                     var value = getEventValue($attr.eventValueType, $element);
 
-                    analytics.report(eventName, $attr.eventFieldName, value)
+                    analytics.report(eventName, $attr.eventField, value)
                 })
             }
         };

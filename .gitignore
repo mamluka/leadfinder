@@ -29,3 +29,4 @@ api-url.js
 api/dump.rdb
 web/deploy/**/*
 web/deploy/**/*.*
+web/deploy/*
