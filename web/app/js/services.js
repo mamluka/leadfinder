@@ -90,7 +90,7 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
 
                 return value
             },
-            getSelectedFacets: _getSelectedFacets,
+            getSelectedFacets: _getSelectedFacets
         }
     }])
     .factory('Leads', ['$http', 'apiUrl', function ($http, apiUrl) {
@@ -138,7 +138,7 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
     }])
     .factory('Analytics', function () {
 
-        var reportToMixPanel = function (facetLabel, value) {
+        var reportFacetsToMixPanel = function (facetLabel, value) {
             mixpanel.track('Facet Selected', {
                     facet: facetLabel,
                     value: value
@@ -154,7 +154,7 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                     value = [value[0] + " - " + value[1]]
                 }
 
-                reportToMixPanel(facetLabel, value)
+                reportFacetsToMixPanel(facetLabel, value)
                 ga('send', 'event', 'Facets', facetLabel, value);
             },
             reportNavigation: function (page) {
@@ -165,13 +165,23 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                     value = value.indexOf(',') ? value.split(',') : [value];
 
                     var diff = _.difference(value, existingValue)[0];
-                    reportToMixPanel(facetLabel, diff);
+                    reportFacetsToMixPanel(facetLabel, diff);
                     ga('send', 'event', 'Facets', facetLabel, diff);
 
                 } else {
-                    reportToMixPanel(facetLabel, value);
+                    reportFacetsToMixPanel(facetLabel, value);
                     ga('send', 'event', 'Facets', facetLabel, value);
                 }
+            },
+            report: function (eventName, field, value) {
+
+                mixpanel.track(eventName, {
+                    key: field,
+                    value: value
+
+                });
+
+                ga('send', 'event', 'OrderFormFields', field, value);
             }
 
 

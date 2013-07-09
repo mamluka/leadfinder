@@ -59,5 +59,10 @@ angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'l
 
         document.domain = domain;
 
+        mixpanel.identify(new Date().getTime().toString());
+        mixpanel.people.set({
+            loggedIn: false
+        });
+
 
     }]);

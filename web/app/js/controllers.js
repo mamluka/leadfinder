@@ -144,7 +144,9 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
         });
 
     }])
-    .controller('OrderFormController', ['$scope', '$rootScope', 'BuyingLeads', '$location', function ($scope, $rootScope, buyingLeads, $location) {
+    .controller('OrderFormController', ['$scope', '$rootScope', 'BuyingLeads', '$location', 'Analytics', function ($scope, $rootScope, buyingLeads, $location, analytics) {
+
+
 
         $scope.inProgress = false;
         $scope.buyButtonText = 'Purchase Records';
@@ -159,11 +161,15 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
             $scope.pricePerLead = 1.5;
         }
 
+        $.unblockUI();
+
         $scope.isBuyButtonDisabled = function () {
             return $scope.inProgress || $scope.buyForm.$invalid
         };
 
         $scope.buy = function () {
+
+            analytics.report('Order', 'Process', 'Made Purchase');
 
             var email = $scope.email;
 
@@ -192,9 +198,13 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
 
                         PostAffTracker.register();
 
+                        analytics.report('Order', 'Process', 'Success');
+
                         $location.path('/order-form/order-ready').search({email: email}).replace();
                     });
                 } else {
+                    analytics.report('Order', 'Process', 'Failed');
+
                     $scope.$apply(function () {
                         $scope.error_message = data.error_message;
                         $scope.error = true;

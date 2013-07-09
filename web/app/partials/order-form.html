@@ -24,17 +24,6 @@
         </div>
     </div>
 
-
-    <!--<div class="control-group">-->
-    <!--<div class="controls">-->
-    <!--<label class="checkbox">-->
-    <!--<input type="checkbox" checkbox-facet data-facet-id="has_telephone_number" data-facet-label="Include leads without telephone number" data-checked-value="true,false" data-unchecked-value='true'/>Include-->
-    <!--leads without telephone number-->
-    <!--</label>-->
-    <!--</div>-->
-    <!--</div>-->
-
-    <hr/>
     <div class="alert alert-error" ng-show="error">
         Error: {{error_message}}
     </div>
@@ -42,7 +31,7 @@
         <label class="control-label">Email:</label>
 
         <div class="controls">
-            <input type="email" class="input-xlarge" placeholder="Email" ng-model="email" required/>
+            <input type="email" class="input-xlarge" placeholder="Email" ng-model="email" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" evemt-field="Email"/>
         </div>
     </div>
 
@@ -50,7 +39,7 @@
         <label class="control-label">First name:</label>
 
         <div class="controls">
-            <input type="text" class="input-large" placeholder="First name" ng-model="firstName" required/>
+            <input type="text" class="input-large" placeholder="First name" ng-model="firstName" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" evemt-field="First name"/>
         </div>
     </div>
 
@@ -58,7 +47,7 @@
         <label class="control-label">Last name:</label>
 
         <div class="controls">
-            <input type="text" class="input-large" placeholder="Last name" ng-model="lastName" required/>
+            <input type="text" class="input-large" placeholder="Last name" ng-model="lastName" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" evemt-field="Last name"/>
         </div>
     </div>
 
@@ -66,7 +55,7 @@
         <label class="control-label">Credit card number:</label>
 
         <div class="controls">
-            <input type="text" class="input-xlarge" placeholder="Credit card number" ng-model="ccNumber" required/>
+            <input type="text" class="input-xlarge" placeholder="Credit card number" ng-model="ccNumber" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" evemt-field="Credit card"/>
         </div>
     </div>
 
@@ -74,7 +63,7 @@
         <label class="control-label">Expiration date:</label>
 
         <div class="controls">
-            <select class="input-small inline" ng-model="ccMonth">
+            <select class="input-small inline" ng-model="ccMonth" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" evemt-field="Exp month">
                 <option value="1">01</option>
                 <option value="2">02</option>
                 <option value="3">03</option>
@@ -89,7 +78,7 @@
                 <option value="12">12</option>
             </select>
 
-            <select class="input-small inline" ng-model="ccYear">
+            <select class="input-small inline" ng-model="ccYear" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" evemt-field="Exp year">
                 <option value="13">2013</option>
                 <option value="14">2014</option>
                 <option value="15">2015</option>
@@ -102,7 +91,7 @@
         <label class="control-label">CCV:</label>
 
         <div class="controls">
-            <input type="text" class="input-small" placeholder="CCV" ng-model="ccCCV" value="000"/>
+            <input type="text" class="input-small" placeholder="CCV" ng-model="ccCCV" value="000" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" evemt-field="CCV"/>
         </div>
     </div>
 
