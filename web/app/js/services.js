@@ -1,7 +1,3 @@
-'use strict';
-
-/* Services */
-
 angular.module('leadFinder.services', ['leadFinder.apiUrl'])
     .factory('Facets', ['$http', 'apiUrl' , function ($http, apiUrl) {
         return {

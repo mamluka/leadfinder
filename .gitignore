@@ -27,3 +27,5 @@ api/buy/orders/
 config.json
 api-url.js
 api/dump.rdb
+web/deploy/**/*
+web/deploy/**/*.*

@@ -1,0 +1,41 @@
+require 'rake-pipeline-web-filters'
+require "rake-pipeline-web-filters/helpers"
+require File.expand_path('../remove-development-sources-filter.rb', __FILE__)
+
+output 'deploy'
+
+input "app/js" do
+
+  match '**/*.js' do
+    concat 'app.js'
+    yui_javascript
+  end
+end
+
+input "app/css" do
+
+  match '**/*.css' do
+    concat 'app.css'
+    yui_css
+  end
+end
+
+input 'app' do
+    match 'index.html' do
+        filter RemoveDevelopmentSourcesFilter
+        copy
+    end
+
+    match 'js/plugins/blockui/jquery.blockUI.js' do
+        copy
+    end
+
+    match 'img/**/*' do
+        copy
+    end
+
+    match 'partials/**/*' do
+       copy
+    end
+end
+

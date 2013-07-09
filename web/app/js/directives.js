@@ -1,8 +1,3 @@
-'use strict';
-
-/* Directives */
-
-
 angular.module('leadFinder.directives', ['leadFinder.services'])
     .directive('listFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
         return {
@@ -718,6 +713,8 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             },
             transclude: true,
             controller: function ($scope, $element) {
+
+                $scope.total = $scope.total > 1000000 ? 1000000 : $scope.total;
 
                 $scope.$watch('howManyLeads', function () {
                     $scope.totalPrice = $.formatNumber($scope.howManyLeads * $scope.pricePerLead / 100);

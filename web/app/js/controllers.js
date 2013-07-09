@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('leadFinder.controllers', ['leadFinder.services'])
     .controller('GeoStateController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
 
