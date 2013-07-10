@@ -714,7 +714,9 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             transclude: true,
             controller: function ($scope, $element) {
 
-                $scope.total = $scope.total > 1000000 ? 1000000 : $scope.total;
+                var total = $scope.total > 1000000 ? 1000000 : $scope.total;
+
+                $('input', $element).attr('max', total);
 
                 $scope.$watch('howManyLeads', function () {
                     $scope.totalPrice = $.formatNumber($scope.howManyLeads * $scope.pricePerLead / 100);
@@ -751,6 +753,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             controller: function ($scope, $element) {
 
             },
+            transclude: true,
             link: function ($scope, $element, $attr) {
 
                 var eventName = $attr.eventName;
