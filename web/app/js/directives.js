@@ -753,7 +753,6 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
             controller: function ($scope, $element) {
 
             },
-            transclude: true,
             link: function ($scope, $element, $attr) {
 
                 var eventName = $attr.eventName;
@@ -768,4 +767,18 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
         };
     }
     ])
-;
+    .directive('creditCardValidation', function () {
+        return {
+            require: 'ngModel',
+            link: function (scope, elm, attrs, ctrl) {
+                ctrl.$parsers.unshift(function (viewValue) {
+                    var validation = creditCardValidator.validate_number(viewValue);
+
+                    if (validation.length_valid && validation.length_valid)
+                        ctrl.$setValidity('creditCard', true);
+                    else
+                        ctrl.$setValidity('creditCard', false);
+                });
+            }
+        };
+    });

@@ -4,7 +4,7 @@
 
 <hr/>
 
-<form class="form-horizontal" name="buyForm">
+<form class="form-horizontal" name="buyForm" id="buyForm">
 
 
     <div class="control-group">
@@ -55,8 +55,8 @@
         <label class="control-label">Credit card number:</label>
 
         <div class="controls">
-            <input type="text" class="input-xlarge" placeholder="Credit card number" ng-model="ccNumber" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean"
-                   event-field="Credit card"/>
+            <input type="text" class="input-xlarge" placeholder="Credit card number" ng-model="ccNumber" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean"
+                   event-field="Credit card" credit-card-validation required/>
             <img src="img/visa_mastercard.jpg"/>
         </div>
     </div>
@@ -65,7 +65,7 @@
         <label class="control-label">Expiration date:</label>
 
         <div class="controls">
-            <select class="input-small inline" ng-model="ccMonth" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="Exp month">
+            <select class="input-small inline" ng-model="ccMonth" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="Exp month" required>
                 <option value="1">01</option>
                 <option value="2">02</option>
                 <option value="3">03</option>
@@ -80,7 +80,7 @@
                 <option value="12">12</option>
             </select>
 
-            <select class="input-small inline" ng-model="ccYear" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="Exp year">
+            <select class="input-small inline" ng-model="ccYear" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="Exp year" required>
                 <option value="13">2013</option>
                 <option value="14">2014</option>
                 <option value="15">2015</option>
