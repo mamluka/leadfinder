@@ -16,7 +16,7 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                         }
                     };
 
-                return $http.get('/data/all-facets.json')
+                return $http.get('/data/all-facets.js')
                     .then(function (request) {
                         var data = request.data;
                         sessionStorage.setItem('facets-cache', JSON.stringify(data));
