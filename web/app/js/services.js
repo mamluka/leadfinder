@@ -1,5 +1,10 @@
 angular.module('leadFinder.services', ['leadFinder.apiUrl'])
-    .factory('Facets', ['$http', 'apiUrl' , function ($http, apiUrl) {
+    .factory('Facets', ['$http', 'apiUrl', '$rootScope' , function ($http, apiUrl, $rootScope) {
+
+        var removeLoadingOverlay = function () {
+            $rootScope.$broadcast('remove-loading-overlay');
+        };
+
         return {
             get: function () {
                 var item = sessionStorage.getItem('facets-cache');
@@ -7,15 +12,15 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                     return {
                         then: function (successFunction) {
                             successFunction(JSON.parse(item));
-                            $.unblockUI();
+                            removeLoadingOverlay();
                         }
                     };
 
-                return $http.get(apiUrl + '/facets/all-cached')
+                return $http.get('/data/all-facets.json')
                     .then(function (request) {
                         var data = request.data;
                         sessionStorage.setItem('facets-cache', JSON.stringify(data));
-                        $.unblockUI();
+                        removeLoadingOverlay();
                         return data;
                     });
 

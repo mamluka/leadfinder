@@ -146,7 +146,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
     }])
     .controller('OrderFormController', ['$scope', '$rootScope', 'BuyingLeads', '$location', 'Analytics', function ($scope, $rootScope, buyingLeads, $location, analytics) {
 
-
+        $rootScope.$broadcast('remove-loading-overlay');
 
         $scope.inProgress = false;
         $scope.buyButtonText = 'Purchase Records';
@@ -160,8 +160,6 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
             $scope.total = 0;
             $scope.pricePerLead = 1.5;
         }
-
-        $.unblockUI();
 
         $scope.isBuyButtonDisabled = function () {
             return $scope.inProgress || $scope.buyForm.$invalid

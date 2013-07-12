@@ -767,7 +767,7 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
         };
     }
     ])
-    .directive('creditCardValidation', function () {
+    .directive('creditCardValidation',function () {
         return {
             require: 'ngModel',
             link: function (scope, elm, attrs, ctrl) {
@@ -781,4 +781,12 @@ angular.module('leadFinder.directives', ['leadFinder.services'])
                 });
             }
         };
-    });
+    }).directive('loadingOverlay', ['$rootScope', function ($rootScope) {
+        return {
+            controller: function ($scope, $element) {
+                $rootScope.$on('remove-loading-overlay', function () {
+                    $($element).remove();
+                });
+            }
+        };
+    }]);
