@@ -167,4 +167,4 @@ window.creditCardValidator = new function (options) {
             length_valid: length_valid
         };
     };
-}
+};
