@@ -31,7 +31,7 @@
         <label class="control-label">Email:</label>
 
         <div class="controls">
-            <input type="email" class="input-xlarge" placeholder="Email" ng-model="email" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" event-field="Email"/>
+            <input type="email" class="input-xlarge" placeholder="Email" ng-model="$parent.email" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" event-field="Email"/>
         </div>
     </div>
 
@@ -39,7 +39,7 @@
         <label class="control-label">First name:</label>
 
         <div class="controls">
-            <input type="text" class="input-large" placeholder="First name" ng-model="firstName" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" event-field="First name"/>
+            <input type="text" class="input-large" placeholder="First name" ng-model="$parent.firstName" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" event-field="First name"/>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
         <label class="control-label">Last name:</label>
 
         <div class="controls">
-            <input type="text" class="input-large" placeholder="Last name" ng-model="lastName" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" event-field="Last name"/>
+            <input type="text" class="input-large" placeholder="Last name" ng-model="$parent.lastName" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" event-field="Last name"/>
         </div>
     </div>
 
@@ -55,7 +55,7 @@
         <label class="control-label">Credit card number:</label>
 
         <div class="controls">
-            <input type="text" class="input-xlarge" placeholder="Credit card number" ng-model="ccNumber" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean"
+            <input type="text" class="input-xlarge" placeholder="Credit card number" ng-model="$parent.ccNumber" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean"
                    event-field="Credit card" credit-card-validation required/>
             <img src="img/visa_mastercard.jpg"/>
         </div>
@@ -65,7 +65,7 @@
         <label class="control-label">Expiration date:</label>
 
         <div class="controls">
-            <select class="input-small inline" ng-model="ccMonth" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="Exp month" required>
+            <select class="input-small inline" ng-model="$parent.ccMonth" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="Exp month" required>
                 <option value="1">01</option>
                 <option value="2">02</option>
                 <option value="3">03</option>
@@ -80,7 +80,7 @@
                 <option value="12">12</option>
             </select>
 
-            <select class="input-small inline" ng-model="ccYear" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="Exp year" required>
+            <select class="input-small inline" ng-model="$parent.ccYear" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="Exp year" required>
                 <option value="13">2013</option>
                 <option value="14">2014</option>
                 <option value="15">2015</option>
@@ -93,7 +93,7 @@
         <label class="control-label">CCV:</label>
 
         <div class="controls">
-            <input type="text" class="input-small" placeholder="CCV" ng-model="ccCCV" value="000" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="CCV"/>
+            <input type="text" class="input-small" placeholder="CCV" ng-model="$parent.ccCCV" value="000" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="CCV"/>
         </div>
     </div>
 
