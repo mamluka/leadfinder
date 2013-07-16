@@ -175,7 +175,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
                 firstName: $scope.firstName,
                 lastName: $scope.lastName,
                 email: email,
-                ccNumber: $scope.ccNumber,
+                ccNumber: $('.cc-number').val(),
                 ccMonth: $scope.ccMonth,
                 ccYear: $scope.ccYear,
                 ccCCV: $scope.ccCCV,
