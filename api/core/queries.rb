@@ -24,7 +24,7 @@ class Queries
     s.results
   end
 
-  def get_leads(params, size)
+  def get_leads(params, size, index)
 
     must_filters = get_must_filters(params)
 
@@ -38,6 +38,8 @@ class Queries
           end
         end
       end
+
+      from size*index
 
       sort do
         by :_script, {

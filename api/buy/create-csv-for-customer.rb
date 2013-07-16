@@ -19,7 +19,21 @@ class CreateCsvForCustomer
 
 
     query = Queries.new
-    results = query.get_leads facets, number_of_leads_bought.to_i
+
+    number_of_leads_bought = number_of_leads_bought.to_i
+
+    results = Array.new
+    i = 0
+    while results.length < number_of_leads_bought
+      part_of_results = query.get_leads facets, 20000, i
+
+      results = results.concat(part_of_results.map { |x| x.to_hash }).uniq { |x| x[:household_id] }
+
+      p results.length
+      i = i+1
+    end
+
+    results = results.take(number_of_leads_bought)
 
 
     matched_people = results.map do |r|
