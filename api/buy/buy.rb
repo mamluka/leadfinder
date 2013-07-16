@@ -65,7 +65,7 @@ class Buy < Grape::API
     hash[:order_id] = SecureRandom.uuid
 
     #remove this when we have a good sample giver
-    if result[:success] || params[:ccNumber] == "sampleme"
+    if result[:success] || params[:ccNumber] == '378282246310005'
 
       require_relative '../core/queue'
 
