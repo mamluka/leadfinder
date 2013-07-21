@@ -10,7 +10,7 @@ require_relative '../core/queries'
 require_relative '../core/pricing'
 require_relative 'payjunction'
 require_relative 'create-csv-for-customer'
-
+require_relative '../../emails/mail_base'
 
 class Buy < Grape::API
   format :json
@@ -73,7 +73,14 @@ class Buy < Grape::API
         config.respond_timeout = 3600
       end
 
-      Backburner.enqueue CreateCsvForCustomer, params[:email], number_of_leads_requested, facets, {name: hash[:first_name] + ' ' + hash[:last_name], order_id: hash[:order_id]}
+      job_hash = {
+          name: hash[:first_name] + ' ' + hash[:last_name],
+          order_id: hash[:order_id],
+          user_id: params[:userId]}
+
+      Backburner.enqueue CreateCsvForCustomer, params[:email], number_of_leads_requested, facets, job_hash
+
+      OrderEmails.order_placed(params[:email], job_hash[:name], job_hash[:order_id]).deliver
 
       response = {
           success: true,

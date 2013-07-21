@@ -37,4 +37,12 @@ class Uploads < Grape::API
     zips.uniq
   end
 
+  post 'suppression-list' do
+    Array.new
+  end
+
+  options 'suppression-list' do
+
+  end
+
 end

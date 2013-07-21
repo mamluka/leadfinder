@@ -43,7 +43,7 @@ angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'l
     $routeProvider.otherwise({redirectTo: '/geographics/states'});
 
 
-}).run(['Analytics', 'DefaultSearchConfigurations', '$rootScope', 'domain', '$location', function (analytics, defaults, $rootScope, domain, $location) {
+}).run(['Analytics', 'DefaultSearchConfigurations', '$rootScope', 'domain', '$location', 'IdGenerator', function (analytics, defaults, $rootScope, domain, $location, idGenerator) {
 
         $rootScope.$on('$routeChangeSuccess', function () {
             var path = $location.path();
@@ -64,5 +64,5 @@ angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'l
             loggedIn: false
         });
 
-
+        $rootScope.userId = idGenerator.generate();
     }]);

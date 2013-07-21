@@ -5,7 +5,14 @@
 <hr/>
 
 <form class="form-horizontal" name="buyForm" id="buyForm">
+    <div class="control-group">
+        <label class="control-label">Suppression list:</label>
 
+        <div class="controls" style="padding-top:5px;font-size: 22px;">
+            <span class="btn" ng-click="uploadSuppressionList()">{{uploadSuppressionListButtonText}}</span>
+            <h6 ng-show="hasSuppressionLists">Your suppression list will be analyzed during list creation, so final lead counts may very, you will only be billed for the leads delivered</h6>
+        </div>
+    </div>
 
     <div class="control-group">
         <label class="control-label">Available:</label>
@@ -14,7 +21,6 @@
             {{totalFormatted}} households
         </div>
     </div>
-
 
     <div class="control-group">
         <label class="control-label">Your Order of:</label>

@@ -1,0 +1,30 @@
+<div class="well">
+    <form id="upload" method="post" action="http://leadfinder:5555/upload-new/suppression-list" enctype="multipart/form-data">
+        <div style="display: table;width: 100%">
+
+            <div class="upload-zone">
+                <div><h3 class="title">Drag your suppression list here or browse</h3>
+                    <small>We currently support CSV files or plain text list - one telephone number per row</small>
+                </div>
+                <span class="btn btn-large browse" ng-click="browse()">Browse for a list...</span>
+                <input type="file" name="file" multiple style="display: none" class="file-field"/>
+            </div>
+
+            <input name="userId" type="hidden" value="{{userId}}">
+        </div>
+    </form>
+</div>
+<div style="margin:15px;">
+    <span ng-show="files.length == 0">No files uploaded yet</span>
+
+    <div ng-repeat="file in files">
+        <div class="progress progress-striped">
+            <div class="bar" ng-style="{width:file.percent + '%'}">{{file.name}}</div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <span class="btn btn-primary" ng-click="dismiss()">Done</span>
+
+</div>

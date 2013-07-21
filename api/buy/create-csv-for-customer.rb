@@ -4,6 +4,7 @@ require 'securerandom'
 
 require_relative '../core/queries'
 require_relative '../core/facets_text_translator'
+require_relative 'suppression_list'
 
 class CreateCsvForCustomer
   include Backburner::Queue
@@ -17,17 +18,19 @@ class CreateCsvForCustomer
 
     all_csv_fields = basic_fields | facet_keys_symbols
 
+    suppression_list = SuppressionList.new
+    phones_set = suppression_list.get_suppressed_phones order_details['user_id']
 
     query = Queries.new
 
     number_of_leads_bought = number_of_leads_bought.to_i
-
     results = Array.new
     i = 0
-    while results.length < number_of_leads_bought
-      part_of_results = query.get_leads facets, 20000, i
 
-      results = results.concat(part_of_results.map { |x| x.to_hash }).uniq { |x| x[:household_id] }
+    while results.length < number_of_leads_bought
+      part_of_results = query.get_leads(facets, 20000, i).map { |x| x.to_hash }.select { |x| !phones_set.include? x[:people].first[:telephone_number] }
+
+      results = results.concat(part_of_results).uniq { |x| x[:household_id] }
 
       p results.length
       i = i+1

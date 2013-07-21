@@ -1,3 +1,3 @@
 require_relative 'api/buy/create-csv-for-customer'
 
-CreateCsvForCustomer.perform 'david.mazvovsky@gmail.com', 100000, {"has_telephone_number" => "true", "state" => "al,ak,az,ar,ca,co,ct,de,dc,fl,ga,hi,id,il,in,ia,ks,ky,la,me,mt,ne,nv,nh,nj,nm,ny,nc,nd,oh,ok,or,md,ma,mi,mn,ms,mo,pa,ri,sc,sd,tn,tx,ut,vt,va,wa,wv,wi,wy"}, {'order_id' => 'david', 'name' => 'coolio'}
+CreateCsvForCustomer.perform 'david.mazvovsky@gmail.com', 20000, {"state"=>"al,ak,az,ar,ca,co,ct,de,dc,fl,ga,hi,id,il,in,ia,ks,ky,la,me,mt,ne,nv,nh,nj,nm,ny,nc,nd,oh,ok,or,md,ma,mi,mn,ms,mo,pa,ri,sc,sd,tn,tx,ut,vt,va,wa,wv,wi,wy", 'exact_age' => '41-198'}, {'name' =>"David MZ", 'order_id' =>"7e840afe-45ad-4243-addd-dd6545cd14892", 'user_id' =>"dea15c0556ff8f75c5fd091b"}

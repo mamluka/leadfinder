@@ -30,3 +30,4 @@ api/dump.rdb
 web/deploy/**/*
 web/deploy/**/*.*
 web/deploy/*
+users/*

@@ -137,10 +137,22 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
     .factory('DefaultSearchConfigurations', ['Wizard', 'Facets', function (wizard, facets) {
         return {
             apply: function () {
-                wizard.update('has_telephone_number', 'true');
+//                wizard.update('has_telephone_number', 'true');
             }
         }
     }])
+    .factory('IdGenerator', function () {
+        return {
+            generate: function () {
+                function S4() {
+                    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+                }
+
+                return S4() + S4() + S4() + S4() + S4() + S4();
+
+            }
+        }
+    })
     .factory('Analytics', function () {
 
         var reportFacetsToMixPanel = function (facetLabel, value) {
@@ -166,16 +178,15 @@ angular.module('leadFinder.services', ['leadFinder.apiUrl'])
                 ga('send', 'event', 'Navigation', 'Page', page);
             },
             reportFacetDiff: function (facetLabel, existingValue, value) {
-                if (_.isArray(existingValue)) {
-                    value = value.indexOf(',') ? value.split(',') : [value];
+                if (value.length > 1) {
 
                     var diff = _.difference(value, existingValue)[0];
                     reportFacetsToMixPanel(facetLabel, diff);
                     ga('send', 'event', 'Facets', facetLabel, diff);
 
                 } else {
-                    reportFacetsToMixPanel(facetLabel, value);
-                    ga('send', 'event', 'Facets', facetLabel, value);
+                    reportFacetsToMixPanel(facetLabel, value[0]);
+                    ga('send', 'event', 'Facets', facetLabel, value[0]);
                 }
             },
             report: function (eventName, field, value) {

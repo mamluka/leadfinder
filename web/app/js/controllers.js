@@ -51,7 +51,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
 
 
                 $('.zip-file-loader-progress').show();
-                $('zip-file-uploader').prop('disabled', true);
+                $('.zip-file-uploader').prop('disabled', true);
             },
             onComplete: function (data) {
                 $scope.$apply(function () {
@@ -61,7 +61,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
                 });
 
                 $('.zip-file-loader-progress').hide();
-                $('zip-file-uploader').prop('disabled', false);
+                $('.zip-file-uploader').prop('disabled', false);
             }
 
         });
@@ -77,10 +77,12 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
 
     }])
     .controller('LifestyleController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
-
+        $rootScope.$broadcast('remove-loading-overlay');
     }])
     .controller('SummeryController', ['$scope', 'Wizard', 'Leads', '$rootScope', function ($scope, wizard, leads, $rootScope) {
 
+
+        $scope.id = $rootScope.userId;
 
         $scope.showLeadCountChooser = false;
         $scope.countingLeads = false
@@ -144,7 +146,7 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
         });
 
     }])
-    .controller('OrderFormController', ['$scope', '$rootScope', 'BuyingLeads', '$location', 'Analytics', function ($scope, $rootScope, buyingLeads, $location, analytics) {
+    .controller('OrderFormController', ['$scope', '$rootScope', 'BuyingLeads', '$location', 'Analytics', '$modal', function ($scope, $rootScope, buyingLeads, $location, analytics, $modal) {
 
         $rootScope.$broadcast('remove-loading-overlay');
 
@@ -179,7 +181,8 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
                 ccMonth: $scope.ccMonth,
                 ccYear: $scope.ccYear,
                 ccCCV: $scope.ccCCV,
-                howManyLeads: $scope.howManyLeads
+                howManyLeads: $scope.howManyLeads,
+                userId: $rootScope.userId
             });
 
             $scope.inProgress = true;
@@ -210,8 +213,90 @@ angular.module('leadFinder.controllers', ['leadFinder.services'])
                     });
                 }
             })
+        };
+
+        $scope.uploadSuppressionListButtonText = 'Upload suppression list(s)';
+        $scope.hasSuppressionLists = false;
+
+        var $modalScope = $rootScope.$new();
+        $modalScope.files = [];
+        $modalScope.userId = $rootScope.userId;
+
+        $modalScope.browse = function () {
+            $('.file-field').click();
+        };
+
+        $modalScope.$on('modal-hidden', function () {
+            if ($modalScope.files.length > 0)
+                $scope.$apply(function () {
+                    $scope.uploadSuppressionListButtonText = 'Uploaded ' + $modalScope.files.length + ' file(s)'
+                    $scope.hasSuppressionLists = true;
+                });
+
+        });
+
+        $modalScope.$on('modal-shown', function () {
+
+            if ($modalScope.files.length > 0)
+                return;
+
+            $('#upload').fileupload({
+                dropZone: $('.upload-zone'),
+                add: function (e, data) {
+
+                    $modalScope.$apply(function () {
+                        $modalScope.files.push({name: data.files[0].name, percent: 10})
+                    });
+
+                    data.scopeIndex = $modalScope.files.length - 1;
+
+                    var jqXHR = data.submit();
+                },
+
+                progress: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+
+                    if (progress < 10)
+                        return;
+
+                    $modalScope.$apply(function () {
+                        $modalScope.files[data.scopeIndex].percent = progress;
+                    });
+
+
+                },
+
+                fail: function (e, data) {
+                },
+                done: function (e, data) {
+                    $modalScope.$apply(function () {
+                        $modalScope.files[data.scopeIndex].phonesCount = data.result.phonesCount;
+                    });
+                }
+            });
+
+        });
+
+        $scope.uploadSuppressionList = function () {
+
+            if ($modalScope.files.length > 0) {
+                $modalScope.show();
+            } else {
+
+                $modal({
+                    template: 'partials/components/upload.html',
+                    show: true,
+                    backdrop: 'static',
+                    persist: true,
+                    scope: $modalScope
+                });
+
+            }
         }
-    }])
+    }
+    ])
     .controller('OrderReadyController', ['$scope', '$routeParams', function ($scope, $routeParams) {
+        $rootScope.$broadcast('remove-loading-overlay');
         $scope.email = $routeParams['email'];
     }]);
+

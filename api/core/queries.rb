@@ -41,17 +41,6 @@ class Queries
 
       from size*index
 
-      sort do
-        by :_script, {
-            script: "org.elasticsearch.common.Digest.md5Hex(doc['household_id'].value + salt)",
-            type: 'string',
-            params: {
-                salt: SecureRandom.uuid
-            }
-        }
-
-      end
-
       size size
     end
 
