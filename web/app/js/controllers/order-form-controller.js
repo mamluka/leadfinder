@@ -1,4 +1,4 @@
-angular.module('leadFinder.order-form.controllers', ['leadFinder.services'])
+angular.module('leadFinder.order-form.controllers', ['leadFinder.general.services'])
     .controller('OrderFormController', ['$scope', '$rootScope', 'BuyingLeads', '$location', 'Analytics', '$modal', function ($scope, $rootScope, buyingLeads, $location, analytics, $modal) {
 
         $rootScope.$broadcast('remove-loading-overlay');

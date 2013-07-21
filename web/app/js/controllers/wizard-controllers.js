@@ -1,4 +1,4 @@
-angular.module('leadFinder.wizard.controllers', ['leadFinder.services'])
+angular.module('leadFinder.wizard.controllers', ['leadFinder.general.services'])
     .controller('DemographicsController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
 
     }])

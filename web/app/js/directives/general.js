@@ -1,4 +1,4 @@
-angular.module('leadFinder.general.directives', ['leadFinder.services'])
+angular.module('leadFinder.general.directives',[])
     .directive('loadingOverlay', ['$rootScope', function ($rootScope) {
         return {
             controller: function ($scope, $element) {

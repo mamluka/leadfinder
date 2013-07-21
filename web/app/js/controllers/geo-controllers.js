@@ -1,4 +1,4 @@
-angular.module('leadFinder.geo.controllers', ['leadFinder.services'])
+angular.module('leadFinder.geo.controllers', ['leadFinder.general.services'])
     .controller('GeoStateController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', function ($scope, $rootScope, wizard, facetEvents) {
 
         $rootScope.$on('change-page', function (e, data) {

@@ -1,4 +1,4 @@
-angular.module('leadFinder.order-form.directives', ['leadFinder.services'])
+angular.module('leadFinder.order-form.directives', ['leadFinder.general.services'])
     .directive('facets', ['Analytics', 'Facets', function (analytics, facets) {
         return {
             restrict: 'E',

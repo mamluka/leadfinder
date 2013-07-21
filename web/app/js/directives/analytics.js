@@ -1,4 +1,4 @@
-angular.module('leadFinder.analytics.directives', ['leadFinder.services'])
+angular.module('leadFinder.analytics.directives', ['leadFinder.general.services'])
     .directive('mixPanelReport', ['Analytics', function (analytics) {
 
         var getEventValue = function (valueType, element) {

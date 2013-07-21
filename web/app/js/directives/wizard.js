@@ -1,4 +1,4 @@
-angular.module('leadFinder.wizard.directives', ['leadFinder.services'])
+angular.module('leadFinder.wizard.directives', ['leadFinder.general.services'])
     .directive('listFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
         return {
             scope: {},

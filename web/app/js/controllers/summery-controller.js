@@ -1,4 +1,4 @@
-angular.module('leadFinder.summery.controller', ['leadFinder.services'])
+angular.module('leadFinder.summery.controller', ['leadFinder.general.services'])
     .controller('SummeryController', ['$scope', 'Wizard', 'Leads', '$rootScope', function ($scope, wizard, leads, $rootScope) {
 
 
