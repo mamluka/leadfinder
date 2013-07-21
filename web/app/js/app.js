@@ -1,4 +1,4 @@
-angular.module('leadFinder', ['leadFinder.services', 'leadFinder.directives', 'leadFinder.geo.controllers', 'leadFinder.wizard.controllers', 'leadFinder.summery.controller', 'leadFinder.order-form.controllers', '$strap.directives'],function ($routeProvider, $locationProvider) {
+angular.module('leadFinder', ['leadFinder.services', 'leadFinder.general.directives', 'leadFinder.wizard.directives', 'leadFinder.order-form.directives', 'leadFinder.analytics.directives', 'leadFinder.geo.controllers', 'leadFinder.wizard.controllers', 'leadFinder.summery.controller', 'leadFinder.order-form.controllers', '$strap.directives'],function ($routeProvider, $locationProvider) {
 
     $routeProvider.when('/geographics/states', {
         templateUrl: '/partials/geographics-states.html',
