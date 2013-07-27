@@ -11,7 +11,7 @@ class IndexLeads
   def initialize
     @logger = Logger.new('logfile.log')
     @leads_logger = Logger.new('leadsops.log')
-	@lines_logger = Logger.new('lines.log')
+    @lines_logger = Logger.new('lines.log')
   end
 
   def index(file)
@@ -67,8 +67,9 @@ class IndexLeads
         .group_by { |x| x[:household_id] }
         .map { |k, v|
           unique_leads = v.uniq { |x| x[:first_name] + x[:last_name] }
-
           {
+              _id: k,
+              telephone_number: unique_leads[0][:telephone_number],
               type: 'household',
               household_id: k,
               household_size: v.length,
@@ -126,6 +127,7 @@ class IndexLeads
     household_id = csv[:phone].nil? ? Digest::MD5.hexdigest(full_address) : Digest::MD5.hexdigest(csv[:phone])
 
     {
+        random_sort: Random.rand(150000000),
         household_id: household_id,
         first_name: csv[:fn],
         last_name: csv[:ln],
@@ -163,7 +165,7 @@ class IndexLeads
         year_built: csv[:prop_bld_yr].to_i,
         air_conditioning: csv[:prop_ac],
         mortgage_purchase_date_ccyymmdd: (Time.parse(csv[:genl_purch_dt]).year rescue nil),
-        load_to_value: csv[:genl_loan_to_value].nil? ? nil : csv[:genl_loan_to_value].to_f/100,
+        loan_to_value: csv[:genl_loan_to_value].nil? ? nil : csv[:genl_loan_to_value].to_f/100,
         mortgage_purchase_price: csv[:genl_purch_amt].to_i,
         most_recent_mortgage_amount: csv[:mr_amt].to_i,
         most_recent_mortgage_date: (Time.parse(csv[:mr_dt]).year rescue nil),
@@ -243,7 +245,6 @@ class IndexLeads
         environment_or_wildlife_charitable_donation: convert.from_yes_no(csv[:donr_wildlife]),
         environmental_issues_charitable_donation: convert.from_yes_no(csv[:donr_environ]),
         health_charitable_donation: convert.from_yes_no(csv[:donr_health]),
-        health_charitable_donation: convert.from_yes_no(csv[:donr_health]),
         international_aid_charitable_donation: convert.from_yes_no(csv[:donr_intl_aid]),
         political_charitable_donation: convert.from_yes_no(csv[:donr_pol]),
         political_conservative_charitable_donation: convert.from_yes_no(csv[:donr_pol_cons]),
@@ -251,7 +252,8 @@ class IndexLeads
         religious_charitable_donation: convert.from_yes_no(csv[:donr_relig]),
         veterans_charitable_donation: convert.from_yes_no(csv[:donr_vets]),
         other_types_of_charitable_donations: convert.from_yes_no(csv[:donr_oth]),
-        community_charities: convert.from_yes_no(csv[:donr_comm_char])
+        community_charities: convert.from_yes_no(csv[:donr_comm_char]),
+
     }
   end
 

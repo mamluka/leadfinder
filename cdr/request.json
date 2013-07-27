@@ -1,0 +1,2 @@
+{"update":{"_index":"leads","_type":"household","_id":"66c4722928d0b6d1afd8a1e8615beaa4"}}
+{"id":"66c4722928d0b6d1afd8a1e8615beaa4","type":"household","script":"if (ctx._source.containsKey(\"cdr_failed\")) { ctx._source.cdr_failed +=cdr_failed } else { ctx._source.cdr_failed = cdr_failed };","params":{"cdr_failed":1,"cdr_connected":0,"cdr_seconds_30":0,"cdr_seconds_300":0}}
