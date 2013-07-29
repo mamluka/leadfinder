@@ -6,7 +6,7 @@ phones_to_get = Array.new
 counter = 0
 start_time = Time.now
 
-steps = 500000
+steps = 1000000
 
 File.open(ARGV[0]).each do |line|
 

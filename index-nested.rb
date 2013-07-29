@@ -14,9 +14,9 @@ class IndexLeads
     @lines_logger = Logger.new('lines.log')
   end
 
-  def index(file)
+  def index(file, chunk, sep)
 
-    Tire.index 'leads' do
+    Tire.index 'leads2' do
       create settings: {
           number_of_shards: 1,
           number_of_replicas: 0,
@@ -24,12 +24,13 @@ class IndexLeads
           'translog.flush_threshold_ops' => 50000,
           'translog.flush_threshold_size' => '2000mb',
           'translog.flush_threshold_period' => '210m',
-          'merge.policy.max_merge_at_once' => 2,
+          'merge.policy.max_merge_at_once' => 20,
+          'merge.policy.segments_per_tier' => 40,
           'merge.policy.max_merged_segment' => '2g',
       }
     end
 
-    Tire::Configuration.client.put Tire.index('leads').url+'/household/_mapping',
+    Tire::Configuration.client.put Tire.index('leads2').url+'/household/_mapping',
                                    {:household => {:properties => {:people => {:type => 'nested'}}}}.to_json
 
     converter = DataConverters.new
@@ -43,7 +44,7 @@ class IndexLeads
     total_time = Time.now
 
     timer = Time.now
-    CSV.foreach(file, {:headers => true, :header_converters => :symbol, :col_sep => ','}) { |csv|
+    CSV.foreach(file, {:headers => true, :header_converters => :symbol, :col_sep => sep}) { |csv|
 
       total_counter = total_counter + 1
       next if csv.header_row?
@@ -58,7 +59,7 @@ class IndexLeads
 
       leads << lead
 
-      if leads.length > 3500 && leads[leads.length-2][:household_id] != leads.last[:household_id]
+      if leads.length > chunk && leads[leads.length-2][:household_id] != leads.last[:household_id]
 
         end_timer = Time.now
 
@@ -77,11 +78,12 @@ class IndexLeads
           }
         }
 
-        Tire.index 'leads' do
+        Tire.index 'leads2' do
           import people
         end
 
-        @logger.info "Possessed #{people.length}, this batch took #{Time.now-start_time} seconds, the csv read took #{end_timer-timer}"
+        batch_time = Time.now-start_time
+        @logger.info "Possessed #{people.length}, this batch took #{batch_time} seconds [#{people.length/batch_time} docs/sec], the csv read took #{end_timer-timer}"
         start_time = Time.now
         @logger.info "Total time passed is #{Time.now-total_time} seconds, we processed #{total_counter}"
         last = leads.last
@@ -236,23 +238,23 @@ class IndexLeads
         health_and_beauty: convert.from_yes_no(csv[:buy_health_beauty]),
         beauty_cosmetics: convert.from_yes_no(csv[:buy_cosmetics]),
         jewelry: convert.from_yes_no(csv[:buy_jewelry]),
-        donation_contribution: convert.from_yes_no(csv[:int_grp_donor]),
-        mail_order_donor: convert.from_yes_no(csv[:donr_mail_ord]),
-        charitable_donation: convert.from_yes_no(csv[:donr_charitable]),
-        animal_welfare_charitable_donation: convert.from_yes_no(csv[:donr_animal]),
-        arts_or_cultural_charitable_donation: convert.from_yes_no(csv[:donr_arts]),
-        childrens_charitable_donation: convert.from_yes_no(csv[:donr_kids]),
-        environment_or_wildlife_charitable_donation: convert.from_yes_no(csv[:donr_wildlife]),
-        environmental_issues_charitable_donation: convert.from_yes_no(csv[:donr_environ]),
-        health_charitable_donation: convert.from_yes_no(csv[:donr_health]),
-        international_aid_charitable_donation: convert.from_yes_no(csv[:donr_intl_aid]),
-        political_charitable_donation: convert.from_yes_no(csv[:donr_pol]),
-        political_conservative_charitable_donation: convert.from_yes_no(csv[:donr_pol_cons]),
-        political_liberal_charitable_donation: convert.from_yes_no(csv[:donr_pol_lib]),
-        religious_charitable_donation: convert.from_yes_no(csv[:donr_relig]),
-        veterans_charitable_donation: convert.from_yes_no(csv[:donr_vets]),
-        other_types_of_charitable_donations: convert.from_yes_no(csv[:donr_oth]),
-        community_charities: convert.from_yes_no(csv[:donr_comm_char]),
+        #donation_contribution: convert.from_yes_no(csv[:int_grp_donor]),
+        #mail_order_donor: convert.from_yes_no(csv[:donr_mail_ord]),
+        #charitable_donation: convert.from_yes_no(csv[:donr_charitable]),
+        #animal_welfare_charitable_donation: convert.from_yes_no(csv[:donr_animal]),
+        #arts_or_cultural_charitable_donation: convert.from_yes_no(csv[:donr_arts]),
+        #childrens_charitable_donation: convert.from_yes_no(csv[:donr_kids]),
+        #environment_or_wildlife_charitable_donation: convert.from_yes_no(csv[:donr_wildlife]),
+        #environmental_issues_charitable_donation: convert.from_yes_no(csv[:donr_environ]),
+        #health_charitable_donation: convert.from_yes_no(csv[:donr_health]),
+        #international_aid_charitable_donation: convert.from_yes_no(csv[:donr_intl_aid]),
+        #political_charitable_donation: convert.from_yes_no(csv[:donr_pol]),
+        #political_conservative_charitable_donation: convert.from_yes_no(csv[:donr_pol_cons]),
+        #political_liberal_charitable_donation: convert.from_yes_no(csv[:donr_pol_lib]),
+        #religious_charitable_donation: convert.from_yes_no(csv[:donr_relig]),
+        #veterans_charitable_donation: convert.from_yes_no(csv[:donr_vets]),
+        #other_types_of_charitable_donations: convert.from_yes_no(csv[:donr_oth]),
+        #community_charities: convert.from_yes_no(csv[:donr_comm_char]),
 
     }
   end
@@ -260,7 +262,10 @@ class IndexLeads
 end
 
 index = IndexLeads.new
-index.index ARGV[0]
+chunk = ARGV[1].nil? ? 3500 : ARGV[1].to_i
+sep = ARGV[2].nil? ? ',' : ARGV[2]
+
+index.index ARGV[0], chunk, sep
 
 
 
