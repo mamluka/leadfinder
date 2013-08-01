@@ -16,7 +16,7 @@ class IndexLeads
 
   def index(file, chunk, sep)
 
-    Tire.index 'leads2' do
+    Tire.index 'leads' do
       create settings: {
           number_of_shards: 1,
           number_of_replicas: 0,
@@ -30,7 +30,7 @@ class IndexLeads
       }
     end
 
-    Tire::Configuration.client.put Tire.index('leads2').url+'/household/_mapping',
+    Tire::Configuration.client.put Tire.index('leads').url+'/household/_mapping',
                                    {:household => {:properties => {:people => {:type => 'nested'}}}}.to_json
 
     converter = DataConverters.new
@@ -78,7 +78,7 @@ class IndexLeads
           }
         }
 
-        Tire.index 'leads2' do
+        Tire.index 'leads' do
           import people
         end
 
