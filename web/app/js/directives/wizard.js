@@ -386,4 +386,29 @@ angular.module('leadFinder.wizard.directives', ['leadFinder.general.services'])
             });
 
         }
+    }])
+    .directive('respondLevelFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
+        return {
+            controller: function ($scope, $element) {
+            },
+            link: function ($scope, element) {
+                var elm = $(element);
+                var facetId = elm.data('facet-id');
+                var facetLabel = elm.data('facet-label');
+
+                var savedFacet = wizard.getSavedFacetFor(facetId);
+                if (savedFacet) {
+                    $scope.responseLevel = savedFacet
+                }
+
+                $scope.$watch('responseLevel', function () {
+
+                    wizard.update(facetId, $scope.responseLevel);
+                    facetEvents.facetsSelected(facetLabel, facetLabel);
+                    facetEvents.recalculateTotal();
+                });
+            },
+            replace: true,
+            templateUrl: 'partials/components/respond-level.html'
+        }
     }]);

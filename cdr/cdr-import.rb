@@ -9,7 +9,7 @@ Tire.configure { logger 'elasticsearch.log', :level => 'debug' }
 File.open(ARGV[0]).each do |phone|
   phones << phone.delete("\n")
 
-  if phones.length % 10000 == 0
+  if phones.length % 1000 == 0
 
     docs = phones
     .group_by { |x| x.split(':')[0] }

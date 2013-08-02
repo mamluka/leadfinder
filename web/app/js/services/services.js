@@ -137,7 +137,7 @@ angular.module('leadFinder.general.services', ['leadFinder.apiUrl'])
     .factory('DefaultSearchConfigurations', ['Wizard', 'Facets', function (wizard, facets) {
         return {
             apply: function () {
-//                wizard.update('has_telephone_number', 'true');
+                wizard.update('has_telephone_number', 'true');
             }
         }
     }])

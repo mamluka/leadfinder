@@ -65,4 +65,6 @@ angular.module('leadFinder.summery.controller', ['leadFinder.general.services'])
                 $scope.orderFormLoaded = false;
         });
 
+
+
     }]);
