@@ -33,7 +33,7 @@ class Queries
     s.results
   end
 
-  def get_leads(params, fields, size,from)
+  def get_leads(params, fields, size, from)
 
     response_level = get_response_level(params)
 
@@ -47,20 +47,19 @@ class Queries
             nested :path => 'people' do
               query do
                 filtered do
-                  filter :bool, {:must => must_filters }
+                  filter :bool, {:must => must_filters}
                 end
               end
             end
           end
+          must { range :random_sort, {gte: from} }
           must(&response_level) unless response_level.nil?
         end
       end
 
-      from from
       fields fields
       size size
-
-      sort { by 'people.random_sort', 'asc' }
+      sort { by :random_sort, 'asc' }
     end
 
     p s.to_json

@@ -30,18 +30,10 @@ class CreateCsvForCustomer
 
     number_of_leads_bought = number_of_leads_bought.to_i
     results = Array.new
-
     chunk_size = 10000
 
-    total_results = query.count_leads(facets).total
-
-    random_history = Array.new
-
     while results.length < number_of_leads_bought
-      random_seed = Random.rand((total_results/chunk_size).to_i)*chunk_size
-      next if random_history.include?(random_seed)
-
-      random_history << random_seed
+      random_seed = Random.rand(6000000)
 
       part_of_results = query.get_leads(facets, req_fields, chunk_size, random_seed)
       .map { |x|
@@ -49,6 +41,14 @@ class CreateCsvForCustomer
           [k.to_s.gsub(/people\./, '').to_sym, v]
         }]
       }.select { |x| !phones_set.include?(x[:telephone_number]) }
+
+      p part_of_results.first
+
+      max_random_sort = part_of_results.max_by { |x| x[:random_sort] }[:random_sort]
+      min_random_sort = part_of_results.min_by { |x| x[:random_sort] }[:random_sort]
+
+      p max_random_sort
+      p min_random_sort
 
       results = results.concat(part_of_results).uniq { |x| x[:household_id] }
 
