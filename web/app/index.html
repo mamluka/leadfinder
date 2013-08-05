@@ -42,9 +42,8 @@
         <div class="wizard" ng-view></div>
         <div class="summery" ng-controller="SummeryController">
             <div ng-show="showLeadCountChooser">
-                <h4 class="pull-left">{{total}} households</h4><h6 ng-show="countingLeads"
-                                                                   class="pull-right lead-count-loading"><img
-                    src="img/lead-count-loading.gif" style="margin-left: 5px"/></h6>
+                <h4 class="pull-left">{{total}} households</h4>
+                <h6 ng-show="countingLeads" class="pull-right lead-count-loading"><img src="img/lead-count-loading.gif" style="margin-left: 5px"/></h6>
                 <hr style="clear:both"/>
                 <div style="clear:both"></div>
 
@@ -56,6 +55,8 @@
                     <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number"
                            data-facet-label="Telephone number" data-checked-value="true"/>Has phone number
                 </label>
+                <h6>Improve connect rate</h6>
+                <div respond-level-facet data-facet-id="responseLevel" data-facet-label="Response Level"></div>
 
 
             </div>

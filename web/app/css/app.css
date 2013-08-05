@@ -139,3 +139,6 @@ dl.dl-horizontal dd {
 .upload-zone .browse {
     margin-top: 10px;
 }
+.responders .btn {
+    width:210px;
+}
