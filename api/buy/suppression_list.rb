@@ -13,7 +13,7 @@ class SuppressionList
       File.open(f, 'r').each do |line|
         phones_per_line = line.scan(/\d{10}/)
         unless phones_per_line.length == 0
-          phones << phones_per_line
+          phones_per_line.each { |x| phones << x }
         end
         next
       end

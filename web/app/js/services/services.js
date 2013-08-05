@@ -109,14 +109,26 @@ angular.module('leadFinder.general.services', ['leadFinder.apiUrl'])
     }])
     .factory('BuyingLeads', ['$http', 'apiUrl', 'Wizard', function ($http, apiUrl, wizard) {
         return {
-            buy: function (details) {
+            buyCreditCard: function (details) {
 
                 var facets = wizard.getSelectedFacets();
 
                 details.facets = JSON.stringify(facets);
 
-                var url = apiUrl + '/buy/buy';
+                var url = apiUrl + '/buy/buy-using-payjunction';
                 return $.post(url, details)
+            },
+            buyPayPal: function (details) {
+                var facets = wizard.getSelectedFacets();
+
+                details.facets = JSON.stringify(facets);
+
+                var url = apiUrl + '/buy/buy-using-paypal';
+                return $.get(url, details)
+            },
+            paypalExecutePayment: function (params) {
+                var url = apiUrl + '/buy/paypal-payment-execute';
+                return $.post(url, params)
             }
         }
     }])

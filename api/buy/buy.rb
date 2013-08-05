@@ -9,6 +9,7 @@ require 'time'
 require_relative '../core/queries'
 require_relative '../core/pricing'
 require_relative 'payjunction'
+require_relative 'paypal'
 require_relative 'create-csv-for-customer'
 require_relative '../../emails/mail_base'
 
@@ -30,10 +31,16 @@ class Buy < Grape::API
       filename = File.dirname(__FILE__) + "/orders/#{order[:first_name]}-#{order[:last_name]}-#{Time.now} + #{order[:id]}.json"
       File.open(filename, 'w') { |file| file.write(json_order) }
     end
+
+    def get_paypal_urls
+      config = JSON.parse(File.read(File.dirname(__FILE__) + '/config.json'), symbolize_names: true)
+
+      {approve_url: config[:pp_approve_url], cancel_url: config[:pp_cancel_url]}
+    end
   end
 
 
-  post :buy do
+  post 'buy-using-payjunction' do
 
     query = Queries.new
     pricing = Pricing.new
@@ -100,6 +107,48 @@ class Buy < Grape::API
     save_order hash
 
     response
+  end
+
+  get 'buy-using-paypal' do
+
+    how_many_leads = params[:howManyLeads]
+
+    paypal_urls = get_paypal_urls
+
+    query = Queries.new
+    pricing = Pricing.new
+
+    facets = JSON.parse(params[:facets])
+
+    count = query.count_leads(facets).total
+    number_of_leads_requested = how_many_leads.to_f
+    amount = number_of_leads_requested * pricing.get_price_for_count(count, facets) / 100
+
+    paypal = Paypal.new
+
+    result = paypal.get_charge_link({
+                                        amount: amount,
+                                        number_of_leads_requested: how_many_leads,
+                                        approve_url: paypal_urls[:approve_url],
+                                        cancel_url: paypal_urls[:cancel_url]
+
+                                    })
+
+    {redirectUrl: result[:payment_url], paymentId: result[:payment_id]}
+  end
+
+  post 'paypal-payment-execute' do
+    payer_id = params[:payerId]
+    payment_id = params[:paymentId]
+
+    paypal = Paypal.new
+    begin
+      paypal.charge(payment_id, payer_id)
+      {success: true}
+    rescue
+      {success: false}
+    end
+
   end
 
 

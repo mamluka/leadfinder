@@ -20,13 +20,13 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
             return $scope.inProgress || $scope.buyForm.$invalid
         };
 
-        $scope.buy = function () {
+        $scope.buyCreditCard = function () {
 
             analytics.report('Order', 'Process', 'Made Purchase');
 
             var email = $scope.email;
 
-            var buyCall = buyingLeads.buy({
+            var buyCall = buyingLeads.buyCreditCard({
                 firstName: $scope.firstName,
                 lastName: $scope.lastName,
                 email: email,
@@ -68,6 +68,23 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
             })
         };
 
+        $scope.buyPayPal = function () {
+
+            if ($scope.buyForm.$invalid) {
+                alert('Order form is invalid');
+                return;
+            }
+
+            var buyCall = buyingLeads.buyPayPal({
+                howManyLeads: $scope.howManyLeads
+            });
+
+            buyCall.done(function (data) {
+                window.location.href = data.redirectUrl;
+                window.sessionStorage.setItem('paypal_payment_id', data.paymentId);
+            });
+        };
+
         $scope.uploadSuppressionListButtonText = 'Upload suppression list(s)';
         $scope.hasSuppressionLists = false;
 
@@ -82,7 +99,7 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
         $modalScope.$on('modal-hidden', function () {
             if ($modalScope.files.length > 0)
                 $scope.$apply(function () {
-                    $scope.uploadSuppressionListButtonText = 'Uploaded ' + $modalScope.files.length + ' file(s)'
+                    $scope.uploadSuppressionListButtonText = 'Uploaded ' + $modalScope.files.length + ' file(s)';
                     $scope.hasSuppressionLists = true;
                 });
 
@@ -151,4 +168,16 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
     .controller('OrderReadyController', ['$scope', '$routeParams', function ($scope, $routeParams) {
         $rootScope.$broadcast('remove-loading-overlay');
         $scope.email = $routeParams['email'];
+    }])
+    .controller('PaypalSuccessfulController', ['$scope', '$rootScope', 'BuyingLeads', '$routeParams', function ($scope, $rootScope, buyingLeads, $routeParams) {
+        $rootScope.$broadcast('remove-loading-overlay');
+
+        buyingLeads.paypalExecutePayment({
+            paymentId: window.sessionStorage.getItem('paypal_payment_id'),
+            payerId: $routeParams.PayerID
+        })
+
+    }])
+    .controller('PaypalFailedController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+
     }]);

@@ -388,6 +388,12 @@ angular.module('leadFinder.wizard.directives', ['leadFinder.general.services'])
         }
     }])
     .directive('respondLevelFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
+        var translate = {
+            cdr_connected: 'Phone verified',
+            cdr_seconds_30: 'Responder',
+            cdr_seconds_300: 'Premium Responder'
+
+        }
         return {
             controller: function ($scope, $element) {
             },
@@ -404,7 +410,7 @@ angular.module('leadFinder.wizard.directives', ['leadFinder.general.services'])
                 $scope.$watch('responseLevel', function () {
 
                     wizard.update(facetId, $scope.responseLevel);
-                    facetEvents.facetsSelected(facetLabel, facetLabel);
+                    facetEvents.facetsSelected(facetLabel, translate[$scope.responseLevel]);
                     facetEvents.recalculateTotal();
                 });
             },

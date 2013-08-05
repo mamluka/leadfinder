@@ -41,6 +41,16 @@ angular.module('leadFinder', ['leadFinder.values.services', 'leadFinder.general.
         controller: 'OrderReadyController'
     });
 
+    $routeProvider.when('/paypal-payment-successful', {
+        templateUrl: '/partials/paypal-payment-successful.html',
+        controller: 'PaypalSuccessfulController'
+    });
+
+    $routeProvider.when('/paypal-payment-failed', {
+        templateUrl: '/partials/paypal-payment-failed.html',
+        controller: 'PaypalFailedController'
+    });
+
     $routeProvider.otherwise({redirectTo: '/geographics/states'});
 
 

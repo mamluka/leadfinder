@@ -15,8 +15,8 @@ class CreateCsvForCustomer
 
     facet_keys_symbols = facets.keys.map { |x| x.to_sym }
 
-    root_fields = [:household_id, :telephone_number]
-    people_fields = [:random_sort, :first_name, :last_name, :name_prefix, :address, :apartment, :state, :city, :zip, :has_telephone_number, :telephone_number, :do_not_call, :gender, :inferred_household_rank, :exact_age, :income_estimated_household, :net_worth, :number_of_lines_of_credit, :credit_range_of_new_credit, :education, :occupation, :occupation_detailed, :business_owner, :has_children, :number_of_children, :marital_status_in_the_hhld, :home_owner, :length_of_residence, :dwelling_type, :home_market_value, :language, :credit_rating, :pool]
+    root_fields = [:household_id, :telephone_number, :random_sort]
+    people_fields = [:first_name, :last_name, :name_prefix, :address, :apartment, :state, :city, :zip, :has_telephone_number, :do_not_call, :gender, :inferred_household_rank, :exact_age, :income_estimated_household, :net_worth, :number_of_lines_of_credit, :credit_range_of_new_credit, :education, :occupation, :occupation_detailed, :business_owner, :has_children, :number_of_children, :marital_status_in_the_hhld, :home_owner, :length_of_residence, :dwelling_type, :home_market_value, :language, :credit_rating, :pool]
 
     req_people_fields = people_fields.map { |x| 'people.' + x.to_s }.concat(root_fields)
     req_fields = req_people_fields | facet_keys_symbols.map { |x| 'people.' + x.to_s }
@@ -30,30 +30,47 @@ class CreateCsvForCustomer
 
     number_of_leads_bought = number_of_leads_bought.to_i
     results = Array.new
-    chunk_size = 10000
+    chunk_size = 5000
+
+    random_history = Array.new
+
+    total_leads_available = query.count_leads(facets).total
+
+    cycle_count = 0
+    cycle_limit = total_leads_available/chunk_size
 
     while results.length < number_of_leads_bought
-      random_seed = Random.rand(6000000)
 
-      part_of_results = query.get_leads(facets, req_fields, chunk_size, random_seed)
+      if phones_set.length == 0
+        random_seed = Random.rand(100000000)
+        next if random_history.any? { |x| random_seed >= x[0] && random_seed <= x[1] }
+
+        leads = query.get_leads(facets, req_fields, chunk_size, random_seed)
+      else
+        break if cycle_count > cycle_limit
+
+        leads = query.get_leads_sequential(facets, req_fields, chunk_size, cycle_count*chunk_size)
+        cycle_count = cycle_count + 1
+      end
+
+      part_of_results = leads
       .map { |x|
         Hash[x.to_hash.map { |k, v|
           [k.to_s.gsub(/people\./, '').to_sym, v]
         }]
-      }.select { |x| !phones_set.include?(x[:telephone_number]) }
+      }
+      .select { |x|
+        !phones_set.include?(x[:telephone_number])
+      }
 
-      p part_of_results.first
+      next if part_of_results.length == 0
 
-      max_random_sort = part_of_results.max_by { |x| x[:random_sort] }[:random_sort]
       min_random_sort = part_of_results.min_by { |x| x[:random_sort] }[:random_sort]
+      max_random_sort = part_of_results.max_by { |x| x[:random_sort] }[:random_sort]
 
-      p max_random_sort
-      p min_random_sort
+      random_history << [min_random_sort-chunk_size, max_random_sort+chunk_size]
 
       results = results.concat(part_of_results).uniq { |x| x[:household_id] }
-
-      p results.length
-
     end
 
     results = results.take(number_of_leads_bought).map { |x|
@@ -62,7 +79,7 @@ class CreateCsvForCustomer
       people = (1..household_size).map { Hash.new }
 
       x.each { |k, v|
-        next unless v.kind_of?(Array)
+        v=(1..household_size).map { v } unless v.kind_of?(Array)
         v.each_index { |p| people[p][k] = v[p] }
       }
 
@@ -106,11 +123,13 @@ class CreateCsvForCustomer
 
     translator = FacetsTextTranslator.new
 
+    csv_fields = [:telephone_number] | people_fields
+
     CSV.open(File.dirname(__FILE__) + '/../../downloads/' + file_name, "wb") do |csv|
-      csv << all_csv_fields
+      csv << csv_fields
 
       matched_people.each do |x|
-        csv << all_csv_fields.map { |facet|
+        csv << csv_fields.map { |facet|
           translator.translate(facet, x[facet])
         }
       end

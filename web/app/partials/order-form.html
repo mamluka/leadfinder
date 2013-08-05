@@ -57,56 +57,78 @@
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Credit card number:</label>
+    <!--<div class="control-group">-->
+    <!--<label class="control-label">Payment method:</label>-->
 
-        <div class="controls">
-            <input type="text" class="input-xlarge cc-number" placeholder="Credit card number" ng-model="ccNumber" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean"
-                   event-field="Credit card" credit-card-validation required/>
-            <img src="img/visa_mastercard.jpg"/>
+    <!--<div class="controls">-->
+    <!--<div class="btn-group" ng-model="paymentMethod" bs-buttons-radio>-->
+    <!--<button type="button" class="btn" value="creditcard">Credit Card</button>-->
+    <!--,g-->
+    <!--<button type="button" class="btn" value="paypal">Paypal</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+
+    <div class="creditcard-details">
+        <div class="control-group">
+            <label class="control-label">Credit card number:</label>
+
+            <div class="controls">
+                <input type="text" class="input-xlarge cc-number" placeholder="Credit card number" ng-model="ccNumber" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean"
+                       event-field="Credit card" credit-card-validation required/>
+                <img src="img/visa_mastercard.jpg"/>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Expiration date:</label>
+
+            <div class="controls">
+                <select class="input-small inline" ng-model="$parent.ccMonth" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="Exp month" required>
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+
+                <select class="input-small inline" ng-model="$parent.ccYear" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="Exp year" required>
+                    <option value="13">2013</option>
+                    <option value="14">2014</option>
+                    <option value="15">2015</option>
+                    <option value="16">2016</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="control-group" style="display:none">
+            <label class="control-label">CCV:</label>
+
+            <div class="controls">
+                <input type="text" class="input-small" placeholder="CCV" ng-model="$parent.ccCCV" value="000" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="CCV"/>
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn" ng-click="buyCreditCard()" ng-disabled="isBuyButtonDisabled()">{{buyButtonText}}</button>
+            </div>
         </div>
     </div>
-
-    <div class="control-group">
-        <label class="control-label">Expiration date:</label>
-
-        <div class="controls">
-            <select class="input-small inline" ng-model="$parent.ccMonth" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="Exp month" required>
-                <option value="1">01</option>
-                <option value="2">02</option>
-                <option value="3">03</option>
-                <option value="4">04</option>
-                <option value="5">05</option>
-                <option value="6">06</option>
-                <option value="7">07</option>
-                <option value="8">08</option>
-                <option value="9">09</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-            </select>
-
-            <select class="input-small inline" ng-model="$parent.ccYear" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="Exp year" required>
-                <option value="13">2013</option>
-                <option value="14">2014</option>
-                <option value="15">2015</option>
-                <option value="16">2016</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="control-group" style="display:none">
-        <label class="control-label">CCV:</label>
-
-        <div class="controls">
-            <input type="text" class="input-small" placeholder="CCV" ng-model="$parent.ccCCV" value="000" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="CCV"/>
-        </div>
-    </div>
-
-
-    <div class="control-group">
-        <div class="controls">
-            <button class="btn" ng-click="buy()" ng-disabled="isBuyButtonDisabled()">{{buyButtonText}}</button>
+    <div class="paypal-details" style="display: none;">
+        <div class="control-group">
+            <div class="controls">
+                <img src="/img/paypal.gif" width="83" ng-click="buyPayPal()"/>
+            </div>
         </div>
     </div>
 </form>

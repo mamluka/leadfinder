@@ -33,7 +33,7 @@ class Queries
     s.results
   end
 
-  def get_leads(params, fields, size, from)
+  def get_leads(params, fields, size, random_seed)
 
     response_level = get_response_level(params)
 
@@ -52,7 +52,7 @@ class Queries
               end
             end
           end
-          must { range :random_sort, {gte: from} }
+          must { range :random_sort, {gte: random_seed} }
           must(&response_level) unless response_level.nil?
         end
       end
@@ -60,6 +60,39 @@ class Queries
       fields fields
       size size
       sort { by :random_sort, 'asc' }
+    end
+
+    p s.to_json
+
+    s.results
+  end
+
+  def get_leads_sequential(params, fields, size, from)
+
+    response_level = get_response_level(params)
+
+    params.delete(:responseLevel)
+    must_filters = get_must_filters(params)
+
+    s = Tire.search 'leads' do
+      query do
+        boolean do
+          must do
+            nested :path => 'people' do
+              query do
+                filtered do
+                  filter :bool, {:must => must_filters}
+                end
+              end
+            end
+          end
+          must(&response_level) unless response_level.nil?
+        end
+      end
+
+      fields fields
+      size size
+      from from
     end
 
     p s.to_json
