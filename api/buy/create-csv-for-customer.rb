@@ -34,7 +34,7 @@ class CreateCsvForCustomer
 
     random_history = Array.new
 
-    total_leads_available = query.count_leads(facets).total
+    total_leads_available = query.count_leads(facet_keys_symbols).total
 
     cycle_count = 0
     cycle_limit = total_leads_available/chunk_size
@@ -45,11 +45,11 @@ class CreateCsvForCustomer
         random_seed = Random.rand(100000000)
         next if random_history.any? { |x| random_seed >= x[0] && random_seed <= x[1] }
 
-        leads = query.get_leads(facets, req_fields, chunk_size, random_seed)
+        leads = query.get_leads(facet_keys_symbols, req_fields, chunk_size, random_seed)
       else
         break if cycle_count > cycle_limit
 
-        leads = query.get_leads_sequential(facets, req_fields, chunk_size, cycle_count*chunk_size)
+        leads = query.get_leads_sequential(facet_keys_symbols, req_fields, chunk_size, cycle_count*chunk_size)
         cycle_count = cycle_count + 1
       end
 

@@ -45,12 +45,12 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
                 if (data.success) {
                     $scope.$apply(function () {
 
-                        PostAffTracker.setAccountId('default1');
-                        var sale = PostAffTracker.createSale();
-                        sale.setTotalCost(data.amount);
-                        sale.setOrderID(data.orderId);
-
-                        PostAffTracker.register();
+//                        PostAffTracker.setAccountId('default1');
+//                        var sale = PostAffTracker.createSale();
+//                        sale.setTotalCost(data.amount);
+//                        sale.setOrderID(data.orderId);
+//
+//                        PostAffTracker.register();
 
                         analytics.report('Order', 'Process', 'Success');
 
