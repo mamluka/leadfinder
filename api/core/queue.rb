@@ -1,5 +1,7 @@
 require 'backburner'
 
+logger = Logger.new('jobs.log')
+
 Backburner.configure do |config|
   config.beanstalk_url = %w(beanstalk://127.0.0.1)
   config.tube_namespace = 'leads-finder'
