@@ -15,6 +15,9 @@ class CreateCsvForCustomer
 
     facet_keys_symbols = facets.keys.map { |x| x.to_sym }
 
+    facets_to_params = Hash.new
+    facets.each { |k, v| facets_to_params[k.to_sym] = v }
+
     root_fields = [:household_id, :telephone_number, :random_sort]
     people_fields = [:first_name, :last_name, :name_prefix, :address, :apartment, :state, :city, :zip, :has_telephone_number, :do_not_call, :gender, :inferred_household_rank, :exact_age, :income_estimated_household, :net_worth, :number_of_lines_of_credit, :credit_range_of_new_credit, :education, :occupation, :occupation_detailed, :business_owner, :has_children, :number_of_children, :marital_status_in_the_hhld, :home_owner, :length_of_residence, :dwelling_type, :home_market_value, :language, :credit_rating, :pool]
 
@@ -34,7 +37,7 @@ class CreateCsvForCustomer
 
     random_history = Array.new
 
-    total_leads_available = query.count_leads(facet_keys_symbols).total
+    total_leads_available = query.count_leads(facets_to_params).total
 
     cycle_count = 0
     cycle_limit = total_leads_available/chunk_size
@@ -45,11 +48,11 @@ class CreateCsvForCustomer
         random_seed = Random.rand(100000000)
         next if random_history.any? { |x| random_seed >= x[0] && random_seed <= x[1] }
 
-        leads = query.get_leads(facet_keys_symbols, req_fields, chunk_size, random_seed)
+        leads = query.get_leads(facets_to_params, req_fields, chunk_size, random_seed)
       else
         break if cycle_count > cycle_limit
 
-        leads = query.get_leads_sequential(facet_keys_symbols, req_fields, chunk_size, cycle_count*chunk_size)
+        leads = query.get_leads_sequential(facets_to_params, req_fields, chunk_size, cycle_count*chunk_size)
         cycle_count = cycle_count + 1
       end
 
