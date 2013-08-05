@@ -391,7 +391,8 @@ angular.module('leadFinder.wizard.directives', ['leadFinder.general.services'])
         var translate = {
             cdr_connected: 'Phone verified',
             cdr_seconds_30: 'Responder',
-            cdr_seconds_300: 'Premium Responder'
+            cdr_seconds_300: 'Premium Responder',
+            none: 'none'
 
         }
         return {
