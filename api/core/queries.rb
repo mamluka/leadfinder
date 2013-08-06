@@ -5,8 +5,6 @@ class Queries
   def count_leads(params)
 
     response_level = get_response_level(params)
-
-    params.delete(:responseLevel)
     must_filters = get_must_filters(params)
 
     s = Tire.search 'leads' do
@@ -36,8 +34,6 @@ class Queries
   def get_leads(params, fields, size, random_seed)
 
     response_level = get_response_level(params)
-
-    params.delete(:responseLevel)
     must_filters = get_must_filters(params)
 
     s = Tire.search 'leads' do
@@ -52,8 +48,8 @@ class Queries
               end
             end
           end
-          must { range :random_sort, {gte: random_seed} }
           must(&response_level) unless response_level.nil?
+          must { range :random_sort, {gte: random_seed} }
         end
       end
 
@@ -70,8 +66,6 @@ class Queries
   def get_leads_sequential(params, fields, size, from)
 
     response_level = get_response_level(params)
-
-    params.delete(:responseLevel)
     must_filters = get_must_filters(params)
 
     s = Tire.search 'leads' do
@@ -121,6 +115,8 @@ class Queries
 
 
     params.each do |k, v|
+      next if k == :responseLevel
+
       if v.to_s.include?('-')
         ranges[k]=v
         next

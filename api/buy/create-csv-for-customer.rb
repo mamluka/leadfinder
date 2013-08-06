@@ -39,6 +39,8 @@ class CreateCsvForCustomer
 
     total_leads_available = query.count_leads(facets_to_params).total
 
+    p total_leads_available
+
     cycle_count = 0
     cycle_limit = total_leads_available/chunk_size
 
@@ -91,9 +93,10 @@ class CreateCsvForCustomer
 
     matched_people = results.map do |r|
       people = r.select do |x|
-        facets.all? do |k, v|
+        facets_to_params
+        .select { |x| x!= :responseLevel }
+        .all? do |k, v|
           v = v.to_s.upcase
-          k= k.to_sym
 
           lead_result = x[k]
 
