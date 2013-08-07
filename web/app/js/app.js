@@ -2,53 +2,64 @@ angular.module('leadFinder', ['leadFinder.values.services', 'leadFinder.general.
 
     $routeProvider.when('/geographics/states', {
         templateUrl: '/partials/geographics-states.html',
-        controller: 'GeoStateController'
+        controller: 'GeoStateController',
+        page: 'geographics'
+
     });
 
     $routeProvider.when('/geographics/zip', {
         templateUrl: '/partials/geographics-zip.html',
-        controller: 'GeoZipCodeController'
+        controller: 'GeoZipCodeController',
+        page: 'geographics'
     });
 
 
     $routeProvider.when('/demographics', {
         templateUrl: '/partials/demographics.html',
-        controller: 'DemographicsController'
+        controller: 'DemographicsController',
+        page: 'demographics'
     });
 
     $routeProvider.when('/economics', {
         templateUrl: '/partials/economics.html',
-        controller: 'EconomicsController'
+        controller: 'EconomicsController',
+        page: 'economics'
     });
 
     $routeProvider.when('/mortgage', {
         templateUrl: '/partials/mortgage.html',
-        controller: 'MortgageController'
+        controller: 'MortgageController',
+        page: 'mortgage'
     });
 
     $routeProvider.when('/lifestyle', {
         templateUrl: '/partials/lifestyle.html',
-        controller: 'LifestyleController'
+        controller: 'LifestyleController'       ,
+        page: 'lifestyle'
     });
 
     $routeProvider.when('/order-form', {
         templateUrl: '/partials/order-form.html',
-        controller: 'OrderFormController'
+        controller: 'OrderFormController',
+        page: 'order-form'
     });
 
     $routeProvider.when('/order-form/order-ready', {
         templateUrl: '/partials/order-ready.html',
-        controller: 'OrderReadyController'
+        controller: 'OrderReadyController',
+        page: 'order-form'
     });
 
     $routeProvider.when('/paypal-payment-successful', {
         templateUrl: '/partials/paypal-payment-successful.html',
-        controller: 'PaypalSuccessfulController'
+        controller: 'PaypalSuccessfulController',
+        page: 'order-form'
     });
 
     $routeProvider.when('/paypal-payment-failed', {
         templateUrl: '/partials/paypal-payment-failed.html',
-        controller: 'PaypalFailedController'
+        controller: 'PaypalFailedController',
+        page: 'order-form'
     });
 
     $routeProvider.otherwise({redirectTo: '/geographics/states'});
@@ -56,9 +67,21 @@ angular.module('leadFinder', ['leadFinder.values.services', 'leadFinder.general.
 
 }).run(['Analytics', 'DefaultSearchConfigurations', '$rootScope', 'domain', '$location', 'IdGenerator', function (analytics, defaults, $rootScope, domain, $location, idGenerator) {
 
-        $rootScope.$on('$routeChangeSuccess', function () {
+        $rootScope.$on('$routeChangeSuccess', function (angularEvent, currentRoute) {
             var path = $location.path();
             analytics.reportNavigation(path)
+
+            _.each($('.top-nav li'), function (n) {
+                var link = $(n);
+
+                if (link.data('top-page') == currentRoute.page)
+                    link.addClass('active');
+                else
+                    link.removeClass('active');
+
+            });
+
+            $('nav_' + currentRoute.topPage).addClass('active');
 
             mixpanel.track(
                 'Page changed',

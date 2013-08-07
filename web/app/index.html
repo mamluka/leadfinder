@@ -29,13 +29,13 @@
     <!--</div>-->
     <!--<div class="logo-strip"></div>-->
     <div class="tabs cool-font nav">
-        <ul>
-            <li><a href="#/geographics/states">Geographics</a></li>
-            <li><a href="#/demographics">Demographics</a></li>
-            <li><a href="#/economics">Economics</a></li>
-            <li><a href="#/mortgage">Mortgage</a></li>
-            <li><a href="#/lifestyle">Lifestyle</a></li>
-            <li><a href="#/order-form">Order form</a></li>
+        <ul class="nav nav-pills top-nav">
+            <li data-top-page="geographics"><a href="#/geographics/states">Geographics</a></li>
+            <li data-top-page="demographics"><a href="#/demographics">Demographics</a></li>
+            <li data-top-page="economics"><a href="#/economics">Economics</a></li>
+            <li data-top-page="mortgage"><a href="#/mortgage">Mortgage</a></li>
+            <li data-top-page="lifestyle"><a href="#/lifestyle">Lifestyle</a></li>
+            <li data-top-page="order-form"><a href="#/order-form">Order form</a></li>
         </ul>
     </div>
     <div class="app">
@@ -55,9 +55,6 @@
                     <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number"
                            data-facet-label="Telephone number" data-checked-value="true"/>Has phone number
                 </label>
-
-
-
             </div>
             <div ng-hide="showLeadCountChooser">
                 <h5>No leads matched your filter</h5>
@@ -67,6 +64,7 @@
                 ease out.
             </div>
             <h5>Improve connect rate</h5>
+
             <div respond-level-facet data-facet-id="responseLevel" data-facet-label="Response Level"></div>
         </div>
     </div>
