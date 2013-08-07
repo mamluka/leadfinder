@@ -54,8 +54,10 @@ class Buy < Grape::API
 
   post 'buy-using-payjunction' do
 
-    number_of_leads_requested = JSON.parse(params[:facets])
-    amount = count_leads(number_of_leads_requested, params[:howManyLeads])
+    number_of_leads_requested = params[:howManyLeads].to_i
+    facets =JSON.parse(params[:facets])
+
+    amount = count_leads(facets, )
 
     pay_junction = PayJunction.new
 
