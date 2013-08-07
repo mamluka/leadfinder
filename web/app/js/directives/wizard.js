@@ -396,6 +396,7 @@ angular.module('leadFinder.wizard.directives', ['leadFinder.general.services'])
 
         }
         return {
+            scope: {},
             controller: function ($scope, $element) {
             },
             link: function ($scope, element) {
@@ -408,11 +409,12 @@ angular.module('leadFinder.wizard.directives', ['leadFinder.general.services'])
                     $scope.responseLevel = savedFacet
                 }
 
-                $scope.$watch('responseLevel', function () {
-
-                    wizard.update(facetId, $scope.responseLevel);
-                    facetEvents.facetsSelected(facetLabel, translate[$scope.responseLevel]);
-                    facetEvents.recalculateTotal();
+                $scope.$watch('responseLevel', function (oldValue, newValue) {
+                    if (newValue) {
+                        wizard.update(facetId, newValue);
+                        facetEvents.facetsSelected(facetLabel, translate[newValue]);
+                        facetEvents.recalculateTotal();
+                    }
                 });
             },
             replace: true,
