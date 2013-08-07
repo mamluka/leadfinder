@@ -40,10 +40,12 @@ class Buy < Grape::API
 
     def count_leads(facets, number_of_leads_requested)
       query = Queries.new
-      pricing = Pricing.new
+      query.count_leads(facets).total
+    end
 
-      count = query.count_leads(facets).total
-      amount = number_of_leads_requested * pricing.get_price_for_count(count, facets) / 100
+    def calculate_charge_amount(count, facets, number_of_leads_requested)
+      pricing = Pricing.new
+      number_of_leads_requested * pricing.get_price_for_count(count, facets) / 100
     end
 
     def process_order(order_hash)
@@ -57,7 +59,8 @@ class Buy < Grape::API
     number_of_leads_requested = params[:howManyLeads].to_i
     facets =JSON.parse(params[:facets])
 
-    amount = count_leads(facets, )
+    count = count_leads(facets, number_of_leads_requested)
+    amount = calculate_charge_amount(count, facets, number_of_leads_requested)
 
     pay_junction = PayJunction.new
 
@@ -71,7 +74,6 @@ class Buy < Grape::API
         amount: amount
     }
 
-    result = pay_junction.charge(hash)
 
     hash[:amount] = amount
     hash[:number_of_leads_requested] = number_of_leads_requested
@@ -79,6 +81,8 @@ class Buy < Grape::API
     hash[:facets] = facets
     hash[:order_id] = SecureRandom.uuid
 
+    result = pay_junction.charge(hash)
+    p result
     #remove this when we have a good sample giver
     if result[:success] || params[:ccNumber] == '378282246310005'
 
@@ -112,7 +116,7 @@ class Buy < Grape::API
       else
         response = {
             success: false,
-            error_message: result[:response_message],
+            error_message: result[:errors],
             amount: result[:amount]
         }
 

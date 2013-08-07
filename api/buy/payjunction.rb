@@ -56,7 +56,7 @@ class PayJunction
         {
             success: false,
             bad_request:false,
-            message: result[:response][:message]
+            errors: result[:response][:message]
         }
       end
     end
