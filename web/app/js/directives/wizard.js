@@ -409,7 +409,7 @@ angular.module('leadFinder.wizard.directives', ['leadFinder.general.services'])
                     $scope.responseLevel = savedFacet
                 }
 
-                $scope.$watch('responseLevel', function (oldValue, newValue) {
+                $scope.$watch('responseLevel', function (newValue) {
                     if (newValue) {
                         wizard.update(facetId, newValue);
                         facetEvents.facetsSelected(facetLabel, translate[newValue]);
