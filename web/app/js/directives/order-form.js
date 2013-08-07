@@ -14,6 +14,8 @@ angular.module('leadFinder.order-form.directives', ['leadFinder.general.services
                         $scope.selectedFacetsIndicators = _.reject($scope.selectedFacetsIndicators, function (x) {
                             return x.label == data.label;
                         });
+                        saveFacets();
+
                         return;
                     }
 
@@ -31,7 +33,7 @@ angular.module('leadFinder.order-form.directives', ['leadFinder.general.services
                                 var values = format(data.value);
                                 analytics.reportFacetDiff(data.label, x.values, values);
 
-                                x.values = values
+                                x.values = values;
 
                                 return x;
                             }
@@ -43,9 +45,7 @@ angular.module('leadFinder.order-form.directives', ['leadFinder.general.services
                         analytics.reportFacet(data.label, data.value)
                     }
 
-                    facets.save(_.map($scope.selectedFacetsIndicators, function (x) {
-                        return { label: x.label, values: x.values, group: x.group }
-                    }));
+                    saveFacets();
 
                     function format(value) {
                         if (_.isArray(value)) {
@@ -56,6 +56,12 @@ angular.module('leadFinder.order-form.directives', ['leadFinder.general.services
                             return value.split(',')
 
                         return [value];
+                    }
+
+                    function saveFacets() {
+                        facets.save(_.map($scope.selectedFacetsIndicators, function (x) {
+                            return { label: x.label, values: x.values, group: x.group }
+                        }));
                     }
                 });
             },
@@ -88,7 +94,7 @@ angular.module('leadFinder.order-form.directives', ['leadFinder.general.services
             replace: true
         };
     })
-    .directive('creditCardValidation',function () {
+    .directive('creditCardValidation', function () {
         return {
             require: 'ngModel',
             link: function (scope, elm, attrs, ctrl) {
