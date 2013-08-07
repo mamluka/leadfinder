@@ -37,19 +37,25 @@ class Buy < Grape::API
 
       {approve_url: config[:pp_approve_url], cancel_url: config[:pp_cancel_url]}
     end
+
+    def count_leads(facets, number_of_leads_requested)
+      query = Queries.new
+      pricing = Pricing.new
+
+      count = query.count_leads(facets).total
+      amount = number_of_leads_requested * pricing.get_price_for_count(count, facets) / 100
+    end
+
+    def process_order(order_hash)
+
+    end
   end
 
 
   post 'buy-using-payjunction' do
 
-    query = Queries.new
-    pricing = Pricing.new
-
-    facets = JSON.parse(params[:facets])
-
-    count = query.count_leads(facets).total
-    number_of_leads_requested = params[:howManyLeads].to_f
-    amount = number_of_leads_requested * pricing.get_price_for_count(count, facets) / 100
+    number_of_leads_requested = JSON.parse(params[:facets])
+    amount = count_leads(number_of_leads_requested, params[:howManyLeads])
 
     pay_junction = PayJunction.new
 
@@ -95,11 +101,21 @@ class Buy < Grape::API
           orderId: hash[:order_id]
       }
     else
-      response = {
-          success: false,
-          error_message: result[:response_code_message],
-          amount: result[:amount]
-      }
+      if result[:bad_request]
+        response = {
+            success: false,
+            error_message: result[:errors].first,
+            amount: result[:amount]
+        }
+      else
+        response = {
+            success: false,
+            error_message: result[:response_message],
+            amount: result[:amount]
+        }
+
+      end
+
     end
 
     hash[:response] = response
@@ -141,9 +157,13 @@ class Buy < Grape::API
     payer_id = params[:payerId]
     payment_id = params[:paymentId]
 
+    amount = count_leads(JSON.parse(params[:facets]), params[:howManyLeads])
+
     paypal = Paypal.new
     begin
       paypal.charge(payment_id, payer_id)
+
+
       {success: true}
     rescue
       {success: false}

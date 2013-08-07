@@ -126,13 +126,27 @@ angular.module('leadFinder.general.services', ['leadFinder.apiUrl'])
                 var url = apiUrl + '/buy/buy-using-paypal';
                 return $.get(url, details)
             },
+            paypalSaveOrderDetails: function (data) {
+                var facets = wizard.getSelectedFacets();
+
+                var merged = $.extend(data, {
+                    facets: JSON.stringify(facets)
+                });
+
+                window.sessionStorage.setItem('paypal_order', JSON.stringify(merged))
+
+            },
             paypalExecutePayment: function (params) {
+
+                var merged = $.extend(params, JSON.parse(window.sessionStorage.getItem('paypal_order')));
+
                 var url = apiUrl + '/buy/paypal-payment-execute';
-                return $.post(url, params)
+                return $.post(url, merged)
             }
         }
     }])
-    .factory('facetEvents', ['$rootScope', function ($rootScope) {
+    .
+    factory('facetEvents', ['$rootScope', function ($rootScope) {
         return {
             facetsSelected: function (label, value, group) {
                 $rootScope.$broadcast('facets-selected', {

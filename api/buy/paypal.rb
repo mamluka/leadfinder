@@ -50,7 +50,7 @@ class Paypal
     paypal.id = payment_id
 
     payment_execution = PayPal::SDK::REST::PaymentExecution.new({payer_id: payer_id})
-    paypal.execute(payment_execution)
+    p paypal.execute(payment_execution)
 
   end
 

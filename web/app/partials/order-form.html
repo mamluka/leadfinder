@@ -57,20 +57,21 @@
         </div>
     </div>
 
-    <!--<div class="control-group">-->
-    <!--<label class="control-label">Payment method:</label>-->
+    <div class="control-group">
+        <label class="control-label">Payment method:</label>
 
-    <!--<div class="controls">-->
-    <!--<div class="btn-group" ng-model="paymentMethod" bs-buttons-radio>-->
-    <!--<button type="button" class="btn" value="creditcard">Credit Card</button>-->
-    <!--,g-->
-    <!--<button type="button" class="btn" value="paypal">Paypal</button>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
+        <div class="controls">
+            <div class="btn-group" ng-model="paymentMethod" bs-buttons-radio>
+                <button type="button" class="btn" value="creditcard">Credit Card</button>
+                ,g
+                <button type="button" class="btn" value="paypal">Paypal</button>
+            </div>
+        </div>
+    </div>
 
-
-    <div class="creditcard-details">
+</form>
+<form class="form-horizontal" name="creditcardFrom" id="creditcardFrom">
+    <div class="creditcard-details" ng-show="showPaymentMethod(paymentMethod,'creditcard')">
         <div class="control-group">
             <label class="control-label">Credit card number:</label>
 
@@ -116,19 +117,20 @@
                 <input type="text" class="input-small" placeholder="CCV" ng-model="$parent.ccCCV" value="000" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean" event-field="CCV"/>
             </div>
         </div>
-
-
         <div class="control-group">
             <div class="controls">
                 <button class="btn" ng-click="buyCreditCard()" ng-disabled="isBuyButtonDisabled()">{{buyButtonText}}</button>
             </div>
         </div>
     </div>
-    <div class="paypal-details" style="display: none;">
+
+    <div class="paypal-details" ng-show="showPaymentMethod(paymentMethod,'paypal')">
         <div class="control-group">
             <div class="controls">
-                <img src="/img/paypal.gif" width="83" ng-click="buyPayPal()"/>
+                <img src="/img/paypal.gif" width="83" ng-click="buyPayPal()" class="paypal-btn"/>
             </div>
         </div>
     </div>
 </form>
+
+

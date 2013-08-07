@@ -142,3 +142,6 @@ dl.dl-horizontal dd {
 .responders .btn {
     width:210px;
 }
+.paypal-btn {
+    cursor: pointer;
+}

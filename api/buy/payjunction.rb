@@ -46,15 +46,16 @@ class PayJunction
 
       if is_success
         {
-            success: false,
+            success: true,
             response_message: result[:response][:message],
             transaction_id: result[:transactionId],
             approval_code: result[:response][:processor][:approvalCode],
-            amout: result[:amountTotal]
+            amount: result[:amountTotal]
         }
       else
         {
             success: false,
+            bad_request:false,
             message: result[:response][:message]
         }
       end

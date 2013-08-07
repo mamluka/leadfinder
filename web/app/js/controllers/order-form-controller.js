@@ -17,7 +17,7 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
         }
 
         $scope.isBuyButtonDisabled = function () {
-            return $scope.inProgress || $scope.buyForm.$invalid
+            return $scope.inProgress || $scope.buyForm.$invalid || $scope.creditcardFrom.$invalid;
         };
 
         $scope.buyCreditCard = function () {
@@ -75,13 +75,30 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
                 return;
             }
 
+
             var buyCall = buyingLeads.buyPayPal({
                 howManyLeads: $scope.howManyLeads
             });
 
+            var $paypalScope = $rootScope.$new();
+
+            $modal({
+                template: 'partials/paypal-payment-wait.html',
+                show: true,
+                backdrop: 'static',
+                persist: true,
+                scope: $paypalScope
+            });
+
             buyCall.done(function (data) {
+
+                buyingLeads.paypalSaveOrderDetails({
+                    paymentId: data.paymentId,
+                    email: $scope.email,
+                    userId: $rootScope.userId
+                });
+
                 window.location.href = data.redirectUrl;
-                window.sessionStorage.setItem('paypal_payment_id', data.paymentId);
             });
         };
 
@@ -163,17 +180,21 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
 
             }
         }
+
+        $scope.paymentMethod = 'creditcard';
+        $scope.showPaymentMethod = function (state, paymentType) {
+            return state == paymentType;
+        }
     }
     ])
-    .controller('OrderReadyController', ['$scope', '$routeParams', function ($scope, $routeParams) {
+    .controller('OrderReadyController', ['$scope', '$routeParams', '$rootScope', function ($scope, $routeParams, $rootScope) {
         $rootScope.$broadcast('remove-loading-overlay');
-        $scope.email = $routeParams['email'];
+        $scope.email = $routeParams.email;
     }])
     .controller('PaypalSuccessfulController', ['$scope', '$rootScope', 'BuyingLeads', '$routeParams', function ($scope, $rootScope, buyingLeads, $routeParams) {
         $rootScope.$broadcast('remove-loading-overlay');
 
         buyingLeads.paypalExecutePayment({
-            paymentId: window.sessionStorage.getItem('paypal_payment_id'),
             payerId: $routeParams.PayerID
         })
 
