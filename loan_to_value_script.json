@@ -1,0 +1,1 @@
+foreach(person: ctx._source.people) { person.loan_to_value=(person.most_recent_mortgage_amount+(Integer)person.second_most_recent_mortgage_amount)/person.home_market_value }
