@@ -1,0 +1,37 @@
+{
+    "query": {
+        "nested": {
+           "path": "people",
+           "query": {
+               "bool": {
+                   "must": [
+                      {
+                          "range": {
+                             "people.most_recent_mortgage_amount": {
+                                "from": "1"
+                                
+                             }
+                          }
+                      },
+                      {
+                          "range": {
+                             "second_most_recent_mortgage_amount": {
+                                "from": "1"
+                                
+                             }
+                          }
+                      },
+                      {
+                          "range": {
+                             "home_market_value": {
+                                "from": "1"
+                                
+                             }
+                          }
+                      }
+                   ]
+               }
+           }
+        }
+    }
+}
