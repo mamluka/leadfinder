@@ -1,6 +1,7 @@
 require 'tire'
 require 'json'
 require 'rest-client'
+require 'logger'
 
 Signal.trap('PIPE', 'EXIT')
 
