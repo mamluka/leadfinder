@@ -3,12 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>Lead Finder</title>
-    <link href='https://fonts.googleapis.com/css?family=Sintony' rel='stylesheet' type='text/css'>
 
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
     <!-- minified-css="app.min.css" -->
     <link href="css/jslider.css" rel="stylesheet">
     <link rel="stylesheet" href="css/app.css"/>
-    <link rel="stylesheet" href="css/bootstrap.css"/>
     <link rel="stylesheet" href="css/chosen.css"/>
     <!-- end minified-css -->
 
@@ -45,12 +44,10 @@
                 <h4 class="pull-left">{{total}} households</h4>
                 <h6 ng-show="countingLeads" class="pull-right lead-count-loading"><img src="img/lead-count-loading.gif" style="margin-left: 5px"/></h6>
                 <hr style="clear:both"/>
-                <div style="clear:both"></div>
-
                 <div>
                     <facets></facets>
                 </div>
-
+                <div class="offer">Now offering <strong>1,000 </strong> leads for <strong>{{formatOffer(1000)}}$</strong></div>
                 <label class="checkbox">
                     <input type="checkbox" checkbox-facet data-facet-id="has_telephone_number"
                            data-facet-label="Telephone number" data-checked-value="true"/>Has phone number
@@ -63,8 +60,6 @@
                 If you selected filters that are too specific
                 ease out.
             </div>
-            <h5>Improve connect rate</h5>
-
             <div respond-level-facet data-facet-id="responseLevel" data-facet-label="Response Level"></div>
         </div>
     </div>
@@ -73,7 +68,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.7.4/angular-strap.js"></script>
 
 
@@ -101,6 +96,8 @@
 <script src="js/plugins/upload/jquery.fileupload.js"></script>
 
 <!-- end minified-js -->
+
+<link href='https://fonts.googleapis.com/css?family=Sintony' rel='stylesheet' type='text/css'>
 
 <script type="text/javascript">
     document.write(unescape("%3Cscript id=%27pap_x2s6df8d%27 src=%27" + (("https:" == document.location.protocol) ? "https://" : "http://") + "market.marketing-data.net/scripts/trackjs.js%27 type=%27text/javascript%27%3E%3C/script%3E"));

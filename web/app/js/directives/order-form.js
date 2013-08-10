@@ -94,7 +94,7 @@ angular.module('leadFinder.order-form.directives', ['leadFinder.general.services
             replace: true
         };
     })
-    .directive('creditCardValidation', function () {
+    .directive('creditCardValidation', function ($modal) {
         return {
             require: 'ngModel',
             link: function (scope, elm, attrs, ctrl) {

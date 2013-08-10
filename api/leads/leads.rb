@@ -10,6 +10,8 @@ require_relative '../core/pricing'
 class Leads < Grape::API
   format :json
 
+  use Rack::Session::Cookie, :secret => 'my-secret'
+
   use Rack::Cors do
     allow do
       origins '*'
@@ -37,8 +39,8 @@ class Leads < Grape::API
     {total: total, pricePerLead: pricing.get_price_for_count(total, params), timestamp: Time.now.to_i}
   end
 
-  post 'upload-zip-list' do
-
+  get :check_login do
+    env['rack.session'][:user_id]
   end
 
 end

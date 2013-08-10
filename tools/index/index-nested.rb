@@ -11,10 +11,10 @@ class IndexLeads
   def initialize
     @logger = Logger.new('logfile.log')
     @leads_logger = Logger.new('leadsops.log')
-	@lines_logger = Logger.new('lines.log')
+    @lines_logger = Logger.new('lines.log')
   end
 
-  def index(file)
+  def index(file, chunk, sep)
 
     Tire.index 'leads' do
       create settings: {
@@ -24,7 +24,8 @@ class IndexLeads
           'translog.flush_threshold_ops' => 50000,
           'translog.flush_threshold_size' => '2000mb',
           'translog.flush_threshold_period' => '210m',
-          'merge.policy.max_merge_at_once' => 2,
+          'merge.policy.max_merge_at_once' => 20,
+          'merge.policy.segments_per_tier' => 40,
           'merge.policy.max_merged_segment' => '2g',
       }
     end
@@ -43,12 +44,9 @@ class IndexLeads
     total_time = Time.now
 
     timer = Time.now
-    CSV.foreach(file, {:headers => true, :header_converters => :symbol, :col_sep => '|'}) { |csv|
+    CSV.foreach(file, {:headers => true, :header_converters => :symbol, :col_sep => sep}) { |csv|
 
       total_counter = total_counter + 1
-
-     @lines_logger.info total_counter
-
       next if csv.header_row?
 
       lead = extract_lead(converter, csv)
@@ -61,7 +59,7 @@ class IndexLeads
 
       leads << lead
 
-      if leads.length > 3500 && leads[leads.length-2][:telephone_number] != leads.last[:telephone_number]
+      if leads.length > chunk && leads[leads.length-2][:household_id] != leads.last[:household_id]
 
         end_timer = Time.now
 
@@ -70,8 +68,9 @@ class IndexLeads
         .group_by { |x| x[:household_id] }
         .map { |k, v|
           unique_leads = v.uniq { |x| x[:first_name] + x[:last_name] }
-
           {
+              _id: k,
+              telephone_number: unique_leads[0][:telephone_number],
               type: 'household',
               household_id: k,
               household_size: v.length,
@@ -79,11 +78,12 @@ class IndexLeads
           }
         }
 
-        Tire.index 'leadsi_debug' do
+        Tire.index 'leads' do
           import people
         end
 
-        @logger.info "Possessed #{people.length}, this batch took #{Time.now-start_time} seconds, the csv read took #{end_timer-timer}"
+        batch_time = Time.now-start_time
+        @logger.info "Possessed #{people.length}, this batch took #{batch_time} seconds [#{people.length/batch_time} docs/sec], the csv read took #{end_timer-timer}"
         start_time = Time.now
         @logger.info "Total time passed is #{Time.now-total_time} seconds, we processed #{total_counter}"
         last = leads.last
@@ -129,6 +129,7 @@ class IndexLeads
     household_id = csv[:phone].nil? ? Digest::MD5.hexdigest(full_address) : Digest::MD5.hexdigest(csv[:phone])
 
     {
+        random_sort: Random.rand(150000000),
         household_id: household_id,
         first_name: csv[:fn],
         last_name: csv[:ln],
@@ -166,12 +167,12 @@ class IndexLeads
         year_built: csv[:prop_bld_yr].to_i,
         air_conditioning: csv[:prop_ac],
         mortgage_purchase_date_ccyymmdd: (Time.parse(csv[:genl_purch_dt]).year rescue nil),
-        load_to_value: csv[:genl_loan_to_value].nil? ? nil : csv[:genl_loan_to_value].to_f/100,
+        loan_to_value: csv[:genl_loan_to_value].nil? ? nil : csv[:genl_loan_to_value].to_f/100,
         mortgage_purchase_price: csv[:genl_purch_amt].to_i,
         most_recent_mortgage_amount: csv[:mr_amt].to_i,
         most_recent_mortgage_date: (Time.parse(csv[:mr_dt]).year rescue nil),
         most_recent_mortgage_loan_type: csv[:mr_loan_typ],
-        second_most_recent_mortgage_amount: csv[:mr2_amt],
+        second_most_recent_mortgage_amount: csv[:mr2_amt].to_i,
         second_most_recent_mortgage_date: (Time.parse(csv[:mr2_dt]).year rescue nil),
         second_most_recent_mortgage_loan_type: csv[:mr2_loan_typ],
         most_recent_lender: csv[:mr_lendr_cd],
@@ -237,31 +238,34 @@ class IndexLeads
         health_and_beauty: convert.from_yes_no(csv[:buy_health_beauty]),
         beauty_cosmetics: convert.from_yes_no(csv[:buy_cosmetics]),
         jewelry: convert.from_yes_no(csv[:buy_jewelry]),
-        donation_contribution: convert.from_yes_no(csv[:int_grp_donor]),
-        mail_order_donor: convert.from_yes_no(csv[:donr_mail_ord]),
-        charitable_donation: convert.from_yes_no(csv[:donr_charitable]),
-        animal_welfare_charitable_donation: convert.from_yes_no(csv[:donr_animal]),
-        arts_or_cultural_charitable_donation: convert.from_yes_no(csv[:donr_arts]),
-        childrens_charitable_donation: convert.from_yes_no(csv[:donr_kids]),
-        environment_or_wildlife_charitable_donation: convert.from_yes_no(csv[:donr_wildlife]),
-        environmental_issues_charitable_donation: convert.from_yes_no(csv[:donr_environ]),
-        health_charitable_donation: convert.from_yes_no(csv[:donr_health]),
-        health_charitable_donation: convert.from_yes_no(csv[:donr_health]),
-        international_aid_charitable_donation: convert.from_yes_no(csv[:donr_intl_aid]),
-        political_charitable_donation: convert.from_yes_no(csv[:donr_pol]),
-        political_conservative_charitable_donation: convert.from_yes_no(csv[:donr_pol_cons]),
-        political_liberal_charitable_donation: convert.from_yes_no(csv[:donr_pol_lib]),
-        religious_charitable_donation: convert.from_yes_no(csv[:donr_relig]),
-        veterans_charitable_donation: convert.from_yes_no(csv[:donr_vets]),
-        other_types_of_charitable_donations: convert.from_yes_no(csv[:donr_oth]),
-        community_charities: convert.from_yes_no(csv[:donr_comm_char])
+        #donation_contribution: convert.from_yes_no(csv[:int_grp_donor]),
+        #mail_order_donor: convert.from_yes_no(csv[:donr_mail_ord]),
+        #charitable_donation: convert.from_yes_no(csv[:donr_charitable]),
+        #animal_welfare_charitable_donation: convert.from_yes_no(csv[:donr_animal]),
+        #arts_or_cultural_charitable_donation: convert.from_yes_no(csv[:donr_arts]),
+        #childrens_charitable_donation: convert.from_yes_no(csv[:donr_kids]),
+        #environment_or_wildlife_charitable_donation: convert.from_yes_no(csv[:donr_wildlife]),
+        #environmental_issues_charitable_donation: convert.from_yes_no(csv[:donr_environ]),
+        #health_charitable_donation: convert.from_yes_no(csv[:donr_health]),
+        #international_aid_charitable_donation: convert.from_yes_no(csv[:donr_intl_aid]),
+        #political_charitable_donation: convert.from_yes_no(csv[:donr_pol]),
+        #political_conservative_charitable_donation: convert.from_yes_no(csv[:donr_pol_cons]),
+        #political_liberal_charitable_donation: convert.from_yes_no(csv[:donr_pol_lib]),
+        #religious_charitable_donation: convert.from_yes_no(csv[:donr_relig]),
+        #veterans_charitable_donation: convert.from_yes_no(csv[:donr_vets]),
+        #other_types_of_charitable_donations: convert.from_yes_no(csv[:donr_oth]),
+        #community_charities: convert.from_yes_no(csv[:donr_comm_char]),
+
     }
   end
 
 end
 
 index = IndexLeads.new
-index.index ARGV[0]
+chunk = ARGV[1].nil? ? 3500 : ARGV[1].to_i
+sep = ARGV[2].nil? ? ',' : ARGV[2]
+
+index.index ARGV[0], chunk, sep
 
 
 

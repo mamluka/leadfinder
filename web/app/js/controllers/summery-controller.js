@@ -51,13 +51,6 @@ angular.module('leadFinder.summery.controller', ['leadFinder.general.services'])
 
         $scope.$broadcast('facets-recalculate-total');
 
-        $scope.prepareToBuy = function () {
-
-
-            $rootScope.$broadcast('buy-committed', {total: $scope.total, pricePerLead: $scope.pricePerLead});
-            $rootScope.$broadcast('change-page', {page: 'buy'});
-        };
-
         $rootScope.$on('change-page', function (e, data) {
             if (data.page == 'buy')
                 $scope.orderFormLoaded = true;
@@ -65,6 +58,9 @@ angular.module('leadFinder.summery.controller', ['leadFinder.general.services'])
                 $scope.orderFormLoaded = false;
         });
 
+        $scope.formatOffer = function (offerSize) {
+            return $.formatNumber(offerSize * $scope.pricePerLead / 100);
+        }
 
 
     }]);

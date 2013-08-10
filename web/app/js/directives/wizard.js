@@ -387,7 +387,7 @@ angular.module('leadFinder.wizard.directives', ['leadFinder.general.services'])
 
         }
     }])
-    .directive('respondLevelFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', function (facets, wizard, facetEvents, $rootScope) {
+    .directive('respondLevelFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', '$modal', function (facets, wizard, facetEvents, $rootScope, $modal) {
         var translate = {
             cdr_connected: 'Phone verified',
             cdr_seconds_30: 'Responder',
@@ -398,6 +398,17 @@ angular.module('leadFinder.wizard.directives', ['leadFinder.general.services'])
         return {
             scope: {},
             controller: function ($scope, $element) {
+                $scope.help = function () {
+                    var $helpScope = $rootScope.$new();
+
+                    $modal({
+                        template: 'partials/help/response-level.html',
+                        show: true,
+                        backdrop: 'static',
+                        persist: true,
+                        scope: $helpScope
+                    });
+                }
             },
             link: function ($scope, element) {
                 var elm = $(element);
