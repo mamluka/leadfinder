@@ -7812,4 +7812,30 @@
         "value": "1",
         "text": "1"
     }
+    ,
+    {
+        "id": "loan_to_value",
+        "value": "1.1",
+        "text": "1.1"
+    },
+    {
+        "id": "loan_to_value",
+        "value": "1.2",
+        "text": "1.2"
+    },
+    {
+        "id": "loan_to_value",
+        "value": "1.3",
+        "text": "1.3"
+    },
+    {
+        "id": "loan_to_value",
+        "value": "1.4",
+        "text": "1.4"
+    },
+    {
+        "id": "loan_to_value",
+        "value": "1.5",
+        "text": "1.5"
+    }
 ]}
