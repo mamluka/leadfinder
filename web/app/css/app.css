@@ -205,7 +205,8 @@ dl.dl-horizontal dd {
     margin-bottom: 5px;
     padding-bottom: 7px;
     padding-left: 7px;
-    padding-right: 30px;
+    padding-right: 7px;
     padding-top: 7px;
     text-align: left;
+    width: 85%;
 }
