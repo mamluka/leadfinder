@@ -32,3 +32,4 @@ web/deploy/**/*.*
 web/deploy/*
 users/*
 *.csv
+*.rdb
