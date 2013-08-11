@@ -1,0 +1,27 @@
+<div class="page-header">
+    <h1>Contact us
+        <small>how can we help you?</small>
+    </h1>
+</div>
+
+<form class="form-horizontal" name="contactForm">
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Your email:</label>
+
+        <div class="controls">
+            <input type="email" id="inputEmail" placeholder="Your email" ng-model="email" required>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="message">Message:</label>
+
+        <div class="controls">
+            <textarea id="message" style="width: 400px;" rows="12" ng-model="message" required></textarea>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn btn-primary" ng-click="send()" ng-disabled="isBuyButtonDisabled()">Contact Us</button>
+        </div>
+    </div>
+</form>

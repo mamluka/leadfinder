@@ -6,8 +6,8 @@ require File.expand_path('../leads/leads.rb', __FILE__)
 require File.expand_path('../buy/buy.rb', __FILE__)
 require File.expand_path('../upload/upload.rb', __FILE__)
 require File.expand_path('../upload/upload-new.rb', __FILE__)
-require File.expand_path('../users/users.rb', __FILE__)
 require File.expand_path('../auth/auth.rb', __FILE__)
+require File.expand_path('../contact-us/contact-us.rb', __FILE__)
 
 map '/leads' do
   run Leads
@@ -29,10 +29,10 @@ map '/upload-new' do
   run UploadsNew
 end
 
-map '/users' do
-  run Users
-end
-
 map '/user' do
   run Auth
+end
+
+map '/contact-us' do
+  run ContactUs
 end

@@ -62,6 +62,12 @@ angular.module('leadFinder', ['leadFinder.values.services', 'leadFinder.general.
         page: 'order-form'
     });
 
+    $routeProvider.when('/contact-us', {
+        templateUrl: '/partials/contact-us.html',
+        controller: 'ContactUsController',
+        page: 'contact-us'
+    });
+
     $routeProvider.otherwise({redirectTo: '/geographics/states'});
 
 

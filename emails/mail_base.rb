@@ -65,3 +65,4 @@ end
 
 
 require_relative 'order'
+require_relative 'contact-us'
