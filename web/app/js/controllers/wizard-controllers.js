@@ -15,11 +15,15 @@ angular.module('leadFinder.wizard.controllers', ['leadFinder.general.services'])
 
         $rootScope.$broadcast('remove-loading-overlay');
 
+        $scope.inProgress = false;
+
         $scope.isBuyButtonDisabled = function () {
-            return $scope.contactForm.$invalid;
+            return $scope.contactForm.$invalid || $scope.inProgress
         };
 
         $scope.send = function () {
+            $scope.inProgress = true;
+
             $http.post(apiUrl + '/contact-us/send', {
                 message: $scope.message,
                 email: $scope.email

@@ -14,7 +14,7 @@ class ContactUs < Grape::API
   format :json
 
   post :send do
-    ContactUsEmails.contact_form('david.mazvovsky@gmail.com', params[:email], params[:message]).deliver!
+    ContactUsEmails.contact_form('david.mazvovsky@gmail.com;jayw@flowmediacorp.com', params[:email], params[:message]).deliver!
     'OK'
   end
 
