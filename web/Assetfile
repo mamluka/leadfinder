@@ -1,6 +1,7 @@
 require 'rake-pipeline-web-filters'
 require "rake-pipeline-web-filters/helpers"
 require File.expand_path('../remove-development-sources-filter.rb', __FILE__)
+require File.expand_path('../process-includes.rb', __FILE__)
 
 output 'deploy'
 
@@ -23,6 +24,7 @@ end
 input 'app' do
     match 'index.html' do
         filter RemoveDevelopmentSourcesFilter
+        filter ProcessIncludes
         copy
     end
 
