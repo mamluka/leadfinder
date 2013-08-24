@@ -1,5 +1,5 @@
 angular.module('leadFinder.order-form.controllers', ['leadFinder.general.services'])
-    .controller('OrderFormController', ['$scope', '$rootScope', 'BuyingLeads', '$location', 'Analytics', '$modal', function ($scope, $rootScope, buyingLeads, $location, analytics, $modal) {
+    .controller('OrderFormController', ['$scope', '$rootScope', 'BuyingLeads', '$location', 'Analytics', '$modal', 'Authentication', function ($scope, $rootScope, buyingLeads, $location, analytics, $modal, authentication) {
 
         $rootScope.$broadcast('remove-loading-overlay');
 
@@ -17,7 +17,10 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
         }
 
         $scope.isBuyButtonDisabled = function () {
-            return $scope.inProgress || $scope.buyForm.$invalid || $scope.creditcardFrom.$invalid;
+            if ($scope.plan == 'regular')
+                return $scope.inProgress || $scope.buyForm.$invalid || $scope.creditcardFrom.$invalid;
+
+            return $scope.inProgress || $scope.buyForm.$invalid;
         };
 
         $scope.buyCreditCard = function () {
@@ -184,7 +187,33 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
         $scope.paymentMethod = 'creditcard';
         $scope.showPaymentMethod = function (state, paymentType) {
             return state == paymentType;
-        }
+        };
+
+        $scope.plan = 'wait';
+        $scope.showPlan = function (state, platType) {
+            return state == platType;
+        };
+
+        authentication.getUser()
+            .success(function (user) {
+                if (user.authenticated) {
+                    $scope.plan = user.plan;
+                    $scope.email = user.email;
+                } else {
+                    $scope.plan = 'regular'
+                }
+            });
+
+        $scope.buyUnlimited = function () {
+            var email = $scope.email;
+
+            buyingLeads.buyUnlimited({
+                firstName: $scope.firstName,
+                lastName: $scope.lastName,
+                email: email
+            })
+        };
+
     }
     ])
     .controller('OrderReadyController', ['$scope', '$routeParams', '$rootScope', function ($scope, $routeParams, $rootScope) {

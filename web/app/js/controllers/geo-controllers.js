@@ -8,13 +8,15 @@ angular.module('leadFinder.geo.controllers', ['leadFinder.general.services'])
     }])
     .controller('GeoZipCodeController', ['$scope', '$rootScope', 'Wizard', 'facetEvents', 'apiUrl', function ($scope, $rootScope, wizard, facetEvents, apiUrl) {
 
+        $rootScope.$broadcast('remove-loading-overlay');
+
         $rootScope.$on('change-page', function (e, data) {
             $scope.showPage = data.page == "geo";
         });
 
         var savedFacet = wizard.getSavedFacetFor('zip');
         if (savedFacet) {
-            $scope.zipList = savedFacet.join('\n');
+            $scope.zipList = typeof(savedFacet) == "Array" ? savedFacet.join('\n') : savedFacet;
         }
 
         $scope.loadFromForm = function () {

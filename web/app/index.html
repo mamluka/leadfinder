@@ -27,7 +27,7 @@
     <!--</ul>-->
     <!--</div>-->
     <!--<div class="logo-strip"></div>-->
-    <div class="tabs cool-font nav">
+    <div class="tabs cool-font nav" ng-controller="MenuController">
         <ul class="nav nav-pills top-nav">
             <li data-top-page="geographics"><a href="#/geographics/states">Geographics</a></li>
             <li data-top-page="demographics"><a href="#/demographics">Demographics</a></li>
@@ -35,6 +35,10 @@
             <li data-top-page="mortgage"><a href="#/mortgage">Mortgage</a></li>
             <li data-top-page="lifestyle"><a href="#/lifestyle">Lifestyle</a></li>
             <li data-top-page="order-form"><a href="#/order-form">Order form</a></li>
+            <li data-top-page="login" style="float:right;" ng-show="loginInformationPresent">
+                <a href="#" ng-click="login()" ng-hide="loggedIn">Login</a>
+                <a href="#" ng-click="logout()" ng-show="loggedIn">Log out</a>
+            </li>
         </ul>
     </div>
     <div class="app">
@@ -84,6 +88,7 @@
 <script src="js/controllers/order-form-controller.js"></script>
 <script src="js/controllers/summery-controller.js"></script>
 <script src="js/controllers/wizard-controllers.js"></script>
+<script src="js/controllers/menu-controller.js"></script>
 <script src="js/directives/analytics.js"></script>
 <script src="js/directives/order-form.js"></script>
 <script src="js/directives/wizard.js"></script>

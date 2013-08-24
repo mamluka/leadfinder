@@ -126,6 +126,14 @@ angular.module('leadFinder.general.services', ['leadFinder.apiUrl'])
                 var url = apiUrl + '/buy/buy-using-paypal';
                 return $.get(url, details)
             },
+            buyUnlimited: function (details) {
+                var facets = wizard.getSelectedFacets();
+
+                details.facets = JSON.stringify(facets);
+
+                var url = apiUrl + '/buy/unlimited';
+                return $.get(url, details)
+            },
             paypalSaveOrderDetails: function (data) {
                 var facets = wizard.getSelectedFacets();
 
@@ -228,4 +236,11 @@ angular.module('leadFinder.general.services', ['leadFinder.apiUrl'])
 
 
         }
-    });
+    })
+    .factory('Authentication', ['$http', '$rootScope', 'apiUrl', function ($http, $rootScope, apiUrl) {
+        return {
+            getUser: function () {
+                return $http.get(apiUrl + '/user/permissions', {withCredentials: true, cache: true})
+            }
+        }
+    }]);

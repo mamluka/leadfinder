@@ -369,7 +369,7 @@
         this.drawScale();
     };
 
-        jSlider.prototype.limits = function (x, pointer) {
+    jSlider.prototype.limits = function (x, pointer) {
         // smooth
         if (!this.settings.smooth) {
             var step = this.settings.step * 100 / ( this.settings.interval );

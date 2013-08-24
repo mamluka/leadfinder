@@ -57,6 +57,9 @@
         </div>
     </div>
 
+
+</form>
+<form class="form-horizontal" name="creditcardFrom" id="creditcardFrom" ng-show="showPlan(plan,'regular')">
     <div class="control-group">
         <label class="control-label">Payment method:</label>
 
@@ -69,8 +72,6 @@
         </div>
     </div>
 
-</form>
-<form class="form-horizontal" name="creditcardFrom" id="creditcardFrom">
     <div class="creditcard-details" ng-show="showPaymentMethod(paymentMethod,'creditcard')">
         <div class="control-group">
             <label class="control-label">Credit card number:</label>
@@ -128,8 +129,26 @@
         <div class="control-group">
             <div class="controls">
                 <!--<img src="/img/paypal.gif" width="83" ng-click="buyPayPal()" class="paypal-btn"/>-->
-                <h4>Coming soon... </h4
+                <h4>Coming soon... </h4>
                 <h6>we can help you if this is critical email support@marketing-data.net</h6>
+            </div>
+        </div>
+    </div>
+</form>
+<form class="form-horizontal" ng-show="showPlan(plan,'unlimited')">
+    <div class="paypal-details">
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn" ng-click="buyUnlimited()" ng-disabled="isBuyButtonDisabled()" >Download</button>
+            </div>
+        </div>
+    </div>
+</form>
+<form class="form-horizontal" ng-show="showPlan(plan,'wait')">
+    <div class="paypal-details">
+        <div class="control-group">
+            <div class="controls">
+                Loading...
             </div>
         </div>
     </div>
