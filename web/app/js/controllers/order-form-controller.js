@@ -210,7 +210,9 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
             buyingLeads.buyUnlimited({
                 firstName: $scope.firstName,
                 lastName: $scope.lastName,
-                email: email
+                email: email,
+                userId: $rootScope.userId,
+                howManyLeads: $scope.howManyLeads
             })
         };
 

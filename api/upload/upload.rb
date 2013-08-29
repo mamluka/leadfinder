@@ -4,7 +4,7 @@ require 'json'
 class Uploads < Grape::API
   content_type :txt, 'text/html'
   formatter :txt, lambda { |object, env|
-    config = JSON.parse(File.read(File.dirname(__FILE__)+ '/config.json'))
+    config = JSON.parse(File.read(File.dirname(__FILE__)+ '/../../config/upload.json'))
 
     "<script>document.domain = '#{config['domain']}'</script>" + JSON.generate(object)
   }

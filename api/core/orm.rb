@@ -7,5 +7,6 @@ class User
 
   field :email, type: String
   field :plan, type: String
+  field :_id, type: String, default: -> { email }
 end
 

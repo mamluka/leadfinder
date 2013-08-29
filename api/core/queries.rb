@@ -115,7 +115,7 @@ class Queries
 
 
     params.each do |k, v|
-      next if k == 'responseLevel'
+      next if k == 'responseLevel' || k == :responseLevel
 
       if v.to_s.include?('-')
         ranges[k]=v

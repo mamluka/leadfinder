@@ -3,7 +3,7 @@ require 'typhoeus'
 
 class PayJunction
   def initialize
-    @config = JSON.parse(File.read(File.dirname(__FILE__)+'/config.json'))
+    @config = JSON.parse(File.read(File.dirname(__FILE__)+'/../../config/buy.json'))
   end
 
   def charge(details)
@@ -55,7 +55,7 @@ class PayJunction
       else
         {
             success: false,
-            bad_request:false,
+            bad_request: false,
             errors: result[:response][:message]
         }
       end

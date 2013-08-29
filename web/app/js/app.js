@@ -131,4 +131,14 @@ angular.module('leadFinder',
                 $rootScope.$broadcast('user-status-retrieved', user)
             });
 
+        $.ajaxSetup({
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true
+        });
+
+
+    }]).config(['$httpProvider', function ($httpProvider) {
+        $httpProvider.defaults.withCredentials = true;
     }]);

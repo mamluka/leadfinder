@@ -6,9 +6,9 @@ require 'omniauth-google-oauth2'
 require 'securerandom'
 require 'json'
 
-require_relative '../core/orm'
+require_relative '../core/authentication'
 
-$config = JSON.parse(File.read(File.dirname(__FILE__) + '/config.json'), symbolize_names: true)
+$config = JSON.parse(File.read(File.dirname(__FILE__) + '/../../config/auth.json'), symbolize_names: true)
 
 class Auth < Sinatra::Base
   use Rack::Session::Cookie, :secret => $config[:cookieSecret]
@@ -29,27 +29,20 @@ class Auth < Sinatra::Base
   get '/auth/:provider/callback' do
     auth = request.env['omniauth.auth']
     user_id = auth['info']['email']
-
     session[:user_id] = user_id
+
+    redirect to('http://127.0.0.1/')
   end
 
   get '/permissions' do
     content_type :json
-    cache_control :no_cache,:max_age => 0
+    cache_control :no_cache, :max_age => 0
 
-    user_id = session[:user_id]
+    auth = Authentication.new
+    is_authenticated = auth.authenticated? session
+    user = auth.get_user_from_session(session)
 
-    if not user_id.nil?
-      user = User.where(email: user_id).first
-      if not user.nil?
-        {plan: user.plan, found: true, authenticated: true, email: user.email}.to_json
-      else
-        {found: false, authenticated: true}.to_json
-      end
-
-    else
-      {found: false, authenticated: false}.to_json
-    end
+    {found: !user.nil?, authenticated: is_authenticated, plan: user.nil? ? 'regular' : user.plan}.to_json
   end
 
 

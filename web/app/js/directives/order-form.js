@@ -81,17 +81,43 @@ angular.module('leadFinder.order-form.directives', ['leadFinder.general.services
             transclude: true,
             controller: function ($scope, $element) {
 
-                var total = $scope.total > 1000000 ? 1000000 : $scope.total;
-
-                $('input', $element).attr('max', total);
+                $scope.max = $scope.total > 1000000 ? 1000000 : $scope.total;
 
                 $scope.$watch('howManyLeads', function () {
                     $scope.totalPrice = $.formatNumber($scope.howManyLeads * $scope.pricePerLead / 100);
                 });
-
             },
             templateUrl: 'partials/components/choose-how-many-leads.html',
             replace: true
+        };
+    })
+    .directive('ngMax', function () {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, elem, attr, ctrl) {
+
+                function isEmpty(value) {
+                    return angular.isUndefined(value) || value === '' || value === null || value !== value;
+                }
+
+                scope.$watch(attr.ngMax, function () {
+                    ctrl.$setViewValue(ctrl.$viewValue);
+                });
+                var maxValidator = function (value) {
+                    var max = scope.$eval(attr.ngMax) || Infinity;
+                    if (!isEmpty(value) && value > max) {
+                        ctrl.$setValidity('ngMax', false);
+                        return undefined;
+                    } else {
+                        ctrl.$setValidity('ngMax', true);
+                        return value;
+                    }
+                };
+
+                ctrl.$parsers.push(maxValidator);
+                ctrl.$formatters.push(maxValidator);
+            }
         };
     })
     .directive('creditCardValidation', function ($modal) {

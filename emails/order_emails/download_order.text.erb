@@ -1,6 +1,6 @@
 Dear <%= @name %>,
 
-Thank you for your order.  This email is to inform you that your order is complete and ready for download.  You may retrieve your order by clicking here https://data.marketing-data.net/download/csv/<%= @order_id %>.csv.  This like will remain active for 4 weeks.
+Thank you for your order.  This email is to inform you that your order is complete and ready for download.  You may retrieve your order by clicking here <%= @download_link_prefix %>/download/csv/<%= @order_id %>.csv.  This like will remain active for 4 weeks.
 If you have any issues downloading your order, please contact us at support@marketing-data.net and we will be happy to assist you.
 
 Thanks again for your order,

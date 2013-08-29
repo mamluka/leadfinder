@@ -132,7 +132,7 @@ angular.module('leadFinder.general.services', ['leadFinder.apiUrl'])
                 details.facets = JSON.stringify(facets);
 
                 var url = apiUrl + '/buy/unlimited';
-                return $.get(url, details)
+                return $.post(url, details, {withCredentials: true})
             },
             paypalSaveOrderDetails: function (data) {
                 var facets = wizard.getSelectedFacets();

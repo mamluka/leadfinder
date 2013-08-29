@@ -4,7 +4,7 @@ require 'json'
 class Paypal
 
   def initialize
-    @config = JSON.parse(File.read(File.dirname(__FILE__) + '/config.json'), symbolize_names: true)
+    @config = JSON.parse(File.read(File.dirname(__FILE__) + '/../../config//buy.json'), symbolize_names: true)
 
     PayPal::SDK::REST.set_config(
         :mode => :sandbox,

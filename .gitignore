@@ -24,7 +24,7 @@ api/log/*
 api/tmp/*
 api/buy/orders/
 *.log
-config.json
+config/*.*
 api-url.js
 api/dump.rdb
 web/deploy/**/*

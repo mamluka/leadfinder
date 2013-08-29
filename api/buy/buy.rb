@@ -13,8 +13,12 @@ require_relative 'paypal'
 require_relative 'create-csv-for-customer'
 require_relative '../../emails/mail_base'
 
+$config = JSON.parse(File.read(File.dirname(__FILE__) + '/../../config/auth.json'), symbolize_names: true)
+
 class Buy < Grape::API
   format :json
+
+  use Rack::Session::Cookie, :secret => $config[:cookieSecret]
 
   use Rack::Cors do
     allow do
@@ -33,12 +37,12 @@ class Buy < Grape::API
     end
 
     def get_paypal_urls
-      config = JSON.parse(File.read(File.dirname(__FILE__) + '/config.json'), symbolize_names: true)
+      config = JSON.parse(File.read(File.dirname(__FILE__) + '../../config/buy.json'), symbolize_names: true)
 
       {approve_url: config[:pp_approve_url], cancel_url: config[:pp_cancel_url]}
     end
 
-    def count_leads(facets, number_of_leads_requested)
+    def count_leads(facets)
       query = Queries.new
       query.count_leads(facets).total
     end
@@ -49,8 +53,22 @@ class Buy < Grape::API
     end
 
     def process_order(order_hash)
+      require_relative '../core/queue'
 
+      Backburner.configure do |config|
+        config.respond_timeout = 3600
+      end
+
+      job_hash = {
+          name: order_hash[:name],
+          order_id: order_hash[:order_id],
+          user_id: order_hash[:user_id]}
+
+      Backburner.enqueue CreateCsvForCustomer, order_hash[:email], order_hash[:number_of_leads_requested], order_hash[:facets], job_hash
+
+      OrderEmails.order_placed(order_hash[:email], job_hash[:name], job_hash[:order_id]).deliver
     end
+
   end
 
 
@@ -59,7 +77,7 @@ class Buy < Grape::API
     number_of_leads_requested = params[:howManyLeads].to_i
     facets =JSON.parse(params[:facets])
 
-    count = count_leads(facets, number_of_leads_requested)
+    count = count_leads(facets)
     amount = calculate_charge_amount(count, facets, number_of_leads_requested)
 
     pay_junction = PayJunction.new
@@ -86,20 +104,16 @@ class Buy < Grape::API
     #remove this when we have a good sample giver
     if result[:success] || params[:ccNumber] == '378282246310005'
 
-      require_relative '../core/queue'
-
-      Backburner.configure do |config|
-        config.respond_timeout = 3600
-      end
-
-      job_hash = {
-          name: hash[:first_name] + ' ' + hash[:last_name],
+      order_hash = {
+          name: "#{params[:firstName]} #{params[:lastName]}",
           order_id: hash[:order_id],
-          user_id: params[:userId]}
+          user_id: params[:userId],
+          email: params[:email],
+          number_of_leads_requested: number_of_leads_requested,
+          facets: facets
+      }
 
-      Backburner.enqueue CreateCsvForCustomer, params[:email], number_of_leads_requested, facets, job_hash
-
-      OrderEmails.order_placed(params[:email], job_hash[:name], job_hash[:order_id]).deliver
+      process_order order_hash
 
       response = {
           success: true,
@@ -129,6 +143,39 @@ class Buy < Grape::API
     save_order hash
 
     response
+  end
+
+  options 'unlimited' do
+  end
+
+  post 'unlimited' do
+    session = env['rack.session']
+
+    auth = Authentication.new
+
+    facets =JSON.parse(params[:facets])
+    number_of_leads_requested = params[:howManyLeads].to_i
+    count = count_leads(facets)
+
+    if auth.authenticated?(session) && auth.has_plan?(session, 'unlimited') && count >= number_of_leads_requested
+
+      order_hash = {
+          name: "#{params[:firstName]} #{params[:lastName]}",
+          order_id: SecureRandom.uuid,
+          user_id: params[:userId],
+          email: params[:email],
+          number_of_leads_requested: number_of_leads_requested,
+          facets: facets
+      }
+
+      process_order order_hash
+      save_order order_hash
+
+      {success: true}
+    else
+      {success: false}
+    end
+
   end
 
   get 'buy-using-paypal' do

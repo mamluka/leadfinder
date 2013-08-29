@@ -33,7 +33,7 @@ class CreateCsvForCustomer
 
     number_of_leads_bought = number_of_leads_bought.to_i
     results = Array.new
-    chunk_size = 5000
+    chunk_size = number_of_leads_bought > 5000 ? 5000 : number_of_leads_bought
 
     random_history = Array.new
 
@@ -76,6 +76,8 @@ class CreateCsvForCustomer
       random_history << [min_random_sort-chunk_size, max_random_sort+chunk_size]
 
       results = results.concat(part_of_results).uniq { |x| x[:household_id] }
+
+      p results.length
     end
 
     results = results.take(number_of_leads_bought).map { |x|
@@ -85,6 +87,7 @@ class CreateCsvForCustomer
 
       x.each { |k, v|
         v=(1..household_size).map { v } unless v.kind_of?(Array)
+        v = v.concat((1..household_size-v.length).map { v.last }) if v.length < household_size
         v.each_index { |p| people[p][k] = v[p] }
       }
 
@@ -101,28 +104,29 @@ class CreateCsvForCustomer
           lead_result = x[k]
 
           if lead_result.nil?
-            next false
-          end
-
-          if v == 'TRUE' || v == 'FALSE'
-            lead_result == (v == 'TRUE' ? true : false)
-          elsif v.include?(',')
-            v.split(',').any? { |p| p == lead_result }
-          elsif v.include?('-')
-            minmax = v.split('-').map { |x| x.to_f }
-            lead_result >= minmax[0] && lead_result < minmax[1]
+            result = false
           else
-            if lead_result.kind_of?(Numeric)
-              lead_result == v.to_i
+            if v == 'TRUE' || v == 'FALSE'
+              result = lead_result == (v == 'TRUE' ? true : false)
+            elsif v.include?(',')
+              result = v.split(',').any? { |p| p == lead_result }
+            elsif v.include?('-')
+              minmax = v.split('-').map { |x| x.to_f }
+              result = lead_result >= minmax[0] && lead_result < minmax[1]
             else
-              lead_result == v
+              if lead_result.kind_of?(Numeric)
+                result = lead_result == v.to_i
+              else
+                result = lead_result == v
+              end
             end
-
           end
+
+          result
         end
       end
 
-      people.first
+      person = people.first
     end
 
     file_name = order_details['order_id'] + '.csv'
@@ -142,6 +146,8 @@ class CreateCsvForCustomer
     end
 
     require_relative '../../emails/mail_base'
+
+    p 'Sending email'
     OrderEmails.download_order(email, order_details['name'], order_details['order_id']).deliver
 
   end
