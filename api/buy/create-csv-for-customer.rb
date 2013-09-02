@@ -78,7 +78,7 @@ class CreateCsvForCustomer
         }]
       }
       .select { |x|
-        !phones_set.include?(x[:telephone_number])
+        !phones_set.include?(x[:telephone_number].to_s)
       }
 
       p 'End mapping'
