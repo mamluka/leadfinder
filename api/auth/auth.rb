@@ -10,6 +10,8 @@ require_relative '../core/authentication'
 
 $config = JSON.parse(File.read(File.dirname(__FILE__) + '/../../config/auth.json'), symbolize_names: true)
 
+OmniAuth.config.full_host = $config[:callback_base_url]
+
 class Auth < Sinatra::Base
   use Rack::Session::Cookie, :secret => $config[:cookieSecret]
 
