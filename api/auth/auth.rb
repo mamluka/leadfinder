@@ -31,7 +31,7 @@ class Auth < Sinatra::Base
     user_id = auth['info']['email']
     session[:user_id] = user_id
 
-    redirect to('http://127.0.0.1/')
+    redirect to($config[:domain])
   end
 
   get '/permissions' do
