@@ -1,5 +1,16 @@
 <div class="login" ng-controller="LoginController">
-    <img src="/img/linkedin_login_btn.png" ng-click="loginWithLinkedIn()"/>
-    <img src="/img/facebook-login-btn.png" ng-click="loginWithFacebook()"/>
-    <img src="/img/sign-in-with-google.png" ng-click="loginWithGoogle()"/>
+    <h3>Choose a login method</h3>
+    <img src="/img/linkedin.png" ng-click="loginWithLinkedIn()"/>
+    <img src="/img/facebook.png" ng-click="loginWithFacebook()"/>
+    <img src="/img/google.png" ng-click="loginWithGoogle()"/>
+
+    <div ng-show="redirecting">
+        <h3>Please wait while redirecting...</h3>
+        <h5>You will be redirected back once you login</h5>
+        <img src="img/lead-count-loading.gif"/>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <span class="btn btn-primary" ng-click="dismiss()">I'll login later</span>
 </div>

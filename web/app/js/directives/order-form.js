@@ -105,7 +105,7 @@ angular.module('leadFinder.order-form.directives', ['leadFinder.general.services
                     ctrl.$setViewValue(ctrl.$viewValue);
                 });
                 var maxValidator = function (value) {
-                    var max = scope.$eval(attr.ngMax) || Infinity;
+                    var max = scope.$eval(attr.ngMax)
                     if (!isEmpty(value) && value > max) {
                         ctrl.$setValidity('ngMax', false);
                         return undefined;

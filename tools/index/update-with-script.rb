@@ -32,8 +32,6 @@ File.open(ARGV[0]).each do |id|
       bulk :update, update_docs
     end
 
-    p s
-
     bulk_time = Time.new - start_end
     logger.info "Took #{bulk_time}, we processed #{counter} [#{chunk_size/bulk_time}] docs/sec"
     start_end = Time.new

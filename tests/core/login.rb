@@ -6,7 +6,9 @@ class Login
   end
 
   def login_linked_in!
-    @client.link(text: 'Login').click
+    login_link = @client.link(text: 'Login')
+    login_link.wait_until_present
+    login_link.click
 
     linked_in = @client.element(css: '.modal img')
     linked_in.wait_until_present

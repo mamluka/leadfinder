@@ -31,7 +31,7 @@ class Queries
     s.results
   end
 
-  def get_leads(params, fields, size, random_seed)
+  def get_leads(params, fields, size, from, random_seed, used_random_seed)
 
     response_level = get_response_level(params)
     must_filters = get_must_filters(params)
@@ -50,12 +50,13 @@ class Queries
           end
           must(&response_level) unless response_level.nil?
           must { range :random_sort, {gte: random_seed} }
+          must { range :random_sort, {lte: used_random_seed} } if used_random_seed > 0
         end
       end
 
+      from from
       fields fields
       size size
-      sort { by :random_sort, 'asc' }
     end
 
     p s.to_json

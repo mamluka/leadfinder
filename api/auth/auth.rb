@@ -42,8 +42,11 @@ class Auth < Sinatra::Base
     is_authenticated = auth.authenticated? session
     user = auth.get_user_from_session(session)
 
-    {found: !user.nil?, authenticated: is_authenticated, plan: user.nil? ? 'regular' : user.plan}.to_json
+    {found: !user.nil?, authenticated: is_authenticated, plan: user.nil? ? 'regular' : user.plan, email: user.nil? ? '' : user.email}.to_json
   end
 
+  get '/logout' do
+    session.clear
+  end
 
 end

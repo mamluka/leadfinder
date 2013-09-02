@@ -12,6 +12,7 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
             $scope.total = data.total;
             $scope.pricePerLead = data.pricePerLead;
         } else {
+            $scope.totalFormatted = 0
             $scope.total = 0;
             $scope.pricePerLead = 1.5;
         }
@@ -198,7 +199,8 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
             .success(function (user) {
                 if (user.authenticated) {
                     $scope.plan = user.plan;
-                    $scope.email = user.email;
+                    if (!$scope.email)
+                        $scope.email = user.email;
                 } else {
                     $scope.plan = 'regular'
                 }

@@ -20,6 +20,8 @@ class Tests < Minitest::Test
 
     all_states_label.parent.checkbox.set
 
+    wait_until_count
+
     order_form = @client.link(text: 'Order form')
     order_form.wait_until_present
     order_form.click
@@ -158,6 +160,35 @@ class Tests < Minitest::Test
     @client.execute_script "var select = $('label:contains(Expiration date)').parent().find('select:last'); select.val(13); select.trigger('change')"
 
     assert_form_invalid
+    end
+
+  def test_when_number_of_leads_is_zero_should_not_be_valid
+    order_form = @client.link(text: 'Order form')
+    order_form.wait_until_present
+    order_form.click
+
+    order_of = @client.label(text: 'Your Order of:')
+    order_of.wait_until_present
+
+    focus_input 'Your Order of'
+    @client.send_keys '100'
+
+    focus_input 'Email'
+    @client.send_keys 'cool@cool.com'
+
+    focus_input 'First name'
+    @client.send_keys 'david'
+
+    focus_input 'Last name'
+    @client.send_keys 'mz'
+
+    focus_input 'Credit card number'
+    @client.send_keys '4916345284667239'
+
+    @client.execute_script "var select = $('label:contains(Expiration date)').parent().find('select:first'); select.val(2); select.trigger('change')"
+    @client.execute_script "var select = $('label:contains(Expiration date)').parent().find('select:last'); select.val(13); select.trigger('change')"
+
+    assert_form_invalid
   end
 
   def credit_card_validation_works
@@ -205,6 +236,8 @@ class Tests < Minitest::Test
 
     all_states_label.parent.checkbox.set
 
+    wait_until_count
+
     order_form = @client.link(text: 'Order form')
     order_form.click
 
@@ -250,22 +283,38 @@ class Tests < Minitest::Test
   end
 
   def assert_form_invalid
-    assert !@client.button(text: 'Purchase Records').enabled?
+    button = @client.button(text: 'Purchase Records')
+    button.wait_until_present
+
+    assert !button.enabled?
   end
 
   def assert_form_valid
-    assert @client.button(text: 'Purchase Records').enabled?
+    button = @client.button(text: 'Purchase Records')
+    button.wait_until_present
+
+    assert button.enabled?
   end
 
   def assert_unlimited_form_invalid
-    assert !@client.button(text: 'Download').enabled?
+    button = @client.button(text: 'Download')
+    button.wait_until_present
+
+    assert !button.enabled?
   end
 
   def assert_unlimited_form_valid
-    assert @client.button(text: 'Download').enabled?
+    button = @client.button(text: 'Download')
+    button.wait_until_present
+
+    assert button.enabled?
   end
 
   def focus_input(text)
     @client.execute_script "$('label:contains(#{text})').parent().find('input').focus()"
+  end
+  def wait_until_count
+    total = @client.element(css: '.summery h4')
+    total.wait_until_present
   end
 end

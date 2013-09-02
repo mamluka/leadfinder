@@ -242,3 +242,14 @@ dl.dl-horizontal dd {
 #feedback a:hover {
     background: #06c;
 }
+
+.login {
+    padding:40px;
+    text-align: center;
+}
+
+.login img {
+    display: block;
+    margin: 8px auto;
+    cursor: pointer;
+}

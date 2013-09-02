@@ -1,3 +1,3 @@
 require_relative '../../api/buy/create-csv-for-customer'
 
-CreateCsvForCustomer.perform 'david.mazvovsky@gmail.com', 3000, {"responseLevel" => 'cdr_seconds_30', "zip"=>"85003,85004,85006,85007,85008,85009,85012,85013,85014,85015,85016,85017,85018,85019,85020,85021,85022,85023,85024,85027,85028,85029,85031,85032,85033,85034,85035,85037,85040,85041,85042,85043,85044,85045,85048,85050,85051,85053,85054,85083,85085,85086,85087,85226,85251,85253,85254,85255,85281,85282,85283,85301,85302,85304,85305,85306,85307,85308,85310,85331,85339,85340,85353,85383,85392", 'home_owner' => 'o','credit_rating'=>'650-1600'}, {'name' =>"David MZ", 'order_id' =>"7e840afe-45ad-4243-addd-dd6545cd14892", 'user_id' =>"dea15c0556ffxx8f75c5fd091b"}
+CreateCsvForCustomer.perform 'david.mazvovsky@gmail.com', 220000, {'state' =>"nh"}, {'name' =>"David MZ", 'order_id' =>"7e840afe-45ad-4243-addd-dd6545cd14892", 'user_id' =>"dea15c0556ffxx8f75c5fd091b"}

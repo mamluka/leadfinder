@@ -33,6 +33,8 @@ class Tests < Minitest::Test
 
     all_states_label.parent.checkbox.set
 
+    wait_until_count
+
     order_form = @client.link(text: 'Order form')
     order_form.wait_until_present
     order_form.click
@@ -60,12 +62,12 @@ class Tests < Minitest::Test
     @client.execute_script "var select = $('label:contains(Expiration date)').parent().find('select:first'); select.val(1); select.trigger('change')"
     @client.execute_script "var select = $('label:contains(Expiration date)').parent().find('select:last'); select.val(15); select.trigger('change')"
 
-    @client.button(text: 'Purchase Records').click
+    button = @client.button(text: 'Purchase Records')
+    button.wait_until_present
 
-    @client.element(css: 'h4').wait_until_present
+    button.click
 
     assert_order_contains lead_count
-
   end
 
   def assert_order_contains(lead_count)
@@ -79,6 +81,8 @@ class Tests < Minitest::Test
     new_york.wait_until_present
 
     new_york.parent.checkbox.set
+
+    wait_until_count
 
     order_form = @client.link(text: 'Order form')
     order_form.wait_until_present
@@ -117,7 +121,9 @@ class Tests < Minitest::Test
     @client.execute_script "var select = $('label:contains(Expiration date)').parent().find('select:first'); select.val(1); select.trigger('change')"
     @client.execute_script "var select = $('label:contains(Expiration date)').parent().find('select:last'); select.val(15); select.trigger('change')"
 
-    @client.button(text: 'Purchase Records').click
+    button = @client.button(text: 'Purchase Records')
+    button.wait_until_present
+    button.click
 
     @client.element(css: 'h4').wait_until_present
 
@@ -133,6 +139,8 @@ class Tests < Minitest::Test
     new_york.wait_until_present
 
     new_york.parent.checkbox.set
+
+    wait_until_count
 
     order_form = @client.link(text: 'Order form')
     order_form.wait_until_present
@@ -155,11 +163,13 @@ class Tests < Minitest::Test
     focus_input 'Last name'
     @client.send_keys 'mz'
 
-    @client.button(text: 'Download').click
+    button = @client.button(text: 'Download')
+    button.wait_until_present
+    button.click
 
     assert_order_contains lead_count
 
-    end
+  end
 
   def test_download_large_file
     login = Login.new @client
@@ -170,6 +180,8 @@ class Tests < Minitest::Test
     new_york.wait_until_present
 
     new_york.parent.checkbox.set
+
+    wait_until_count
 
     order_form = @client.link(text: 'Order form')
     order_form.wait_until_present
@@ -192,12 +204,13 @@ class Tests < Minitest::Test
     focus_input 'Last name'
     @client.send_keys 'mz'
 
-    @client.button(text: 'Download').click
+    button = @client.button(text: 'Download')
+    button.wait_until_present
+    button.click
 
     assert_order_contains lead_count
 
   end
-
 
 
   def get_download_url
@@ -211,5 +224,10 @@ class Tests < Minitest::Test
 
   def focus_input(text)
     @client.execute_script "$('label:contains(#{text})').parent().find('input').focus()"
+  end
+
+  def wait_until_count
+    total = @client.element(css: '.summery h4')
+    total.wait_until_present
   end
 end

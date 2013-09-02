@@ -240,7 +240,10 @@ angular.module('leadFinder.general.services', ['leadFinder.apiUrl'])
     .factory('Authentication', ['$http', '$rootScope', 'apiUrl', function ($http, $rootScope, apiUrl) {
         return {
             getUser: function () {
-                return $http.get(apiUrl + '/user/permissions', {withCredentials: true, cache: true})
+                return $http.get(apiUrl + '/user/permissions', {withCredentials: true})
+            },
+            logout: function () {
+                return $http.get(apiUrl + '/user/logout', {withCredentials: true})
             }
         }
     }]);

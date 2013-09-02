@@ -185,7 +185,7 @@ class Tests < Minitest::Test
     @client.send_keys :enter
 
     count = get_count
-    assert_equal '3,102,455 households', count
+    assert_equal '3,019,664 households', count
 
     assert_facet_display_contains 'Language:', %w(English Spanish)
   end
@@ -222,11 +222,51 @@ class Tests < Minitest::Test
     assert_facet_display_contains 'Response Level:', 'Phone verified'
   end
 
+  def test_lead_counting_shows_in_order_form
+    all_states_label = @client.label(text: 'All States')
+    all_states_label.wait_until_present
+
+    all_states_label.parent.checkbox.set
+
+    wait_until_count
+
+    order_form = @client.link(text: 'Order form')
+    order_form.wait_until_present
+    order_form.click
+
+    order_of = @client.label(text: 'Your Order of:')
+    order_of.wait_until_present
+
+    number_of_households = @client.execute_script "return $('label:contains(Available)').parent().find('div').html()"
+
+    assert_match '3,417,210 households', number_of_households
+
+    end
+
+  def test_when_no_filter_selected_and_we_go_to_order_Form
+    order_form = @client.link(text: 'Order form')
+    order_form.wait_until_present
+    order_form.click
+
+    order_of = @client.label(text: 'Your Order of:')
+    order_of.wait_until_present
+
+    number_of_households = @client.execute_script "return $('label:contains(Available)').parent().find('div').html()"
+
+    assert_match '0 households', number_of_households
+
+  end
+
   def get_count
     total = @client.element(css: '.summery h4')
     total.wait_until_present
 
     total.text
+  end
+
+  def wait_until_count
+    total = @client.element(css: '.summery h4')
+    total.wait_until_present
   end
 
   def assert_facet_display_contains(label, text)
