@@ -31,19 +31,21 @@ angular.module('leadFinder.login.controller', ['leadFinder.general.services'])
                 })
         }
     }])
-    .controller('LoginController', [ '$scope', '$rootScope', '$modal', function ($scope, $rootScope, $modal) {
-        $scope.loginWithLinkedIn = function () {
+    .controller('LoginController', [ '$scope', '$rootScope', '$modal', 'apiUrl', function ($scope, $rootScope, $modal, apiUrl) {
+        function redirect(service) {
             $scope.redirecting = true;
-            window.location.href = 'http://127.0.0.1:5555/user/auth/linkedin'
+            window.location.href = apiUrl + '/user/auth/' + service;
+        }
+
+        $scope.loginWithLinkedIn = function () {
+            redirect('linkedin');
         };
 
         $scope.loginWithFacebook = function () {
-            $scope.redirecting = true;
-            window.location.href = 'http://127.0.0.1:5555/user/auth/facebook'
+            redirect('facebook');
         };
 
         $scope.loginWithGoogle = function () {
-            $scope.redirecting = true;
-            window.location.href = 'http://127.0.0.1:5555/user/auth/google_oauth2'
+            redirect('google_oauth2');;
         }
     }]);
