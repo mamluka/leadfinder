@@ -70,8 +70,6 @@ class CreateCsvForCustomer
 
       p 'Start Mapping'
 
-      p leads.first
-
       part_of_results = leads
       .select { |x|
         !phones_set.include?(x.telephone_number)
@@ -133,7 +131,7 @@ class CreateCsvForCustomer
 
     csv_fields = [:telephone_number] | people_fields
 
-    CSV.open(File.dirname(__FILE__) + '/../../downloads/' + file_name, "wb") do |csv|
+    CSV.open(File.dirname(__FILE__) + '/../../downloads/' + file_name, 'wb') do |csv|
       csv << csv_fields
 
       matched_people.each do |x|
@@ -148,6 +146,9 @@ class CreateCsvForCustomer
     p 'Sending email'
 
     OrderEmails.download_order(email, order_details['name'], order_details['order_id']).deliver
+
+    matched_people.clear
+    results.clear
 
   end
 end
