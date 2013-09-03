@@ -46,6 +46,7 @@ class CreateCsvForCustomer
     while results.length < number_of_leads_bought
 
       p 'Start query'
+      start_time = Time.now
       if phones_set.length == 0
         #next if random_history.any? { |x| random_seed >= x[0] && random_seed <= x[1] }
         leads = query.get_leads(facets_to_params, req_fields, chunk_size, cycle_count*chunk_size, random_seed, used_random_seed)
@@ -61,48 +62,34 @@ class CreateCsvForCustomer
         leads = query.get_leads_sequential(facets_to_params, req_fields, chunk_size, cycle_count*chunk_size)
       end
 
+      p "Fetch took #{Time.now-start_time} secs"
+
       p 'End Query'
 
       cycle_count = cycle_count + 1
 
       p 'Start Mapping'
 
+      p leads.first
+
       part_of_results = leads
-      .map { |x|
-        Hash[x.to_hash.select { |k, v|
-          !(v.kind_of?(Array) && v.empty?) || !k.match(/_/).nil?
-        }.map { |k, v|
-          v = v.map { |x| x.to_sym } if v.kind_of?(Array) && v.first.kind_of?(String)
-          v = v.to_sym if v.kind_of?(String)
-          [k.to_s.gsub(/people\./, '').to_sym, v]
-        }]
-      }
       .select { |x|
-        !phones_set.include?(x[:telephone_number].to_s)
+        !phones_set.include?(x.telephone_number)
+      }
+      .map { |x|
+        x.people.map { |x|
+          x.to_hash.select { |k, v| !v.nil? }
+        }
       }
 
       p 'End mapping'
 
       next if part_of_results.length == 0
 
-      results = results.concat(part_of_results).uniq { |x| x[:household_id] }
+      results = results.concat(part_of_results).uniq { |x| x.first[:household_id] }
 
       p results.length
     end
-
-    results = results.take(number_of_leads_bought).map { |x|
-      household_size = x[:zip].length
-
-      people = (1..household_size).map { Hash.new }
-
-      x.each { |k, v|
-        v=(1..household_size).map { v } unless v.kind_of?(Array)
-        v = v.concat((1..household_size-v.length).map { v.last }) if v.length < household_size
-        v.each_index { |p| people[p][k] = v[p] }
-      }
-
-      people
-    }
 
     matched_people = results.map do |r|
       people = r.select do |x|
@@ -119,7 +106,7 @@ class CreateCsvForCustomer
             if v == 'TRUE' || v == 'FALSE'
               result = lead_result == (v == 'TRUE' ? true : false)
             elsif v.include?(',')
-              result = v.split(',').any? { |p| p.to_sym == lead_result }
+              result = v.split(',').any? { |p| p == lead_result }
             elsif v.include?('-')
               minmax = v.split('-').map { |x| x.to_f }
               result = lead_result >= minmax[0] && lead_result < minmax[1]
@@ -127,7 +114,7 @@ class CreateCsvForCustomer
               if lead_result.kind_of?(Numeric)
                 result = lead_result == v.to_i
               else
-                result = lead_result == v.to_sym
+                result = lead_result == v
 
               end
             end

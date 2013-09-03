@@ -55,7 +55,6 @@ class Queries
       end
 
       from from
-      fields fields
       size size
     end
 
@@ -85,7 +84,6 @@ class Queries
         end
       end
 
-      fields fields
       size size
       from from
     end
