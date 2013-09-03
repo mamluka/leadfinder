@@ -237,7 +237,7 @@ angular.module('leadFinder.general.services', ['leadFinder.apiUrl'])
 
         }
     })
-    .factory('Authentication', ['$http', '$rootScope', 'apiUrl', function ($http, $rootScope, apiUrl) {
+    .factory('Authentication', ['$http', '$rootScope', 'apiUrl', 'Analytics', function ($http, $rootScope, apiUrl, analytics) {
         return {
             getUser: function () {
                 return $http.get(apiUrl + '/user/permissions', {withCredentials: true})

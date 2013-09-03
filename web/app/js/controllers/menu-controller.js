@@ -1,5 +1,5 @@
 angular.module('leadFinder.login.controller', ['leadFinder.general.services'])
-    .controller('MenuController', [ '$scope', '$rootScope', '$modal', 'Authentication', '$location', '$templateCache', function ($scope, $rootScope, $modal, auth, $location, $cache) {
+    .controller('MenuController', [ '$scope', '$rootScope', '$modal', 'Authentication', '$location', '$templateCache', 'Analytics', function ($scope, $rootScope, $modal, auth, $location, $cache, analytics) {
 
         $scope.loginInformationPresent = false;
         $scope.loggedIn = false;
@@ -10,6 +10,8 @@ angular.module('leadFinder.login.controller', ['leadFinder.general.services'])
         });
 
         $scope.login = function () {
+
+            analytics.report('Login', 'Modal', 'Open');
 
             var $loginScope = $rootScope.$new();
 
@@ -24,16 +26,20 @@ angular.module('leadFinder.login.controller', ['leadFinder.general.services'])
 
         $scope.logout = function () {
             auth.logout()
-                .success(function () {
+                .success(function (data) {
                     $scope.loggedIn = false;
                     $cache.remove('/partials/order-form.html');
                     $location.path('/')
+
+                    analytics.report('Login', 'Logout', data.email);
                 })
         }
     }])
-    .controller('LoginController', [ '$scope', '$rootScope', '$modal', 'apiUrl', function ($scope, $rootScope, $modal, apiUrl) {
+    .controller('LoginController', [ '$scope', '$rootScope', '$modal', 'apiUrl', 'Analytics', function ($scope, $rootScope, $modal, apiUrl, analytics) {
         function redirect(service) {
             $scope.redirecting = true;
+            analytics.report('Login', 'Redirect', service);
+
             window.location.href = apiUrl + '/user/auth/' + service;
         }
 
@@ -46,6 +52,7 @@ angular.module('leadFinder.login.controller', ['leadFinder.general.services'])
         };
 
         $scope.loginWithGoogle = function () {
-            redirect('google_oauth2');;
+            redirect('google_oauth2');
+            ;
         }
     }]);

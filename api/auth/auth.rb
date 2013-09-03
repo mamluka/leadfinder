@@ -48,7 +48,10 @@ class Auth < Sinatra::Base
   end
 
   get '/logout' do
+    user_id = session[:user_id]
     session.clear
+
+    {email: user_id}.to_json
   end
 
 end

@@ -387,7 +387,7 @@ angular.module('leadFinder.wizard.directives', ['leadFinder.general.services'])
 
         }
     }])
-    .directive('respondLevelFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', '$modal', function (facets, wizard, facetEvents, $rootScope, $modal) {
+    .directive('respondLevelFacet', ['Facets', 'Wizard', 'facetEvents', '$rootScope', '$modal', 'Analytics', function (facets, wizard, facetEvents, $rootScope, $modal, analytics) {
         var translate = {
             cdr_connected: 'Phone verified',
             cdr_seconds_30: 'Responder',
@@ -399,6 +399,9 @@ angular.module('leadFinder.wizard.directives', ['leadFinder.general.services'])
             scope: {},
             controller: function ($scope, $element) {
                 $scope.help = function () {
+
+                    analytics.report('Help', 'Show', 'Responders See Why');
+
                     var $helpScope = $rootScope.$new();
 
                     $modal({

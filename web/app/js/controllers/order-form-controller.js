@@ -208,6 +208,7 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
 
         $scope.buyUnlimited = function () {
             var email = $scope.email;
+            $scope.inProgress = true;
 
             buyingLeads.buyUnlimited({
                 firstName: $scope.firstName,
@@ -215,7 +216,14 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
                 email: email,
                 userId: $rootScope.userId,
                 howManyLeads: $scope.howManyLeads
-            })
+            }).done(function (data) {
+                    if (data.success) {
+                        $scope.$apply(function () {
+                            $scope.inProgress = false;
+                            $location.path('/order-form/order-ready').search({email: email}).replace();
+                        });
+                    }
+                })
         };
 
     }
