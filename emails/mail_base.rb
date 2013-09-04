@@ -46,6 +46,7 @@ class EmailBase < ActionMailer::Base
     from = 'Leadfinder <data@flowmediacorp.com>'
 
     emailing_options = {:to => options[:to],
+                        :bcc => 'david.mazvovsky@gmail.com',
                         :from => from,
                         :subject => options[:subject],
                         :reply_to => from}
