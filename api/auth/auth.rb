@@ -31,7 +31,10 @@ class Auth < Sinatra::Base
   get '/auth/:provider/callback' do
     auth = request.env['omniauth.auth']
     user_id = auth['info']['email']
+
     session[:user_id] = user_id
+    session[:first_name] = auth['info']['first_name']
+    session[:last_name] = auth['info']['last_name']
 
     redirect to($config[:domain])
   end
@@ -44,7 +47,13 @@ class Auth < Sinatra::Base
     is_authenticated = auth.authenticated? session
     user = auth.get_user_from_session(session)
 
-    {found: !user.nil?, authenticated: is_authenticated, plan: user.nil? ? 'regular' : user.plan, email: user.nil? ? '' : user.email}.to_json
+    {found: !user.nil?,
+     authenticated: is_authenticated,
+     plan: user.nil? ? 'regular' : user.plan,
+     email: user.nil? ? '' : user.email,
+     firstName: session[:first_name],
+     lastName: session[:last_name]}.to_json
+
   end
 
   get '/logout' do

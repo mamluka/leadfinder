@@ -1,10 +1,10 @@
 /* app css stylesheet */
 /*.form-horizontal .control-label.wide {*/
-    /*width: 180px;*/
+/*width: 180px;*/
 /*}*/
 
 /*.form-horizontal .controls.wide {*/
-    /*margin-left: 200px;*/
+/*margin-left: 200px;*/
 /*}*/
 .cool-slider {
     width: 400px;
@@ -13,6 +13,7 @@
 .jslider {
     margin-top: 5px;
 }
+
 .money-calculation {
     font-size: 22px;
 }
@@ -42,51 +43,61 @@
     padding-top: 20px;
     border-bottom: black 5px solid;
 }
+
 .header ul li {
     margin: 10px 20px 10px 0px;
 }
+
 .nav ul {
     list-style: none;
-    margin:0px;
+    margin: 0px;
 }
+
 .nav ul li {
     font-size: 13px;
     display: inline-block;
     list-style-type: none;
 }
+
 .logo-strip {
     height: 120px;
 }
+
 .tabs {
     border-top: 1px #dedede solid;
     border-bottom: 1px #dedede solid;
     padding: 0px 5px;
     margin-top: 10px;
 }
+
 .tabs ul li {
     margin: 5px 2px 5px 0px;
 }
+
 .wizard {
-    width:659px;
-    float:left;
-    padding-right:30px;
+    width: 659px;
+    float: left;
+    padding-right: 30px;
 }
+
 .summery {
-    width:260px;
-    float:left;
+    width: 260px;
+    float: left;
     padding-left: 10px;
 }
+
 dl.dl-horizontal dt.facet {
-    width:130px;
-    white-space:normal;
+    width: 130px;
+    white-space: normal;
     font-size: 11px;
 }
 
 dl.dl-horizontal dd {
     margin-left: 140px;
 }
+
 .facet-label {
-    border-radius:3px;
+    border-radius: 3px;
     display: inline-block;
     padding: 3px 6px;
     font-size: 11px;
@@ -97,26 +108,32 @@ dl.dl-horizontal dd {
     vertical-align: baseline;
     background-color: #999999;
 }
+
 .zip-list .span5 {
     height: 330px;
 }
+
 .zip-list .span4 {
     height: 330px;
 }
+
 .zip-list .span2 {
     height: 330px;
 }
+
 .middle {
     display: block;
     position: relative;
     top: 50%;
     font-size: 2em;
 }
+
 .middle-button {
     position: relative;
     top: 40%;
     font-size: 16px;
 }
+
 #buyForm input.ng-invalid-credit-card {
     border-color: #e9322d;
     -webkit-box-shadow: 0 0 6px #f8b9b7;
@@ -128,7 +145,7 @@ dl.dl-horizontal dd {
 
 .upload-zone {
     position: relative;
-    width:250px;
+    width: 250px;
     height: 150px;
     display: table-cell;
     text-align: center;
@@ -138,23 +155,28 @@ dl.dl-horizontal dd {
 .upload-zone .browse {
     margin-top: 10px;
 }
+
 .responders .btn {
-    width:210px;
+    width: 210px;
 }
+
 .paypal-btn {
     cursor: pointer;
 }
+
 .response-level-help {
-    display:inline-block;
-    float:right;
-    font-size:10px;
-    position:relative;
-    top:2px;
+    display: inline-block;
+    float: right;
+    font-size: 10px;
+    position: relative;
+    top: 2px;
 }
+
 .list-group {
     padding-left: 0;
     margin-bottom: 20px;
 }
+
 .list-group-item {
     position: relative;
     display: block;
@@ -174,6 +196,7 @@ dl.dl-horizontal dd {
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
 }
+
 .offer {
     background-color: #FFF;
     border-bottom-color: #DDD;
@@ -210,6 +233,7 @@ dl.dl-horizontal dd {
     text-align: left;
     width: 85%;
 }
+
 #feedback {
     height: 104px;
     width: 104px;
@@ -244,7 +268,7 @@ dl.dl-horizontal dd {
 }
 
 .login {
-    padding:40px;
+    padding: 40px;
     text-align: center;
 }
 
@@ -252,4 +276,34 @@ dl.dl-horizontal dd {
     display: block;
     margin: 8px auto;
     cursor: pointer;
+}
+
+input[type=text] + span.validation-label, input[type=email] + span.validation-label {
+    left: -25px;
+}
+
+input[type=number] + span.validation-label {
+    left: -30px;
+}
+
+input + span.validation-label {
+    position: relative;
+    opacity: 0.7;
+}
+
+input.ng-invalid + span.validation-label {
+    color: red;
+}
+
+input.ng-invalid + span.validation-label:before {
+    content: "\f057";
+}
+
+input.ng-valid + span.validation-label {
+    color: green;
+
+}
+
+input.ng-valid + span.validation-label:before {
+    content: "\f058";
 }

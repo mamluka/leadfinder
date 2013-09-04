@@ -38,6 +38,7 @@
 
         <div class="controls">
             <input type="email" name="email" class="input-xlarge" placeholder="Email" ng-model="$parent.email" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" event-field="Email"/>
+            <span class="icon- validation-label"></span>
         </div>
     </div>
 
@@ -46,6 +47,7 @@
 
         <div class="controls">
             <input type="text" class="input-large" placeholder="First name" ng-model="$parent.firstName" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" event-field="First name"/>
+            <span class="icon- validation-label"></span>
         </div>
     </div>
 
@@ -54,6 +56,7 @@
 
         <div class="controls">
             <input type="text" class="input-large" placeholder="Last name" ng-model="$parent.lastName" required mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" event-field="Last name"/>
+            <span class="icon- validation-label"></span>
         </div>
     </div>
 
@@ -66,7 +69,6 @@
         <div class="controls">
             <div class="btn-group" ng-model="paymentMethod" bs-buttons-radio>
                 <button type="button" class="btn" value="creditcard">Credit Card</button>
-                ,g
                 <button type="button" class="btn" value="paypal">Paypal</button>
             </div>
         </div>
@@ -79,6 +81,7 @@
             <div class="controls">
                 <input type="text" class="input-xlarge cc-number" placeholder="Credit card number" ng-model="ccNumber" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="boolean"
                        event-field="Credit card" credit-card-validation required/>
+                <span class="icon- validation-label"></span>
                 <img src="img/visa_mastercard.jpg"/>
             </div>
         </div>
@@ -121,6 +124,7 @@
         <div class="control-group">
             <div class="controls">
                 <button class="btn" ng-click="buyCreditCard()" ng-disabled="isBuyButtonDisabled()">{{buyButtonText}}</button>
+
             </div>
         </div>
     </div>

@@ -201,6 +201,13 @@ angular.module('leadFinder.order-form.controllers', ['leadFinder.general.service
                     $scope.plan = user.plan;
                     if (!$scope.email)
                         $scope.email = user.email;
+
+                    if (!$scope.firstName)
+                        $scope.firstName = user.firstName
+
+                    if (!$scope.lastName)
+                        $scope.lastName = user.lastName
+
                 } else {
                     $scope.plan = 'regular'
                 }

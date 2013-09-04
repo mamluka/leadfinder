@@ -1,3 +1,3 @@
 <div>
-    <input required  ng-max="$parent.max" type="number" ng-model="$parent.howManyLeads" class="input-small" min="1" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" event-field="How many leads"/><span class="money-calculation"> x {{pricePerLead}}¢ = {{totalPrice}}$</span>
+    <input required type="text" ng-max="$parent.max" ng-model="$parent.howManyLeads" class="input-medium" mix-panel-report event-name="Order form filled" event-trigger="focusout" event-value-type="value" event-field="How many leads"/><span class="icon- validation-label"></span><span class="money-calculation"> x {{pricePerLead}}¢ = {{totalPrice}}$</span>
 </div>
