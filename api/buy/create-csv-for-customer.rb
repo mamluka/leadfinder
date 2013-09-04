@@ -107,7 +107,7 @@ class CreateCsvForCustomer
               result = v.split(',').any? { |p| p == lead_result }
             elsif v.include?('-')
               minmax = v.split('-').map { |x| x.to_f }
-              result = lead_result >= minmax[0] && lead_result < minmax[1]
+              result = lead_result.to_f >= minmax[0] && lead_result.to_f < minmax[1]
             else
               if lead_result.kind_of?(Numeric)
                 result = lead_result == v.to_i
