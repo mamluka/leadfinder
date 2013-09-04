@@ -43,7 +43,7 @@ class EmailBase < ActionMailer::Base
 
   def prepare_email(options)
 
-    from = 'data@flowmediacorp.com'
+    from = 'Leadfinder <data@flowmediacorp.com>'
 
     emailing_options = {:to => options[:to],
                         :from => from,
