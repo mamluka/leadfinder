@@ -509,45 +509,137 @@
 ], "credit_rating": [
     {
         "id": "credit_rating",
-        "value": 1000,
-        "text": 1000
+        "text": 550,
+        "value": 550
     },
     {
         "id": "credit_rating",
-        "value": 500,
-        "text": 500
+        "text": 560,
+        "value": 560
     },
     {
         "id": "credit_rating",
-        "value": 550,
-        "text": 550
+        "text": 570,
+        "value": 570
     },
     {
         "id": "credit_rating",
-        "value": 600,
-        "text": 600
+        "text": 580,
+        "value": 580
     },
     {
         "id": "credit_rating",
-        "value": 650,
-        "text": 650
+        "text": 590,
+        "value": 590
     },
     {
         "id": "credit_rating",
-        "value": 700,
-        "text": 700
+        "text": 600,
+        "value": 600
     },
     {
         "id": "credit_rating",
-        "value": 750,
-        "text": 750
+        "text": 610,
+        "value": 610
     },
     {
         "id": "credit_rating",
-        "value": 1600,
-        "text": 800
+        "text": 620,
+        "value": 620
+    },
+    {
+        "id": "credit_rating",
+        "text": 630,
+        "value": 630
+    },
+    {
+        "id": "credit_rating",
+        "text": 640,
+        "value": 640
+    },
+    {
+        "id": "credit_rating",
+        "text": 650,
+        "value": 650
+    },
+    {
+        "id": "credit_rating",
+        "text": 660,
+        "value": 660
+    },
+    {
+        "id": "credit_rating",
+        "text": 670,
+        "value": 670
+    },
+    {
+        "id": "credit_rating",
+        "text": 680,
+        "value": 680
+    },
+    {
+        "id": "credit_rating",
+        "text": 690,
+        "value": 690
+    },
+    {
+        "id": "credit_rating",
+        "text": 700,
+        "value": 700
+    },
+    {
+        "id": "credit_rating",
+        "text": 710,
+        "value": 710
+    },
+    {
+        "id": "credit_rating",
+        "text": 720,
+        "value": 720
+    },
+    {
+        "id": "credit_rating",
+        "text": 730,
+        "value": 730
+    },
+    {
+        "id": "credit_rating",
+        "text": 740,
+        "value": 740
+    },
+    {
+        "id": "credit_rating",
+        "text": 750,
+        "value": 750
+    },
+    {
+        "id": "credit_rating",
+        "text": 760,
+        "value": 760
+    },
+    {
+        "id": "credit_rating",
+        "text": 770,
+        "value": 770
+    },
+    {
+        "id": "credit_rating",
+        "text": 780,
+        "value": 780
+    },
+    {
+        "id": "credit_rating",
+        "text": 790,
+        "value": 790
+    },
+    {
+        "id": "credit_rating",
+        "text": 800,
+        "value": 800
     }
-], "exact_age": [
+]
+
+    , "exact_age": [
     {
         "id": "exact_age",
         "value": 21,
@@ -7765,77 +7857,77 @@
     {
         "id": "loan_to_value",
         "value": "0.1",
-        "text": "0.1"
+        "text": "10"
     },
     {
         "id": "loan_to_value",
         "value": "0.2",
-        "text": "0.2"
+        "text": "20"
     },
     {
         "id": "loan_to_value",
         "value": "0.3",
-        "text": "0.3"
+        "text": "30"
     },
     {
         "id": "loan_to_value",
         "value": "0.4",
-        "text": "0.4"
+        "text": "40"
     },
     {
         "id": "loan_to_value",
         "value": "0.5",
-        "text": "0.5"
+        "text": "50"
     },
     {
         "id": "loan_to_value",
         "value": "0.6",
-        "text": "0.6"
+        "text": "60"
     },
     {
         "id": "loan_to_value",
         "value": "0.7",
-        "text": "0.7"
+        "text": "70"
     },
     {
         "id": "loan_to_value",
         "value": "0.8",
-        "text": "0.8"
+        "text": "80"
     },
     {
         "id": "loan_to_value",
         "value": "0.9",
-        "text": "0.9"
+        "text": "90"
     },
     {
         "id": "loan_to_value",
         "value": "1",
-        "text": "1"
+        "text": "100"
     }
     ,
     {
         "id": "loan_to_value",
         "value": "1.1",
-        "text": "1.1"
+        "text": "110"
     },
     {
         "id": "loan_to_value",
         "value": "1.2",
-        "text": "1.2"
+        "text": "120"
     },
     {
         "id": "loan_to_value",
         "value": "1.3",
-        "text": "1.3"
+        "text": "130"
     },
     {
         "id": "loan_to_value",
         "value": "1.4",
-        "text": "1.4"
+        "text": "140"
     },
     {
         "id": "loan_to_value",
         "value": "1.5",
-        "text": "1.5"
+        "text": "150"
     }
 ]}
