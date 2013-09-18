@@ -1,7 +1,7 @@
 require 'redis'
 require 'logger'
 
-redis = redis = Redis.new(:host => "10.0.1.1", :port => ENV['CDR_REDIS_PORT'].nil? ? 6379 : ENV['CDR_REDIS_PORT'].to_i)
+redis = redis = Redis.new(:host => "localhost", :port => ENV['CDR_REDIS_PORT'].nil? ? 6379 : ENV['CDR_REDIS_PORT'].to_i)
 
 phones_to_get = Array.new
 counter = 0
