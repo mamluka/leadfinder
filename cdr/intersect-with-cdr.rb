@@ -13,7 +13,7 @@ logger = Logger.new 'log-intersect-with-cdr.log'
 
 File.open(ARGV[0]).each do |line|
 
-  if phones_to_get.length == steps
+  if phones_to_get.length == steps || phones_to_get.length < steps
 
     counter = counter + steps
 
@@ -32,6 +32,8 @@ File.open(ARGV[0]).each do |line|
   end
 
   phone = line.scan(/\d{10}/)[0]
+
+  #$stdout.puts phone
 
   phones_to_get << {line: line.strip, phone: phone} if not phone.nil?
 end
