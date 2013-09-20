@@ -13,8 +13,6 @@ class ProcessCDR
 
     start_time = Time.now
 
-    p phones_to_get
-
     s = @redis.pipelined do
       phones_to_get.each { |x| @redis.get x[:phone] }
     end
