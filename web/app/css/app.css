@@ -307,3 +307,11 @@ input.ng-valid + span.validation-label {
 input.ng-valid + span.validation-label:before {
     content: "\f058";
 }
+
+footer {
+    Position: absolute;
+    Width: 100%;
+    Bottom: 0;
+    Height: 75px;  /* This value is the height of your footer */
+    text-align: center;
+}
