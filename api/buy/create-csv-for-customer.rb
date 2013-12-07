@@ -1,7 +1,6 @@
 require 'backburner'
 require 'csv'
 require 'securerandom'
-require 'peach'
 
 require_relative '../core/queries'
 require_relative '../core/facets_text_translator'
