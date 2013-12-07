@@ -1,6 +1,7 @@
 require 'backburner'
 require 'csv'
 require 'securerandom'
+require 'peach'
 
 require_relative '../core/queries'
 require_relative '../core/facets_text_translator'
@@ -89,10 +90,16 @@ class CreateCsvForCustomer
       p results.length
     end
 
+
+    start_time = Time.now
+    p 'Start Matching'
+
+    skip_matching = [:zip, :responseLevel]
+
     matched_people = results.map do |r|
       people = r.select do |x|
         facets_to_params
-        .select { |x| x!= :responseLevel }
+        .select { |x| !skip_matching.include? x }
         .all? do |k, v|
           v = v.to_s.upcase
 
@@ -124,6 +131,8 @@ class CreateCsvForCustomer
 
       people.first
     end
+
+    p "Matching took #{Time.now - start_time}"
 
     file_name = order_details['order_id'] + '.csv'
 

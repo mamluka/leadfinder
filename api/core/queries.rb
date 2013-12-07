@@ -58,8 +58,6 @@ class Queries
       size size
     end
 
-    p s.to_json
-
     s.results
   end
 
@@ -87,8 +85,6 @@ class Queries
       size size
       from from
     end
-
-    p s.to_json
 
     s.results
   end
