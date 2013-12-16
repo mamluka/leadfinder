@@ -10,6 +10,18 @@
         "text": "Female"
     }
 ],
+    "occupation": [
+        {
+            "id": "occupation",
+            "value": "r",
+            "text": "Student"
+        },
+        {
+            "id": "occupation",
+            "value": "f",
+            "text": "Student / Unemployed"
+        }
+    ],
     "state": [
         {
             "id": "state",
@@ -637,9 +649,7 @@
         "text": 800,
         "value": 800
     }
-]
-
-    , "exact_age": [
+], "exact_age": [
     {
         "id": "exact_age",
         "value": 21,
